@@ -177,19 +177,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[CodeGenerator]]></title>
-    <url>%2F2016%2F08%2F29%2FCodeGenerator%2F</url>
-    <content type="text"><![CDATA[1. 单例生成 2. Copy生成 3. FindView生成 4. MainMethod生成 5. Activity添加到AndroidManifest.xml]]></content>
-      <categories>
-        <category>Develop</category>
-      </categories>
-      <tags>
-        <tag>高效开发</tag>
-        <tag>Android Studio Plugin</tag>
-        <tag>Generaotr</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[BuilderGenerator]]></title>
     <url>%2F2016%2F08%2F29%2FBuilderGenerator%2F</url>
     <content type="text"><![CDATA[日常开发中，我们经常会使用到Builder模式，我们一般都是直接手动地去写一个Builder类来使用。这里我们采用APT的方式进行配置生成Builder类 一、 快速接入1. 配置apt依赖外层gradle添加 1classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4' 内层build.gradle添加 1apply plugin: 'com.neenbedankt.android-apt' 2. 配置该框架依赖内层build.gradle添加 12compile 'com.puke:buildergenerator-api:1.0.0'apt 'com.puke:buildergenerator-compiler:1.0.0' 到这里，配置部分就结束了，接下来就是使用过程。 3. 使用姿势这里我们模拟一个需要使用Builder模式的类Dog 123456789101112131415public class Dog &#123; private String name; private int age; private String sex; private Color color; @Builder("configure") Dog(@Item("customName") String name, @Item int age, @Item String sex, Color color) &#123; this.name = name; this.age = age; this.sex = sex; this.color = color; &#125;&#125; 然后只需要build一下Project就ok了 我们可以在该Module的“build/generated/source/apt”目录下找到对应的DogBuilder类，如下 1234567891011121314151617181920212223242526272829// this is a generated file.package com.puke.buildergeneator;public final class DogBuilder &#123; private String customName; private int age; private String sex; public final DogBuilder configureCustomName(String customName) &#123; this.customName = customName; return this; &#125; public final DogBuilder configureAge(int age) &#123; this.age = age; return this; &#125; public final DogBuilder configureSex(String sex) &#123; this.sex = sex; return this; &#125; public final Dog build() &#123; return new Dog(customName, age, sex, null); &#125;&#125; 4. 几点说明整体比较轻巧，使用起来也比较简单，我们可以重点看一下该类的构造方法，接下来几点说明： 构造方法上面加了@Builder注解 表示该类是要生成Builder类 @Builder中注入了“configure” 表示生成注解类的组装子Item的方法前面全部都要加上”configure“关键字，当然这个是可选的，如果不加的话就会直接就直接取方法名 构造方法中加入了@Item注解 加入了@Item注解的参数表示Builder类中可以加入的参数，未加则不能通过Builder加入 @Item中注入“customName” 表示在Builder类中给对应的属性设置的别名，不设时默认去参数名 二、 项目源码https://github.com/puke3615/BuilderGeneator.git]]></content>
