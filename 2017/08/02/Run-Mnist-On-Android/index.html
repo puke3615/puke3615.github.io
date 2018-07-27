@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'KFRJ311K0H',
+      apiKey: '4c626345121fb7419731b7ae5a02dc19',
+      indexName: 'Hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索文章","hits_empty":"未找到关键词：${query}","hits_stats":"搜索到${hits}个结果，用时${time}ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="通过手写数字识别的具体案例来展示Tensorflow中运行的模型是如何移植到Android中。">
+<meta name="keywords" content="Android,Tensorflow,Mnist">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android上运行手写数字识别模型">
+<meta property="og:url" content="http://puke3615.github.io/2017/08/02/Run-Mnist-On-Android/index.html">
+<meta property="og:site_name" content="Puke&#39;s Blog">
+<meta property="og:description" content="通过手写数字识别的具体案例来展示Tensorflow中运行的模型是如何移植到Android中。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://puke3615.github.io/2017/08/02/Run-Mnist-On-Android/8.png">
+<meta property="og:updated_time" content="2017-08-04T05:31:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android上运行手写数字识别模型">
+<meta name="twitter:description" content="通过手写数字识别的具体案例来展示Tensorflow中运行的模型是如何移植到Android中。">
+<meta name="twitter:image" content="http://puke3615.github.io/2017/08/02/Run-Mnist-On-Android/8.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://puke3615.github.io/2017/08/02/Run-Mnist-On-Android/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Android上运行手写数字识别模型 | Puke's Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?34758a82d032eeddb9df79e54b74f600";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Puke's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">副标题</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/puke3615" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://puke3615.github.io/2017/08/02/Run-Mnist-On-Android/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Puke">
+      <meta itemprop="description" content="描述信息">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Puke's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android上运行手写数字识别模型
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-02 19:42:25" itemprop="dateCreated datePublished" datetime="2017-08-02T19:42:25+08:00">2017-08-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-08-04 13:31:00" itemprop="dateModified" datetime="2017-08-04T13:31:00+08:00">2017-08-04</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/02/Run-Mnist-On-Android/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/08/02/Run-Mnist-On-Android/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/08/02/Run-Mnist-On-Android/" class="leancloud_visitors" data-flag-title="Android上运行手写数字识别模型">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.5k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">通过手写数字识别的具体案例来展示Tensorflow中运行的模型是如何移植到Android中。</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>Github源码请移步本文底部。</em></p>
+<h3 id="模型导出pb文件"><a href="#模型导出pb文件" class="headerlink" title="模型导出pb文件"></a>模型导出pb文件</h3><p>首先我们需要在我们的<code>python</code>代码中保存训练好的模型，<code>save_path</code>参数就传递<code>**.pb</code>，这里导出文件留给接下来使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_model_and_params</span><span class="params">(session, save_path)</span>:</span></span><br><span class="line">    out_graph_def = tf.graph_util.convert_variables_to_constants(session, session.graph_def, [<span class="string">"output"</span>])</span><br><span class="line">    <span class="keyword">with</span> tf.gfile.FastGFile(save_path, <span class="string">'wb'</span>) <span class="keyword">as</span> file:</span><br><span class="line">        file.write(out_graph_def.SerializeToString())</span><br></pre></td></tr></table></figure>
+<h3 id="Android中通过JNI调用"><a href="#Android中通过JNI调用" class="headerlink" title="Android中通过JNI调用"></a>Android中通过JNI调用</h3><h4 id="Tensorflow与Android整合"><a href="#Tensorflow与Android整合" class="headerlink" title="Tensorflow与Android整合"></a>Tensorflow与Android整合</h4><p>整合部分就直接按照<a href="../../../../2017/08/02/Tensorflow-On-Android/">Android端运行Tensorflow</a>中的步骤来就行了。</p>
+<h4 id="封装输出数据解析逻辑"><a href="#封装输出数据解析逻辑" class="headerlink" title="封装输出数据解析逻辑"></a>封装输出数据解析逻辑</h4><p>在手写数字识别模型中的输出是一个size为10的列表，列表元素的索引值对应输出的结果，列表元素对应输出的概率，例如输出是[0.2, 0.7, 0.01……]，即表示有0.2的概率是0，0.7的概率是1，0.01的概率是2……</p>
+<p>因此我们需要在输出中对数据按照概率进行降序排列，以便让结果一目了然。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zijiao</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 17/8/2</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MnistData</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Item&gt; items = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MnistData</span><span class="params">(<span class="keyword">float</span>[] data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.length; i++) &#123;</span><br><span class="line">            items.add(<span class="keyword">new</span> Item(data[i], i));</span><br><span class="line">        &#125;</span><br><span class="line">        Collections.sort(items);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">top</span><span class="params">(<span class="keyword">int</span> topSize)</span> </span>&#123;</span><br><span class="line">        StringBuilder builder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; topSize; i++) &#123;</span><br><span class="line">            Item item = items.get(i);</span><br><span class="line">            builder.append(item.index)</span><br><span class="line">                    .append(<span class="string">": "</span>)</span><br><span class="line">                    .append(String.format(<span class="string">"%.1f%%"</span>, item.value * <span class="number">100</span>))</span><br><span class="line">                    .append(<span class="string">"\n"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> builder.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">output</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(items.get(<span class="number">0</span>).index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> output();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"NullableProblems"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Item</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Item</span>&gt; </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">float</span> value;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">float</span> index;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="title">Item</span><span class="params">(<span class="keyword">float</span> value, <span class="keyword">float</span> index)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">            <span class="keyword">this</span>.index = index;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Item o)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> value &lt; o.value ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时我们就能通过<code>MnistData</code>类的<code>top</code>方法得到概率最大的几个结果分别是什么。</p>
+<h4 id="构建数字分类器"><a href="#构建数字分类器" class="headerlink" title="构建数字分类器"></a>构建数字分类器</h4><p>这里通过<code>TensorFlowInferenceInterface</code>来调用模型，注释写得很清楚，值得注意的一点是，<code>input</code>和<code>output</code>的名称要和模型中的变量名称保持一致。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zijiao</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 17/8/2</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MnistClassifier</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TensorFlowInferenceInterface inference;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MnistClassifier</span><span class="params">(AssetManager assetManager)</span> </span>&#123;</span><br><span class="line">        inference = <span class="keyword">new</span> TensorFlowInferenceInterface();</span><br><span class="line">      	<span class="comment">// 加载模型图</span></span><br><span class="line">        inference.initializeTensorFlow(assetManager, TF.MODEL);</span><br><span class="line">      	<span class="comment">// 模型使用阶段, 不需要进行dropout处理, 所以keep_prob直接为1.0</span></span><br><span class="line">        inference.fillNodeFloat(TF.KEEP_PROB_NAME, <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>&#125;, <span class="keyword">new</span> <span class="keyword">float</span>[]&#123;<span class="number">1.0f</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MnistData <span class="title">inference</span><span class="params">(<span class="keyword">float</span>[] input)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (input == <span class="keyword">null</span> || input.length != <span class="number">28</span> * <span class="number">28</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Input data is error."</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      	<span class="comment">// 填入Input数据</span></span><br><span class="line">        inference.fillNodeFloat(TF.INPUT_NAME, TF.INPUT_TYPE, input);</span><br><span class="line">      	<span class="comment">// 运行结果, 类似Python中的sess.run([outputs])</span></span><br><span class="line">        inference.runInference(<span class="keyword">new</span> String[]&#123;TF.OUTPUT_NAME&#125;);</span><br><span class="line">        <span class="keyword">float</span>[] output = <span class="keyword">new</span> <span class="keyword">float</span>[<span class="number">10</span>];</span><br><span class="line">      	<span class="comment">// 取出结果集中我们需要的</span></span><br><span class="line">        inference.readNodeFloat(TF.OUTPUT_NAME, output);</span><br><span class="line">      	<span class="comment">// 将输出结果交给MnistData处理</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MnistData(output);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="添加画板"><a href="#添加画板" class="headerlink" title="添加画板"></a>添加画板</h3><p>模型处理的逻辑已经写完了，接下来就是如何得到输入源了。由于是手写数字识别，所以接下来就要写画板类。这里只贴出关键代码部分（完整代码可以看本文底部的Github地址）。</p>
+<p>手指滑动屏幕时画出手指滑动的轨迹</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onDraw(canvas);</span><br><span class="line">    canvas.drawPath(path, paint);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">float</span> x = event.getX();</span><br><span class="line">    <span class="keyword">float</span> y = event.getY();</span><br><span class="line">    <span class="keyword">switch</span> (event.getAction()) &#123;</span><br><span class="line">        <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">            path.moveTo(x, y);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">            path.lineTo(x, y);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    invalidate();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>向外部提供读取画布数据的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">float</span>[] fetchData(<span class="keyword">int</span> width, <span class="keyword">int</span> height) &#123;</span><br><span class="line">    <span class="keyword">float</span>[] data = <span class="keyword">new</span> <span class="keyword">float</span>[height * width];</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        setDrawingCacheEnabled(<span class="keyword">true</span>);</span><br><span class="line">        setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);</span><br><span class="line">        Bitmap cache = getDrawingCache();</span><br><span class="line">        fillInputData(cache, data, width, height);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        setDrawingCacheEnabled(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fillInputData</span><span class="params">(Bitmap bm, <span class="keyword">float</span>[] data, <span class="keyword">int</span> newWidth, <span class="keyword">int</span> newHeight)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 获得图片的宽高</span></span><br><span class="line">    <span class="keyword">int</span> width = bm.getWidth();</span><br><span class="line">    <span class="keyword">int</span> height = bm.getHeight();</span><br><span class="line">    <span class="comment">// 计算缩放比例</span></span><br><span class="line">    <span class="keyword">float</span> scaleWidth = ((<span class="keyword">float</span>) newWidth) / width;</span><br><span class="line">    <span class="keyword">float</span> scaleHeight = ((<span class="keyword">float</span>) newHeight) / height;</span><br><span class="line">    <span class="comment">// 取得想要缩放的matrix参数</span></span><br><span class="line">    Matrix matrix = <span class="keyword">new</span> Matrix();</span><br><span class="line">    matrix.postScale(scaleWidth, scaleHeight);</span><br><span class="line">    <span class="comment">// 得到新的图片</span></span><br><span class="line">    Bitmap newbm = Bitmap.createBitmap(bm, <span class="number">0</span>, <span class="number">0</span>, width, height, matrix, <span class="keyword">true</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> y = <span class="number">0</span>; y &lt; newHeight; y++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; newWidth; x++) &#123;</span><br><span class="line">            <span class="keyword">int</span> pixel = newbm.getPixel(x, y);</span><br><span class="line">            data[newWidth * y + x] = pixel == <span class="number">0xffffffff</span> ? <span class="number">0</span> : <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h3><p>布局代码就直接省略了，我们只需要在点击<code>识别</code>的时候，调用下面这段的识别逻辑即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 识别</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onInference</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (canvasView.isEmpty()) &#123;</span><br><span class="line">        resultPanel.setText(<span class="string">"画板为空"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    MnistData result = classifier.inference(canvasView.fetchData(<span class="number">28</span>, <span class="number">28</span>));</span><br><span class="line">    resultPanel.setText(result.top(<span class="number">3</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后附上运行效果图</p>
+<p><img src="8.png" alt=""></p>
+<p>这里是该项目的<a href="https://github.com/puke3615/Mnist" target="_blank" rel="noopener">Github源码</a></p>
+
+      
+    </div>
+
+    
+      
+
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/08/02/Tensorflow-On-Android/" rel="bookmark">Android端运行Tensorflow</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/09/01/Activity-onCreate-Load-Bitmap/" rel="bookmark">Activity#onCreate中加载Bitmap</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2016/08/29/Android-Annotation/" rel="bookmark">Android注解</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/10/12/Tensorflow-Poems-Source/" rel="bookmark">基于RNN自动作诗源码剖析</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Puke</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://puke3615.github.io/2017/08/02/Run-Mnist-On-Android/" title="Android上运行手写数字识别模型">http://puke3615.github.io/2017/08/02/Run-Mnist-On-Android/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Tensorflow/" rel="tag"># Tensorflow</a>
+          
+            <a href="/tags/Mnist/" rel="tag"># Mnist</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+               <div id="needsharebutton-postbottom">
+                 <span class="btn">
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>
+                 </span>
+               </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/02/Tensorflow-On-Android/" rel="next" title="Android端运行Tensorflow">
+                <i class="fa fa-chevron-left"></i> Android端运行Tensorflow
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/03/Titanic-Fill-Data/" rel="prev" title="Titanic缺失数据处理">
+                Titanic缺失数据处理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Puke" />
+            
+              <p class="site-author-name" itemprop="name">Puke</p>
+              <p class="site-description motion-element" itemprop="description">描述信息</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/puke3615" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="puke3615" target="_blank" title="Wexin"><i class="fa fa-fw fa-weixin"></i></a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型导出pb文件"><span class="nav-number">1.</span> <span class="nav-text">模型导出pb文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android中通过JNI调用"><span class="nav-number">2.</span> <span class="nav-text">Android中通过JNI调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Tensorflow与Android整合"><span class="nav-number">2.1.</span> <span class="nav-text">Tensorflow与Android整合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#封装输出数据解析逻辑"><span class="nav-number">2.2.</span> <span class="nav-text">封装输出数据解析逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建数字分类器"><span class="nav-number">2.3.</span> <span class="nav-text">构建数字分类器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加画板"><span class="nav-number">3.</span> <span class="nav-text">添加画板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行测试"><span class="nav-number">4.</span> <span class="nav-text">运行测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Powered By Puke</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">124k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:52</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://puke3615.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://puke3615.github.io/2017/08/02/Run-Mnist-On-Android/';
+        this.page.identifier = '2017/08/02/Run-Mnist-On-Android/';
+        this.page.title = 'Android上运行手写数字识别模型';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://puke3615.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.min.css">
+
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("TUGTQJGdWzfD9vqxvu4TLobi-gzGzoHsz", "e6ji6OuVNHOCBlMQQjQuL1Cs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "default";
+      
+          flOptions.boxForm = "vertical";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script type="text/javascript">
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

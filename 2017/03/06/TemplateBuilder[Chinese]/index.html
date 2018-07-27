@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'KFRJ311K0H',
+      apiKey: '4c626345121fb7419731b7ae5a02dc19',
+      indexName: 'Hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索文章","hits_empty":"未找到关键词：${query}","hits_stats":"搜索到${hits}个结果，用时${time}ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="将Android Studio Template的开发过程集成于Android Studio Plugin中，只需要一键就能将当前文件制作为Template。">
+<meta name="keywords" content="高效开发,Android Studio,Template,Android Studio Plugin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TemplateBuilder(中文版)">
+<meta property="og:url" content="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/index.html">
+<meta property="og:site_name" content="Puke&#39;s Blog">
+<meta property="og:description" content="将Android Studio Template的开发过程集成于Android Studio Plugin中，只需要一键就能将当前文件制作为Template。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/img1.png">
+<meta property="og:image" content="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/img2.gif">
+<meta property="og:image" content="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/img7.gif">
+<meta property="og:image" content="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/img3.png">
+<meta property="og:image" content="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/img4.png">
+<meta property="og:image" content="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/img6.png">
+<meta property="og:image" content="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/img5.png">
+<meta property="og:image" content="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/img8.png">
+<meta property="og:updated_time" content="2017-03-19T03:10:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TemplateBuilder(中文版)">
+<meta name="twitter:description" content="将Android Studio Template的开发过程集成于Android Studio Plugin中，只需要一键就能将当前文件制作为Template。">
+<meta name="twitter:image" content="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/img1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>TemplateBuilder(中文版) | Puke's Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?34758a82d032eeddb9df79e54b74f600";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Puke's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">副标题</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/puke3615" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Puke">
+      <meta itemprop="description" content="描述信息">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Puke's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TemplateBuilder(中文版)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-03-06 16:41:57" itemprop="dateCreated datePublished" datetime="2017-03-06T16:41:57+08:00">2017-03-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-03-19 11:10:24" itemprop="dateModified" datetime="2017-03-19T11:10:24+08:00">2017-03-19</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/06/TemplateBuilder[Chinese]/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/03/06/TemplateBuilder[Chinese]/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/06/TemplateBuilder[Chinese]/" class="leancloud_visitors" data-flag-title="TemplateBuilder(中文版)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">3.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">3 分钟</span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">将Android Studio Template的开发过程集成于Android Studio Plugin中，只需要<b>一键</b>就能将当前文件制作为Template。</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="../../../../2017/03/06/TemplateBuilder/">English Version</a></p>
+<blockquote>
+<p><code>声明</code></p>
+<p>Android Studio的模板包括以下三种，这里讲的是第三种Multi Template。在阅读本文之前，默认你是了解该模板的，知道为什么要使用它，如果不清楚它是什么，可以在网上自行查阅相关资料，当然也可以直接<a href="../../../../2017/03/10/Android%20Studio%20Template/">点击这里</a>查看一下同行们对它的评价</p>
+<ul>
+<li>Live Template：代码片段级别</li>
+<li>File Template：单文件级别</li>
+<li>Multi Template：多个文件级别（以下称 <code>Android Studio Template</code>）</li>
+</ul>
+</blockquote>
+<h3 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h3><p><code>TemplateBuilder</code>是一款能够帮助我们快速生成<code>Android Studio Template</code>的AS插件，将通过逐个文件去配置模板的方式改进为通过插件来实现，对于简单的模板制作，只需要一键即可生成。</p>
+<h3 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>打开Android Studio，<code>Preferences</code> – <code>Plugins</code> – <code>Brown Repositories</code>,  搜索<code>TemplateBuilder</code> 并下载，下载之后重启IDE即可使用。</p>
+<p><img src="img1.png" alt=""></p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><h5 id="动态图展示"><a href="#动态图展示" class="headerlink" title="动态图展示"></a>动态图展示</h5><p>先直接贴上Gif的演示效果，分别对应模板的导出与导入</p>
+<p><img src="img2.gif" alt=""></p>
+<p><code>导出：</code> 选择待导出的文件或文件夹，按下<code>ALT + T</code>，在弹出界面中更改模板名称（<code>MVP Test</code>）和描述后直接<code>Finish</code>，然后重启IDE；</p>
+<p><img src="img7.gif" alt=""></p>
+<p><code>导入：</code> 选择一个包，按下<code>Command + N</code>键，输入模板分类名（默认为电脑用户名），选择<code>MVP Test</code>模板进行导入。</p>
+<h5 id="快速制作"><a href="#快速制作" class="headerlink" title="快速制作"></a>快速制作</h5><p>这里我们拿对一个MVP模板的抽取来举例，首先选中需要制作为模板的类文件（如果需要选中某个文件夹里的全部文件，可以直接选中该文件夹），然后按下启动改插件的快捷键<code>ALT + T</code>，便能看到如下界面</p>
+<p><img src="img3.png" alt=""></p>
+<p>下面来说明一下该界面对应的内容</p>
+<ul>
+<li><code>Template Category</code>  对应模板的分类，对应选择导入模板时的模板分类，这里默认值是电脑的用户名。</li>
+<li><code>Template Name</code>  对应模板名称，对应选择导入模板时的模板名称，默认值是当前的Project名称。</li>
+<li><code>Template Description</code>  对应模板描述信息，对应导入模板时弹出的导入界面的文字描述，默认为空。</li>
+<li><code>Template Folder</code>  对应生成模板所存放的位置，如果是Mac操作系统则默认为<code>/Applications/Android Studio.app/Contents/plugins/android/lib/templates</code>， Windows系统的话由于差异比较大，就默认为空了，可以自行配置<code>[Android Studio安装目录]/plugins/android/lib/templates</code>（这里只需要配置一次即可，插件将自动保存该位置）。</li>
+<li><code>Input data区域</code>  （见下：<a href="#configure">配置模板变量</a>）</li>
+</ul>
+<p>如果你只是想简单抽取你写的这个模板，你只需要输入下<code>Template Name</code>和<code>Template Description</code>即可，当然如果你不想输入的话这也可以省略掉。接下来直接点击<code>Finish</code>，就能在IDE底部看到弹出如下图所示的提示，此时你已经制作成功，重启IDE即可使用该模板。</p>
+<p><img src="img4.png" alt=""></p>
+<p>到这里，如果你了解<code>Android Studio Template</code>制作流程的话，你可能觉得相对于完全自己手动去做这样固然简单，但是灵活性上降低了不少。例如模板中有组价依赖关系的时候，你需要在<code>build.gradle.ftl</code>中去添加对应的依赖；导入模板之后你想自动打开某个文件时，你需要编辑<code>recipe.xml.ftl</code>；选择模板适用于哪个版本时，你需要编辑<code>template.xml</code>等等。如果你有这方面的需求，可以点击<code>Next</code>来代替<code>Finish</code>，点击之后你就能看到如下界面，在这里提供了所有你需要关注的配置文件的编辑，编辑完成直接点击<code>OK</code>开始自动生成。</p>
+<p><img src="img6.png" alt=""></p>
+<h5 id="配置模板变量"><a href="#配置模板变量" class="headerlink" title="配置模板变量"></a><span id="configure">配置模板变量</span></h5><p>在上面的界面中可以看到<code>Input data</code>区域，它对应着导入模板时的变量输入，如果你想增强模板的可配性将会用到它，它就对应着AS模板中<code>template.xml</code>的<code>&lt;parameter /&gt;</code>标签，也就是下面的每一个配置项。</p>
+<p><img src="img5.png" alt=""></p>
+<p>关于<code>Input data</code>的使用，先解释下每个属性对应的含义</p>
+<ul>
+<li><code>id</code>  变量名，必须和模板中使用的变量名对应，必填</li>
+<li><code>name</code> 变量简介，必填</li>
+<li><code>type</code> 变量类型，string和boolean两种，通过下拉框选择，必填</li>
+<li><code>default</code>  变量对应的默认值，选填</li>
+<li><code>help</code>  添加该变量时的提示信息，选填</li>
+</ul>
+<p>下面我举个例子，假设待导出的模板文件是<code>UserActivity</code>类，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> TextView mUserName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">	  <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">	  setContentView(R.layout.activity_user);</span><br><span class="line">	  mUserName = (TextView) findViewById(R.id.user_name);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码很简单，假设我们想让引入模板时<code>mUserName</code>属性名是可配的，并且在Activity中是否调用setContentView方法也是可配的，那我们就需要这样改写该类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView $&#123;textViewName&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        &lt;#if setContentView&gt;</span><br><span class="line">        setContentView(R.layout.activity_user);</span><br><span class="line">        $&#123;textViewName&#125; = (TextView) findViewById(R.id.user_name);</span><br><span class="line">        &lt;/#if&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们用到了<code>textViewName</code>和<code>setContentView</code>两个变量，所以当我们按下<code>ALT + T</code>时就要在对应的Input data区域点击<code>Add</code>来添加两个对应的变量。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><code>Input data</code></th>
+<th style="text-align:center"><code>textViewName</code></th>
+<th style="text-align:center"><code>setContentView</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>id</code></td>
+<td style="text-align:center">textViewName</td>
+<td style="text-align:center">setContentView</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>type</code></td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">boolean</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>name</code></td>
+<td style="text-align:center">TextView属性名</td>
+<td style="text-align:center">是否设置布局</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>default</code></td>
+<td style="text-align:center">mUserName</td>
+<td style="text-align:center">false</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>help</code></td>
+<td style="text-align:center">输入TextView对应的属性名</td>
+<td style="text-align:center">勾选则设置布局文件，反之不设置</td>
+</tr>
+</tbody>
+</table>
+<p>添加完模板变量后导出，重启IDE选择导入该模板，此时便能看到刚才配置的两个变量，你可以输入不同的值来验证模板的正确性。</p>
+<p><img src="img8.png" alt=""></p>
+<h5 id="添加模板依赖"><a href="#添加模板依赖" class="headerlink" title="添加模板依赖"></a>添加模板依赖</h5><p>模板中需要添加gradle依赖时，点击<code>Next</code>在第二个页面中<code>build.gradle.ftl</code>添加如下所示对应的仓库和依赖即可。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">    <span class="comment">// 如果仓库是jcenter()，则可省略</span></span><br><span class="line">    jcenter()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    compile <span class="string">'io.reactivex.rxjava2:rxjava:2.0.6'</span></span><br><span class="line">    compile <span class="string">'io.reactivex.rxjava2:rxandroid:2.0.1'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h3><p>如果你尝试过自己去制作一个<code>Android Studio Template</code>的话，相信你一定会为模板配置、更改文件名、添加可配参数等等繁琐的操作而烦恼，因为哪怕一个很简单的模板抽取都需要把这一系列流程全都走一遍，更改好几个配置文件。</p>
+<p>说下我的个人感受，当我发现<code>Android Studio Template</code>时我顿时感觉有太多太多可以抽取出来的模板以供日后快速使用，但当我刚开始抽取几个模板的时候就已经被深深的恶心到了，因为这个过程真心很繁琐。记得当时还专门写groovy脚本来辅助进行这些模板的配置，但也还是需要向脚本里添加一些模板文件的入参信息，依然很麻烦。后来我决定将这个制作过程尽可能通过自动化来完成，当时考虑<code>Gradle插件</code>、<code>Java GUI</code>、<code>AS Plugin</code>等多种方式来完成模板制作，最终选择了快而方便的<code>AS Plugin</code>，插件的名称就是上面所提到的<code>TemplateBuilder</code>。</p>
+
+      
+    </div>
+
+    
+      
+
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/03/06/TemplateBuilder/" rel="bookmark">TemplateBuilder</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2016/10/16/Android-Studio-Template-For-File-Group/" rel="bookmark">Android Studio模板之文件组</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2016/10/15/Android-Studio-Template-For-File/" rel="bookmark">Android Studio模板之文件</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/03/10/Android-Studio-Template/" rel="bookmark">Android Studio Template</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Puke</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/" title="TemplateBuilder(中文版)">http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/高效开发/" rel="tag"># 高效开发</a>
+          
+            <a href="/tags/Android-Studio/" rel="tag"># Android Studio</a>
+          
+            <a href="/tags/Template/" rel="tag"># Template</a>
+          
+            <a href="/tags/Android-Studio-Plugin/" rel="tag"># Android Studio Plugin</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+               <div id="needsharebutton-postbottom">
+                 <span class="btn">
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>
+                 </span>
+               </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/06/TemplateBuilder/" rel="next" title="TemplateBuilder">
+                <i class="fa fa-chevron-left"></i> TemplateBuilder
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/10/Android-Studio-Template/" rel="prev" title="Android Studio Template">
+                Android Studio Template <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Puke" />
+            
+              <p class="site-author-name" itemprop="name">Puke</p>
+              <p class="site-description motion-element" itemprop="description">描述信息</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/puke3615" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="puke3615" target="_blank" title="Wexin"><i class="fa fa-fw fa-weixin"></i></a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#WHAT"><span class="nav-number">1.</span> <span class="nav-text">WHAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HOW"><span class="nav-number">2.</span> <span class="nav-text">HOW</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用"><span class="nav-number">2.2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#动态图展示"><span class="nav-number">2.2.1.</span> <span class="nav-text">动态图展示</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#快速制作"><span class="nav-number">2.2.2.</span> <span class="nav-text">快速制作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置模板变量"><span class="nav-number">2.2.3.</span> <span class="nav-text">配置模板变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加模板依赖"><span class="nav-number">2.2.4.</span> <span class="nav-text">添加模板依赖</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WHY"><span class="nav-number">3.</span> <span class="nav-text">WHY</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Powered By Puke</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">124k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:52</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://puke3615.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://puke3615.github.io/2017/03/06/TemplateBuilder[Chinese]/';
+        this.page.identifier = '2017/03/06/TemplateBuilder[Chinese]/';
+        this.page.title = 'TemplateBuilder(中文版)';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://puke3615.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.min.css">
+
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("TUGTQJGdWzfD9vqxvu4TLobi-gzGzoHsz", "e6ji6OuVNHOCBlMQQjQuL1Cs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "default";
+      
+          flOptions.boxForm = "vertical";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script type="text/javascript">
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

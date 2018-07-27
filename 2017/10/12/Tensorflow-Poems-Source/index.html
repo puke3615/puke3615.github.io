@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'KFRJ311K0H',
+      apiKey: '4c626345121fb7419731b7ae5a02dc19',
+      indexName: 'Hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索文章","hits_empty":"未找到关键词：${query}","hits_stats":"搜索到${hits}个结果，用时${time}ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Tensorflow通过基于RNN来学习古诗文的序列数据，来自动作诗。">
+<meta name="keywords" content="Tensorflow,Machine-Learning,LSTM,RNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于RNN自动作诗源码剖析">
+<meta property="og:url" content="http://puke3615.github.io/2017/10/12/Tensorflow-Poems-Source/index.html">
+<meta property="og:site_name" content="Puke&#39;s Blog">
+<meta property="og:description" content="Tensorflow通过基于RNN来学习古诗文的序列数据，来自动作诗。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-10-12T09:50:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于RNN自动作诗源码剖析">
+<meta name="twitter:description" content="Tensorflow通过基于RNN来学习古诗文的序列数据，来自动作诗。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://puke3615.github.io/2017/10/12/Tensorflow-Poems-Source/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>基于RNN自动作诗源码剖析 | Puke's Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?34758a82d032eeddb9df79e54b74f600";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Puke's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">副标题</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/puke3615" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://puke3615.github.io/2017/10/12/Tensorflow-Poems-Source/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Puke">
+      <meta itemprop="description" content="描述信息">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Puke's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于RNN自动作诗源码剖析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-10-12 13:21:32 / 修改时间：17:50:12" itemprop="dateCreated datePublished" datetime="2017-10-12T13:21:32+08:00">2017-10-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/12/Tensorflow-Poems-Source/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/12/Tensorflow-Poems-Source/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/12/Tensorflow-Poems-Source/" class="leancloud_visitors" data-flag-title="基于RNN自动作诗源码剖析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">13k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">12 分钟</span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">Tensorflow通过基于RNN来学习古诗文的序列数据，来自动作诗。</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>Tensorflow Poems是一款基于RNN（循环神经网络）的 <a href="https://github.com/jinfagang/tensorflow_poems" target="_blank" rel="noopener">Github开源项目</a>，它能通过学习大量古诗文和歌词然后能够自己来模仿创造诗文和歌词。</em><br>[TOC]</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>就项目本身，其意义不是很大，权当娱乐就行。这里的重点是解读如何从最原始的诗句，到数据的读取，再到数据预处理，再到模型的构建，再到最后的训练和使用流程。</p>
+<h2 id="源数据"><a href="#源数据" class="headerlink" title="源数据"></a>源数据</h2><p>通过上面的github地址可以下载到项目源码，其中古诗文的数据集是<code>dataset/data/poems.txt</code>，打开可以看到如下的内容（篇幅限制，只显示了前两行诗句）。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">首春:寒随穷律变，春逐鸟声开。初风飘带柳，晚雪间花梅。碧林青旧竹，绿沼翠新苔。芝田初雁去，绮树巧莺来。</span><br><span class="line">初晴落景:晚霞聊自怡，初晴弥可喜。日晃百花色，风动千林翠。池鱼跃不同，园鸟声还异。寄言博通者，知予物外志。</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>整体的格式还是蛮清晰的，每行就代表一首诗，每首诗由标题和内容两部分组成，中间以冒号分割。</p>
+<h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><p>代码位于<code>poems.py</code>文件的<code>process_peoms</code>方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_poems</span><span class="params">(file_name)</span>:</span></span><br><span class="line">    <span class="comment"># 诗集</span></span><br><span class="line">    poems = []</span><br><span class="line">    <span class="keyword">with</span> open(file_name, <span class="string">"r"</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># 取出title和content</span></span><br><span class="line">                title, content = line.strip().split(<span class="string">':'</span>)</span><br><span class="line">                <span class="comment"># 移除content中的所有空格</span></span><br><span class="line">                content = content.replace(<span class="string">' '</span>, <span class="string">''</span>)</span><br><span class="line">                <span class="comment"># 过滤掉包含特殊字符的诗</span></span><br><span class="line">                <span class="keyword">if</span> <span class="string">'_'</span> <span class="keyword">in</span> content <span class="keyword">or</span> <span class="string">'('</span> <span class="keyword">in</span> content <span class="keyword">or</span> <span class="string">'（'</span> <span class="keyword">in</span> content <span class="keyword">or</span> <span class="string">'《'</span> <span class="keyword">in</span> content <span class="keyword">or</span> <span class="string">'['</span> <span class="keyword">in</span> content <span class="keyword">or</span> \</span><br><span class="line">                                start_token <span class="keyword">in</span> content <span class="keyword">or</span> end_token <span class="keyword">in</span> content:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                <span class="comment"># 过滤掉过长或过短的诗句</span></span><br><span class="line">                <span class="keyword">if</span> len(content) &lt; <span class="number">5</span> <span class="keyword">or</span> len(content) &gt; <span class="number">79</span>:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                <span class="comment"># 将内容加上前缀(G)和后缀(E)</span></span><br><span class="line">                content = start_token + content + end_token</span><br><span class="line">                <span class="comment"># 处理后的添加到诗集中</span></span><br><span class="line">                poems.append(content)</span><br><span class="line">            <span class="comment"># 处理过程出错则跳过, 忽略掉</span></span><br><span class="line">            <span class="keyword">except</span> ValueError <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">    <span class="comment"># 按诗的字数排序</span></span><br><span class="line">    poems = sorted(poems, key=<span class="keyword">lambda</span> l: len(line))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 统计每个字出现次数</span></span><br><span class="line">    all_words = []</span><br><span class="line">    <span class="keyword">for</span> poem <span class="keyword">in</span> poems:</span><br><span class="line">        all_words += [word <span class="keyword">for</span> word <span class="keyword">in</span> poem]</span><br><span class="line">    <span class="comment"># 计算每个字对应的频率</span></span><br><span class="line">    counter = collections.Counter(all_words)</span><br><span class="line">    <span class="comment"># 按照文字频率进行倒序排列</span></span><br><span class="line">    count_pairs = sorted(counter.items(), key=<span class="keyword">lambda</span> x: -x[<span class="number">1</span>])</span><br><span class="line">    <span class="comment"># 取出排列后的字集, 赋值给words</span></span><br><span class="line">    words, _ = zip(*count_pairs)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将words最后追加一位空格</span></span><br><span class="line">    words = words[:len(words)] + (<span class="string">' '</span>,)</span><br><span class="line">    <span class="comment"># 每个字映射为一个数字ID</span></span><br><span class="line">    word_int_map = dict(zip(words, range(len(words))))</span><br><span class="line">    <span class="comment"># 将诗句中的每个word都注意映射为对应的数字ID</span></span><br><span class="line">    poems_vector = [list(map(<span class="keyword">lambda</span> word: word_int_map.get(word, len(words)), poem)) <span class="keyword">for</span> poem <span class="keyword">in</span> poems]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 依次返回数字ID表示的诗句、汉字-ID的映射map、所有的汉字的列表</span></span><br><span class="line">    <span class="keyword">return</span> poems_vector, word_int_map, words</span><br></pre></td></tr></table></figure>
+<h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><p>代码位于<code>model.py</code>的<code>rnn_model</code>方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rnn_model</span><span class="params">(model, input_data, output_data, vocab_size, rnn_size=<span class="number">128</span>, num_layers=<span class="number">2</span>, batch_size=<span class="number">64</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              learning_rate=<span class="number">0.01</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    构造rnn的序列模型</span></span><br><span class="line"><span class="string">    :param model: model class</span></span><br><span class="line"><span class="string">    :param input_data: 输入数据占位符</span></span><br><span class="line"><span class="string">    :param output_data: 输出数据占位符</span></span><br><span class="line"><span class="string">    :param vocab_size: words的总长度</span></span><br><span class="line"><span class="string">    :param rnn_size: rnn的units数</span></span><br><span class="line"><span class="string">    :param num_layers: rnn中cell的层数</span></span><br><span class="line"><span class="string">    :param batch_size: 每个batch的样本数量</span></span><br><span class="line"><span class="string">    :param learning_rate: 学习率</span></span><br><span class="line"><span class="string">    :return: 模型状态集</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 声明模型状态集, 由于模型需要返回多个相关值, 故以map集合的形式向外部返回</span></span><br><span class="line">    end_points = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 选择rnn的具体cell类型, 提供了rnn、gru、lstm三种</span></span><br><span class="line">    <span class="keyword">if</span> model == <span class="string">'rnn'</span>:</span><br><span class="line">        cell_fun = tf.contrib.rnn.BasicRNNCell</span><br><span class="line">    <span class="keyword">elif</span> model == <span class="string">'gru'</span>:</span><br><span class="line">        cell_fun = tf.contrib.rnn.GRUCell</span><br><span class="line">    <span class="keyword">elif</span> model == <span class="string">'lstm'</span>:</span><br><span class="line">        cell_fun = tf.contrib.rnn.BasicLSTMCell</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 构造具体的cell</span></span><br><span class="line">    cell = cell_fun(rnn_size, state_is_tuple=<span class="keyword">True</span>)</span><br><span class="line">    <span class="comment"># 将单层的cell变为更深的cell, 以表征更复杂的关联关系</span></span><br><span class="line">    cell = tf.contrib.rnn.MultiRNNCell([cell] * num_layers, state_is_tuple=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化cell的状态</span></span><br><span class="line">    <span class="keyword">if</span> output_data <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="comment"># 训练时batch容量为batch_size</span></span><br><span class="line">        initial_state = cell.zero_state(batch_size, tf.float32)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 使用时batch容量为1</span></span><br><span class="line">        initial_state = cell.zero_state(<span class="number">1</span>, tf.float32)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># tensorflow对于lookup_embedding的操作只能再cpu上进行</span></span><br><span class="line">    <span class="keyword">with</span> tf.device(<span class="string">"/cpu:0"</span>):</span><br><span class="line">        <span class="comment"># 构造(vocab_size + 1, run_size)的Tensor</span></span><br><span class="line">        embedding = tf.get_variable(<span class="string">'embedding'</span>, initializer=tf.random_uniform(</span><br><span class="line">            [vocab_size + <span class="number">1</span>, rnn_size], <span class="number">-1.0</span>, <span class="number">1.0</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># embedding_lookup函数</span></span><br><span class="line">        <span class="comment"># output = embedding_lookup(embedding, ids): 将ids里的element替换为embedding中对应element位的值</span></span><br><span class="line">        <span class="comment"># 即: embedding: [[1, 2], [3, 4], [5, 6]]  ids: [1, 2]  则outputs: [[3, 4], [5, 6]]</span></span><br><span class="line">        <span class="comment"># 类比one_hot, 只是这里是x_hot</span></span><br><span class="line">        <span class="comment"># embedding: (3, 2)  ids: (10, )  outputs: (10, 2)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 处理之后的shape为(batch_size, n_steps, rnn_size)</span></span><br><span class="line">        inputs = tf.nn.embedding_lookup(embedding, input_data)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (batch_size, n_steps, rnn_size) =&gt; (batch_size, n_steps, rnn_size)</span></span><br><span class="line">    outputs, last_state = tf.nn.dynamic_rnn(cell, inputs, initial_state=initial_state)</span><br><span class="line">    <span class="comment"># (batch_size, n_steps, rnn_size) =&gt; (batch_size x n_steps, rnn_size)</span></span><br><span class="line">    output = tf.reshape(outputs, [<span class="number">-1</span>, rnn_size])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (batch_size x n_steps, rnn_size) =&gt; (batch_size x n_steps, vocab_size + 1)</span></span><br><span class="line">    weights = tf.Variable(tf.truncated_normal([rnn_size, vocab_size + <span class="number">1</span>]))</span><br><span class="line">    bias = tf.Variable(tf.zeros(shape=[vocab_size + <span class="number">1</span>]))</span><br><span class="line">    logits = tf.nn.bias_add(tf.matmul(output, weights), bias=bias)</span><br><span class="line">    <span class="comment"># [?, vocab_size+1]</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> output_data <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="comment"># output_data must be one-hot encode</span></span><br><span class="line">        labels = tf.one_hot(tf.reshape(output_data, [<span class="number">-1</span>]), depth=vocab_size + <span class="number">1</span>)</span><br><span class="line">        <span class="comment"># should be [?, vocab_size+1]</span></span><br><span class="line"></span><br><span class="line">        loss = tf.nn.softmax_cross_entropy_with_logits(labels=labels, logits=logits)</span><br><span class="line">        <span class="comment"># loss shape should be [?, vocab_size+1]</span></span><br><span class="line">        total_loss = tf.reduce_mean(loss)</span><br><span class="line">        train_op = tf.train.AdamOptimizer(learning_rate).minimize(total_loss)</span><br><span class="line"></span><br><span class="line">        end_points[<span class="string">'initial_state'</span>] = initial_state</span><br><span class="line">        end_points[<span class="string">'output'</span>] = output</span><br><span class="line">        end_points[<span class="string">'train_op'</span>] = train_op</span><br><span class="line">        end_points[<span class="string">'total_loss'</span>] = total_loss</span><br><span class="line">        end_points[<span class="string">'loss'</span>] = loss</span><br><span class="line">        end_points[<span class="string">'last_state'</span>] = last_state</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        prediction = tf.nn.softmax(logits)</span><br><span class="line"></span><br><span class="line">        end_points[<span class="string">'initial_state'</span>] = initial_state</span><br><span class="line">        end_points[<span class="string">'last_state'</span>] = last_state</span><br><span class="line">        end_points[<span class="string">'prediction'</span>] = prediction</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> end_points</span><br></pre></td></tr></table></figure>
+<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><p>获取数据batch的代码位于<code>poem.py</code>的<code>generate_batch</code>方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_batch</span><span class="params">(batch_size, poems_vec, word_to_int)</span>:</span></span><br><span class="line">    <span class="comment"># 每次取batch_size首诗进行训练</span></span><br><span class="line">    n_chunk = len(poems_vec) // batch_size</span><br><span class="line">    x_batches = []</span><br><span class="line">    y_batches = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n_chunk):</span><br><span class="line">        <span class="comment"># 求得每个batch中start和end的索引值</span></span><br><span class="line">        start_index = i * batch_size</span><br><span class="line">        end_index = start_index + batch_size</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 取出batch的数据</span></span><br><span class="line">        batches = poems_vec[start_index:end_index]</span><br><span class="line">        <span class="comment"># 找到这个batch的所有poem中最长的poem的长度</span></span><br><span class="line">        length = max(map(len, batches))</span><br><span class="line">        <span class="comment"># 填充一个这么大小的空batch，空的地方放空格对应的index标号</span></span><br><span class="line">        x_data = np.full((batch_size, length), word_to_int[<span class="string">' '</span>], np.int32)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> range(batch_size):</span><br><span class="line">            <span class="comment"># 每一行就是一首诗，在原本的长度上把诗还原上去</span></span><br><span class="line">            x_data[row, :len(batches[row])] = batches[row]</span><br><span class="line">        y_data = np.copy(x_data)</span><br><span class="line">        <span class="comment"># y的话就是x向左边也就是前面移动一个</span></span><br><span class="line">        y_data[:, :<span class="number">-1</span>] = x_data[:, <span class="number">1</span>:]</span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        x_data             y_data</span></span><br><span class="line"><span class="string">        [6,2,4,6,9]       [2,4,6,9,9]</span></span><br><span class="line"><span class="string">        [1,4,2,8,5]       [4,2,8,5,5]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        x_batches.append(x_data)</span><br><span class="line">        y_batches.append(y_data)</span><br><span class="line">    <span class="keyword">return</span> x_batches, y_batches</span><br></pre></td></tr></table></figure>
+<p>训练代码位于<code>tang_poems.py</code>的<code>run_training</code>方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_training</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 检测模型参数文件夹及父文件夹, 不存在则新建</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(os.path.dirname(FLAGS.checkpoints_dir)):</span><br><span class="line">        os.mkdir(os.path.dirname(FLAGS.checkpoints_dir))</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(FLAGS.checkpoints_dir):</span><br><span class="line">        os.mkdir(FLAGS.checkpoints_dir)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 读取诗集文件</span></span><br><span class="line">    <span class="comment"># 依次得到数字ID表示的诗句、汉字-ID的映射map、所有的汉字的列表</span></span><br><span class="line">    poems_vector, word_to_int, vocabularies = process_poems(FLAGS.file_path)</span><br><span class="line">    <span class="comment"># 按照batch读取输入和输出数据</span></span><br><span class="line">    batches_inputs, batches_outputs = generate_batch(FLAGS.batch_size,</span><br><span class="line">                                                     poems_vector, word_to_int)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 声明输入、输出的占位符</span></span><br><span class="line">    input_data = tf.placeholder(tf.int32, [FLAGS.batch_size, <span class="keyword">None</span>])</span><br><span class="line">    output_targets = tf.placeholder(tf.int32, [FLAGS.batch_size, <span class="keyword">None</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 通过rnn模型得到结果状态集</span></span><br><span class="line">    end_points = rnn_model(model=<span class="string">'lstm'</span>, input_data=input_data,</span><br><span class="line">                           output_data=output_targets, vocab_size=len(vocabularies),</span><br><span class="line">                           rnn_size=<span class="number">128</span>, num_layers=<span class="number">2</span>, batch_size=<span class="number">64</span>,</span><br><span class="line">                           learning_rate=FLAGS.learning_rate)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化saver和session</span></span><br><span class="line">    saver = tf.train.Saver(tf.global_variables())</span><br><span class="line">    init_op = tf.group(tf.global_variables_initializer(),</span><br><span class="line">                       tf.local_variables_initializer())</span><br><span class="line">    <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">        sess.run(init_op)</span><br><span class="line">        start_epoch = <span class="number">0</span></span><br><span class="line">        <span class="comment"># 加载上次的模型参数(如果有)</span></span><br><span class="line">        checkpoint = tf.train.latest_checkpoint(FLAGS.checkpoints_dir)</span><br><span class="line">        <span class="keyword">if</span> checkpoint:</span><br><span class="line">            saver.restore(sess, checkpoint)</span><br><span class="line">            print(<span class="string">"[INFO] restore from the checkpoint &#123;0&#125;"</span>.format(checkpoint))</span><br><span class="line">            <span class="comment"># 如果有模型参数, 则取出对应的epoch, 训练从该epoch开始训练</span></span><br><span class="line">            start_epoch += int(checkpoint.split(<span class="string">'-'</span>)[<span class="number">-1</span>])</span><br><span class="line">        <span class="comment"># 开始训练</span></span><br><span class="line">        print(<span class="string">'[INFO] start training...'</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">for</span> epoch <span class="keyword">in</span> range(start_epoch, FLAGS.epochs):</span><br><span class="line">                n = <span class="number">0</span></span><br><span class="line">                <span class="comment"># 计算一个epoch需要多少次batch训练完, 有余数则忽略掉末尾部分</span></span><br><span class="line">                n_chunk = len(poems_vector) // FLAGS.batch_size</span><br><span class="line">                <span class="keyword">for</span> batch <span class="keyword">in</span> range(n_chunk):</span><br><span class="line">                    <span class="comment"># 训练并计算loss</span></span><br><span class="line">                    <span class="comment"># batches_inputs[n]: 第n个batch的输入数据</span></span><br><span class="line">                    <span class="comment"># batches_outputs[n]: 第n个batch的输出数据</span></span><br><span class="line">                    loss, _, _ = sess.run([</span><br><span class="line">                        end_points[<span class="string">'total_loss'</span>],</span><br><span class="line">                        end_points[<span class="string">'last_state'</span>],</span><br><span class="line">                        end_points[<span class="string">'train_op'</span>]</span><br><span class="line">                    ], feed_dict=&#123;</span><br><span class="line">                        input_data: batches_inputs[n],</span><br><span class="line">                        output_targets: batches_outputs[n]</span><br><span class="line">                    &#125;)</span><br><span class="line">                    n += <span class="number">1</span></span><br><span class="line">                    print(<span class="string">'[INFO] Epoch: %d , batch: %d , training loss: %.6f'</span> % (epoch, batch, loss))</span><br><span class="line">                <span class="comment"># 每训练6个epoch进行一次模型保存</span></span><br><span class="line">                <span class="keyword">if</span> epoch % <span class="number">6</span> == <span class="number">0</span>:</span><br><span class="line">                    saver.save(sess, os.path.join(FLAGS.checkpoints_dir,</span><br><span class="line">                                                  FLAGS.model_prefix), global_step=epoch)</span><br><span class="line">        <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">            <span class="comment"># 用户手动退出时, 尝试保存模型参数</span></span><br><span class="line">            print(<span class="string">'[INFO] Interrupt manually, try saving checkpoint for now...'</span>)</span><br><span class="line">            saver.save(sess, os.path.join(FLAGS.checkpoints_dir,</span><br><span class="line">                                          FLAGS.model_prefix), global_step=epoch)</span><br><span class="line">            print(<span class="string">'[INFO] Last epoch were saved, next time will start from epoch &#123;&#125;.'</span>.format(epoch))</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>取词代码位于<code>tang_poems.py</code>的<code>to_word</code>方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_word</span><span class="params">(predict, vocabs)</span>:</span></span><br><span class="line">    <span class="comment"># 取词逻辑</span></span><br><span class="line">    <span class="comment"># 将predict累加求和</span></span><br><span class="line">    t = np.cumsum(predict)</span><br><span class="line">    <span class="comment"># 求出预测可能性的总和</span></span><br><span class="line">    s = np.sum(predict)</span><br><span class="line">    <span class="comment"># 返回将0~s的随机值插值到t中的索引值</span></span><br><span class="line">    <span class="comment"># 由于predict各维度对应的词向量是按照训练数据集的频率进行排序的</span></span><br><span class="line">    <span class="comment"># 故P(x|predict[i]均等时) &gt; P(x + δ), 即达到了权衡优先取前者和高概率词向量的目的</span></span><br><span class="line">    sample = int(np.searchsorted(t, np.random.rand(<span class="number">1</span>) * s))</span><br><span class="line">    <span class="keyword">if</span> sample &gt;= len(vocabs):</span><br><span class="line">        sample = len(vocabs) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> vocabs[sample]</span><br></pre></td></tr></table></figure>
+<p>作诗代码位于<code>tang_peoms.py</code>的<code>gen_poem</code>方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_poem</span><span class="params">(begin_word)</span>:</span></span><br><span class="line">    <span class="comment"># 根据首个汉字作诗</span></span><br><span class="line">    <span class="comment"># 作诗时, batch_size设为1</span></span><br><span class="line">    batch_size = <span class="number">1</span></span><br><span class="line">    print(<span class="string">'[INFO] loading corpus from %s'</span> % FLAGS.file_path)</span><br><span class="line">    <span class="comment"># 读取诗集文件</span></span><br><span class="line">    <span class="comment"># 依次得到数字ID表示的诗句、汉字-ID的映射map、所有的汉字的列表</span></span><br><span class="line">    poems_vector, word_int_map, vocabularies = process_poems(FLAGS.file_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 声明输入的占位符</span></span><br><span class="line">    input_data = tf.placeholder(tf.int32, [batch_size, <span class="keyword">None</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 通过rnn模型得到结果状态集</span></span><br><span class="line">    end_points = rnn_model(model=<span class="string">'lstm'</span>, input_data=input_data,</span><br><span class="line">                           output_data=<span class="keyword">None</span>, vocab_size=len(vocabularies),</span><br><span class="line">                           rnn_size=<span class="number">128</span>, num_layers=<span class="number">2</span>, batch_size=<span class="number">64</span>,</span><br><span class="line">                           learning_rate=FLAGS.learning_rate)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化saver和session</span></span><br><span class="line">    saver = tf.train.Saver(tf.global_variables())</span><br><span class="line">    init_op = tf.group(tf.global_variables_initializer(),</span><br><span class="line">                       tf.local_variables_initializer())</span><br><span class="line">    <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">        sess.run(init_op)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 加载上次的模型参数</span></span><br><span class="line">        checkpoint = tf.train.latest_checkpoint(FLAGS.checkpoints_dir)</span><br><span class="line">        <span class="comment"># 注: 无模型参数时, 该步直接crash, 强制有训练好的模型参数</span></span><br><span class="line">        saver.restore(sess, checkpoint)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 取出诗文前缀(G)对应的索引值所谓初始输入</span></span><br><span class="line">        x = np.array([list(map(word_int_map.get, start_token))])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 得出预测值和rnn的当前状态</span></span><br><span class="line">        [predict, last_state] = sess.run([end_points[<span class="string">'prediction'</span>], end_points[<span class="string">'last_state'</span>]],feed_dict=&#123;input_data: x&#125;)</span><br><span class="line">        <span class="keyword">if</span> begin_word:</span><br><span class="line">            <span class="comment"># 用户输入值赋值给word</span></span><br><span class="line">            word = begin_word</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 若未输入, 则取初始预测值的词向量</span></span><br><span class="line">            word = to_word(predict, vocabularies)</span><br><span class="line">        <span class="comment"># 初始化作诗结果变量</span></span><br><span class="line">        poem = <span class="string">''</span></span><br><span class="line">        <span class="comment"># 未到结束符时, 一直预测下一个词</span></span><br><span class="line">        <span class="keyword">while</span> word != end_token:</span><br><span class="line">            <span class="comment"># 没预测一个则追加到结果上</span></span><br><span class="line">            poem += word</span><br><span class="line">            <span class="comment"># 初始化输入为[[0]]</span></span><br><span class="line">            x = np.zeros((<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">            <span class="comment"># 赋值为当前word对应的索引值</span></span><br><span class="line">            x[<span class="number">0</span>, <span class="number">0</span>] = word_int_map[word]</span><br><span class="line">            <span class="comment"># 根据当前词和当前的上下文状态(last_state)进行预测 </span></span><br><span class="line">            <span class="comment"># 返回的结果是预测值和最新的上下文状态</span></span><br><span class="line">            [predict, last_state] = sess.run([end_points[<span class="string">'prediction'</span>],</span><br><span class="line">                                              end_points[<span class="string">'last_state'</span>]],</span><br><span class="line">                                             feed_dict=&#123;</span><br><span class="line">                                                 input_data: x,</span><br><span class="line">                                                 end_points[<span class="string">'initial_state'</span>]: last_state</span><br><span class="line">                                             &#125;)</span><br><span class="line">            <span class="comment"># 根据预测值得出词向量</span></span><br><span class="line">            word = to_word(predict, vocabularies)</span><br><span class="line">        <span class="keyword">return</span> poem</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/08/02/Run-Mnist-On-Android/" rel="bookmark">Android上运行手写数字识别模型</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/08/02/Tensorflow-On-Android/" rel="bookmark">Android端运行Tensorflow</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Puke</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://puke3615.github.io/2017/10/12/Tensorflow-Poems-Source/" title="基于RNN自动作诗源码剖析">http://puke3615.github.io/2017/10/12/Tensorflow-Poems-Source/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tensorflow/" rel="tag"># Tensorflow</a>
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine-Learning</a>
+          
+            <a href="/tags/LSTM/" rel="tag"># LSTM</a>
+          
+            <a href="/tags/RNN/" rel="tag"># RNN</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+               <div id="needsharebutton-postbottom">
+                 <span class="btn">
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>
+                 </span>
+               </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/02/Watermelon-Book/" rel="next" title="读《西瓜书》">
+                <i class="fa fa-chevron-left"></i> 读《西瓜书》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/08/Keras-Doc-Summary/" rel="prev" title="Keras框架总结">
+                Keras框架总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Puke" />
+            
+              <p class="site-author-name" itemprop="name">Puke</p>
+              <p class="site-description motion-element" itemprop="description">描述信息</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/puke3615" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="puke3615" target="_blank" title="Wexin"><i class="fa fa-fw fa-weixin"></i></a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源数据"><span class="nav-number">2.</span> <span class="nav-text">源数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理"><span class="nav-number">3.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型"><span class="nav-number">4.</span> <span class="nav-text">模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">5.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">6.</span> <span class="nav-text">使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Powered By Puke</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">124k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:52</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://puke3615.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://puke3615.github.io/2017/10/12/Tensorflow-Poems-Source/';
+        this.page.identifier = '2017/10/12/Tensorflow-Poems-Source/';
+        this.page.title = '基于RNN自动作诗源码剖析';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://puke3615.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.min.css">
+
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("TUGTQJGdWzfD9vqxvu4TLobi-gzGzoHsz", "e6ji6OuVNHOCBlMQQjQuL1Cs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "default";
+      
+          flOptions.boxForm = "vertical";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script type="text/javascript">
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

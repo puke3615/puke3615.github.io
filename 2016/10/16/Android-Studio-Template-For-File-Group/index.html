@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'KFRJ311K0H',
+      apiKey: '4c626345121fb7419731b7ae5a02dc19',
+      indexName: 'Hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索文章","hits_empty":"未找到关键词：${query}","hits_stats":"搜索到${hits}个结果，用时${time}ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="文件组模板是基于FreeMarker模板语言的一个功能很强大的Android开发模板，可以这样说，代码片段模板和文件模板是一种提高编码效率的工具，而文件组模板可以算是一种模板引擎。">
+<meta name="keywords" content="高效开发,Android Studio,Template">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Studio模板之文件组">
+<meta property="og:url" content="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/index.html">
+<meta property="og:site_name" content="Puke&#39;s Blog">
+<meta property="og:description" content="文件组模板是基于FreeMarker模板语言的一个功能很强大的Android开发模板，可以这样说，代码片段模板和文件模板是一种提高编码效率的工具，而文件组模板可以算是一种模板引擎。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/step5.png">
+<meta property="og:image" content="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/filesTemplate1.gif">
+<meta property="og:image" content="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/filesTemplate2.gif">
+<meta property="og:image" content="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/step1.png">
+<meta property="og:image" content="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/step2.png">
+<meta property="og:image" content="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/step3.png">
+<meta property="og:image" content="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/step4.png">
+<meta property="og:updated_time" content="2017-08-07T03:51:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Studio模板之文件组">
+<meta name="twitter:description" content="文件组模板是基于FreeMarker模板语言的一个功能很强大的Android开发模板，可以这样说，代码片段模板和文件模板是一种提高编码效率的工具，而文件组模板可以算是一种模板引擎。">
+<meta name="twitter:image" content="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/step5.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Android Studio模板之文件组 | Puke's Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?34758a82d032eeddb9df79e54b74f600";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Puke's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">副标题</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/puke3615" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Puke">
+      <meta itemprop="description" content="描述信息">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Puke's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android Studio模板之文件组
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-10-16 17:08:34" itemprop="dateCreated datePublished" datetime="2016-10-16T17:08:34+08:00">2016-10-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-08-07 11:51:14" itemprop="dateModified" datetime="2017-08-07T11:51:14+08:00">2017-08-07</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/16/Android-Studio-Template-For-File-Group/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/10/16/Android-Studio-Template-For-File-Group/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/10/16/Android-Studio-Template-For-File-Group/" class="leancloud_visitors" data-flag-title="Android Studio模板之文件组">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">17k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">16 分钟</span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">文件组模板是基于FreeMarker模板语言的一个功能很强大的Android开发模板，可以这样说，代码片段模板和文件模板是一种提高编码效率的工具，而文件组模板可以算是一种模板引擎。</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><h6 id="Android-Studio模板系列文章"><a href="#Android-Studio模板系列文章" class="headerlink" title="Android Studio模板系列文章"></a>Android Studio模板系列文章</h6><ul>
+<li><a href="../../../../2016/10/14/Android-Studio-Template-For-Part/">Android Studio模板之代码片段</a></li>
+<li><a href="../../../../2016/10/15/Android-Studio-Template-For-File/">Android Studio模板之文件</a></li>
+<li><a href="../../../../2016/10/16/Android-Studio-Template-For-File-Group/">Android Studio模板之文件组</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="效果图展示"><a href="#效果图展示" class="headerlink" title="效果图展示"></a>效果图展示</h4><p>说再多，不如图来的实在，先上图</p>
+<p><img src="step5.png" alt="step5"></p>
+<p>已有工程中使用模板效果图</p>
+<p><img src="filesTemplate1.gif" alt="filesTemplate1.gif"></p>
+<p>创建工程时使用模板</p>
+<p><img src="filesTemplate2.gif" alt="filesTemplate2"></p>
+<h4 id="示例场景"><a href="#示例场景" class="headerlink" title="示例场景"></a>示例场景</h4><p>在进行Android开发时，我们经常会创建一个Demo工程，目的可能有很多种，可能是为了验证一个问题，可能是为了学习一个框架的使用，可能为了测试自己写的一个lib库等等。这个时候我们可能会创建一个Activity，然后再在xml写一些按钮，再在Activity里写该按钮的事件监听逻辑，也就是说为了执行一段代码我们要做这么多操作。为了简化这段重复操作，我这边写了一个DebugActivity类，然后支持我们只需要写个子类来继承它，然后像下面这样写几个方法即可，运行的时候会根据方法动态创建按钮，并在点击按钮时执行该方法的代码逻辑。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">_test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	T(<span class="string">"弹出Toast"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于本文主要介绍模板相关的，所以该场景相关的具体代码技术细节就不多说了，有兴趣的可以看下，<a href="https://www.zybuluo.com/puke3615/note/533604" target="_blank" rel="noopener">DebugActivity的代码</a>，这里提出来只是为模板开发简单的做个铺垫。</p>
+<h4 id="模板位置"><a href="#模板位置" class="headerlink" title="模板位置"></a>模板位置</h4><p>Android Studio Template中有系统预设的一些模板，我们可以直接修改，也可以另行添加新的模板。打开<code>Android Studio安装目录/Contents/plugins/android/lib/templates</code>这个文件夹我们能看到下面的目录结构，这里便是AS中模板存放的位置。</p>
+<p><img src="step1.png" alt="step1"></p>
+<p>我们接下来的工作也就在这里，保险起见我们在这里新建一个目录，我们自己写的模板都放在自己新建的目录里，例如我这里就创建了一个叫<code>pk</code>的目录。</p>
+<h4 id="模板规范"><a href="#模板规范" class="headerlink" title="模板规范"></a>模板规范</h4><p>在上面的基础上，我们可以直接打开<code>/activies/EmptyActivity</code>目录，如下图</p>
+<p><img src="step2.png" alt="step2"></p>
+<p>我们可以看到上面红色区域便是Template的文件结构，大致说下各个文件（夹）的含义</p>
+<ul>
+<li><code>globals.xml.ftl</code>  模板中参数配置的地方（可选）</li>
+<li><code>recipe.xml.ftl</code>  模板行为执行处，引入这个模板之后，接下来要做什么事情，就是它说的算（可选，但是不选就没有意义了，因为模板引入是要要行为驱动的）</li>
+<li><code>root</code>  存放模板文件及引入资源的目录，模板文件可以是<code>.xml</code>、<code>.java</code>、<code>.gradle</code>等任何一个文本格式的文件，资源一般是我们引入的<code>.png</code>资源文件（可选，不选同上）</li>
+<li><code>template_blank_activity.png</code>  引入模板时的引导图（可选）</li>
+<li><code>template.xml</code>  面向模板引擎的配置文件（必选）</li>
+</ul>
+<p>我们可以看到，真正核心的部分就是<code>root</code>、<code>recipe.xml.ftl</code>和<code>template.xml</code>，接下来这重点说明这三部分。</p>
+<p>我们可以打开root目录，能够看到里面的文件除了图片资源文件都是以<code>.ftl</code>结尾的，而<code>.ftl</code>是标准的FreeMarker的文件。FreeMarker是类似于Velocity的一种模板框架，据说对于多文件处理时它具有更好的性能，大概也是Android Studio选择Velocity作为单文件模板，选择FreeMarker作为文件组模板的原因吧。有兴趣的可以去<a href="http://freemarker.org" target="_blank" rel="noopener">FreeMarker官网</a>学习一下，它的自定义标签功能还是很强大的，个人感觉比Velocity的更加接地气。</p>
+<p>接下来我们看一下<code>recipe.xml.ftl</code> 的内容，打开如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">recipe</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">#include</span> "<span class="attr">..</span>/<span class="attr">common</span>/<span class="attr">recipe_manifest.xml.ftl</span>" /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">#if</span> <span class="attr">generateLayout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">#include</span> "<span class="attr">..</span>/<span class="attr">common</span>/<span class="attr">recipe_simple.xml.ftl</span>" /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">open</span> <span class="attr">file</span>=<span class="string">"$&#123;escapeXmlAttribute(resOut)&#125;/layout/$&#123;layoutName&#125;.xml"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">#if</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">instantiate</span> <span class="attr">from</span>=<span class="string">"root/src/app_package/SimpleActivity.java.ftl"</span></span></span><br><span class="line"><span class="tag">                   <span class="attr">to</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;activityClass&#125;.java"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">open</span> <span class="attr">file</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;activityClass&#125;.java"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">recipe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里以<code>&lt;#</code>开头的都是FreeMarker的语法，基本上比葫芦画瓢就能看明白，就不多说了。其实对于这个文件最重要的部分是下面四个标签</p>
+<ul>
+<li><code>copy</code>  就是简单的copy，把模板root目录下的某个文件copy到目标工程的某个目录下</li>
+<li><code>instantiate</code>  跟copy很类似，唯一多的一点功能就是并不只简单的走IO流进行copy，而是通过FreeMarker框架按照模板中的FreeMarker能识别的逻辑判断和数据引入来生成最终的目标文件</li>
+<li><code>merge</code>  目标项目中有了某文件，而我们还要想该文件合并一些我们的模板的部分时，就选用merge，例如我们添加一个Activity时需要merge<code>AndroidManifest.xml</code>的配置。目前支持的merge格式有<code>.xml</code>和<code>.gradle</code>，但是对<code>.gradle</code>支持的不怎么好，不过不影响该模板的开发，对于这套模板引擎的开发者来说，这可能是最麻烦的部分了，但是对于我们使用者就不用考那么多了，直接使用吧</li>
+<li><code>open</code>  这个很简单，就是指定模板引入之后要IDE打开的文件</li>
+</ul>
+<p>然后看下<code>template.xml</code>内容</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">template</span></span></span><br><span class="line"><span class="tag">    <span class="attr">format</span>=<span class="string">"5"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">revision</span>=<span class="string">"5"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">name</span>=<span class="string">"Empty Activity"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">minApi</span>=<span class="string">"7"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">minBuildApi</span>=<span class="string">"14"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">description</span>=<span class="string">"Creates a new empty activity"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">category</span> <span class="attr">value</span>=<span class="string">"Activity"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">formfactor</span> <span class="attr">value</span>=<span class="string">"Mobile"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"activityClass"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">name</span>=<span class="string">"Activity Name"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"string"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">constraints</span>=<span class="string">"class|unique|nonempty"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">suggest</span>=<span class="string">"$&#123;layoutToActivity(layoutName)&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">default</span>=<span class="string">"MainActivity"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">help</span>=<span class="string">"The name of the activity class to create"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"generateLayout"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">name</span>=<span class="string">"Generate Layout File"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"boolean"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">default</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">help</span>=<span class="string">"If true, a layout file will be generated"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"layoutName"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">name</span>=<span class="string">"Layout Name"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"string"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">constraints</span>=<span class="string">"layout|unique|nonempty"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">suggest</span>=<span class="string">"$&#123;activityToLayout(activityClass)&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">default</span>=<span class="string">"activity_main"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">visibility</span>=<span class="string">"generateLayout"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">help</span>=<span class="string">"The name of the layout to create for the activity"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"isLauncher"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">name</span>=<span class="string">"Launcher Activity"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"boolean"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">default</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">help</span>=<span class="string">"If true, this activity will have a CATEGORY_LAUNCHER intent filter, making it visible in the launcher"</span> /&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"packageName"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">name</span>=<span class="string">"Package name"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"string"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">constraints</span>=<span class="string">"package"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">default</span>=<span class="string">"com.mycompany.myapp"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 128x128 thumbnails relative to template.xml --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">thumbs</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- default thumbnail is required --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">thumb</span>&gt;</span>template_blank_activity.png<span class="tag">&lt;/<span class="name">thumb</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">thumbs</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">globals</span> <span class="attr">file</span>=<span class="string">"globals.xml.ftl"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">execute</span> <span class="attr">file</span>=<span class="string">"recipe.xml.ftl"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当我们进行模板引入时，AS会弹出一个如下图的UI界面，要我们来填入或选择一些数据，例如输入Activity的的名称，选择SDK的版本之类的。而这个界面就是根据由该文件而来的。</p>
+<p><img src="step3.png" alt="step3"></p>
+<p>内容比较多，为减少篇幅我挑些重要的说</p>
+<ul>
+<li><code>template标签</code><ul>
+<li><code>name</code>  引入模板时的模板名称，就死根据他选择哪个模板的</li>
+<li><code>description</code>  弹出Dialog的标题，对应上去的区域1</li>
+</ul>
+</li>
+<li><code>category</code>  表示该模板属于哪种分类，在引入的时候会有个分类的选择</li>
+<li><code>parameter</code>  每个该标签就对应Dialog界面的一个输入项<ul>
+<li><code>id</code>  该参数的唯一标识符，也是我们在<code>.ftl</code>中引入的值，例如定义的id为<code>username</code>，引用时就是<code>$username</code></li>
+<li><code>name</code>  对应Dialog上面该输入项的名称</li>
+<li><code>type</code>  对应该参数的类型，Dialog就是根据这个来决定对应输入是选择框、输入框还是下拉框等等</li>
+<li><code>constraints</code>  对应该参数的约束，如果有多个要用<code>|</code>分割开</li>
+<li><code>suggest</code>  建议值，这个输入部分是由级联效应的，可能你改了A参数，B参数也会跟着改变，就是根据这个参数决定的</li>
+<li><code>default</code>  参数的默认值</li>
+<li><code>visibility</code>  可见性，要配置一个boolean类型的参数，一般指向另一个输入源</li>
+<li><code>help</code>  当焦点在某个输入源上面时，上图的区域3的就限制这儿的内容</li>
+</ul>
+</li>
+</ul>
+<h4 id="操刀实战"><a href="#操刀实战" class="headerlink" title="操刀实战"></a>操刀实战</h4><p>了解了模板规范之后，我们编写模板时就不会那么被动了，下面我们来自己动手编写文章开始部分展示的模板。</p>
+<p>首先在刚才提到的自定义的模板下创建如下图所示的目录结构</p>
+<ul>
+<li><code>DebugActivity</code><ul>
+<li><code>root</code><ul>
+<li><code>src</code><ul>
+<li><code>app_package</code><ul>
+<li><code>DebugActivity.java.ftl</code></li>
+<li><code>JumpActivity.java.ftl</code></li>
+<li><code>SimpleActivity.java.ftl</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>AndroidManifest.xml.ftl</code></li>
+</ul>
+</li>
+<li><code>globals.xml.ftl</code></li>
+<li><code>recipe.xml.ftl</code></li>
+<li><code>template.xml</code></li>
+<li><code>template_debug_activity.png</code></li>
+</ul>
+</li>
+</ul>
+<p>然后将下面的代码对应贴进去（图片部分随便找一张代替好了…）</p>
+<p><code>globals.xml.ftl</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">globals</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">global</span> <span class="attr">id</span>=<span class="string">"resOut"</span> <span class="attr">value</span>=<span class="string">"$&#123;resDir&#125;"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">global</span> <span class="attr">id</span>=<span class="string">"srcOut"</span> <span class="attr">value</span>=<span class="string">"$&#123;srcDir&#125;/$&#123;slashedPackageName(packageName)&#125;"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">global</span> <span class="attr">id</span>=<span class="string">"relativePackage"</span> <span class="attr">value</span>=<span class="string">"&lt;#if relativePackage?has_content&gt;$&#123;relativePackage&#125;&lt;#else&gt;$&#123;packageName&#125;&lt;/#if&gt;"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">globals</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>recipe.xml.ftl</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">recipe</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">instantiate</span> <span class="attr">from</span>=<span class="string">"root/src/app_package/DebugActivity.java.ftl"</span></span></span><br><span class="line"><span class="tag">                   <span class="attr">to</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/DebugActivity.java"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">instantiate</span> <span class="attr">from</span>=<span class="string">"root/src/app_package/SimpleActivity.java.ftl"</span></span></span><br><span class="line"><span class="tag">                   <span class="attr">to</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;activityClass&#125;.java"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">#if</span> <span class="attr">addJumpActivity</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">instantiate</span> <span class="attr">from</span>=<span class="string">"root/src/app_package/JumpActivity.java.ftl"</span></span></span><br><span class="line"><span class="tag">                 <span class="attr">to</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/JumpActivity.java"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">#if</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">merge</span> <span class="attr">from</span>=<span class="string">"root/AndroidManifest.xml.ftl"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">to</span>=<span class="string">"$&#123;escapeXmlAttribute(manifestOut)&#125;/AndroidManifest.xml"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">open</span> <span class="attr">file</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;activityClass&#125;.java"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">open</span> <span class="attr">file</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/DebugActivity.java"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">recipe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>template.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">template</span></span></span><br><span class="line"><span class="tag">    <span class="attr">format</span>=<span class="string">"5"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">revision</span>=<span class="string">"5"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">name</span>=<span class="string">"Debug Activity"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">minApi</span>=<span class="string">"7"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">minBuildApi</span>=<span class="string">"14"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">description</span>=<span class="string">"创建一个Debug的Activity"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">category</span> <span class="attr">value</span>=<span class="string">"Activity"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">formfactor</span> <span class="attr">value</span>=<span class="string">"Mobile"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"activityClass"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">name</span>=<span class="string">"Activity名称"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"string"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">constraints</span>=<span class="string">"class|unique|nonempty"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">default</span>=<span class="string">"SetupActivity"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">help</span>=<span class="string">"创建Activity的名称"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"addExample"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">name</span>=<span class="string">"是否添加按钮使用示例"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"boolean"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">default</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">help</span>=<span class="string">"选择时会自动生成测试按钮；否则不生成"</span> /&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"addJumpActivity"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">name</span>=<span class="string">"是否添加跳转Activity示例"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"boolean"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">default</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">help</span>=<span class="string">"选择时会自动生成跳转Activity相关逻辑；否则不生成"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"isLauncher"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">name</span>=<span class="string">"设为启动页面"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"boolean"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">default</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">help</span>=<span class="string">"选择时设置该页面为启动页面；否则不设"</span> /&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"packageName"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">name</span>=<span class="string">"包名"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"string"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">constraints</span>=<span class="string">"package"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">default</span>=<span class="string">"com.mycompany.myapp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">help</span>=<span class="string">"输入Application包名"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 128x128 thumbnails relative to template.xml --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">thumbs</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- default thumbnail is required --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">thumb</span>&gt;</span>template_debug_activity.png<span class="tag">&lt;/<span class="name">thumb</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">thumbs</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">globals</span> <span class="attr">file</span>=<span class="string">"globals.xml.ftl"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">execute</span> <span class="attr">file</span>=<span class="string">"recipe.xml.ftl"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>AndroidManifest.xml.ftl</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">#if</span> <span class="attr">addJumpActivity</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">"$&#123;relativePackage&#125;.JumpActivity"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">#if</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">"$&#123;relativePackage&#125;.SetupActivity"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">#if</span> !(<span class="attr">isLibraryProject</span>!<span class="attr">false</span>) &amp;&amp; <span class="attr">isLauncher</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">#if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>DebugActivity.java.ftl</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> $&#123;packageName&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.LinearLayout;</span><br><span class="line"><span class="keyword">import</span> android.widget.ScrollView;</span><br><span class="line"><span class="keyword">import</span> android.widget.Toast;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Debug测试类,快速调试Demo工程&lt;hr /&gt;</span></span><br><span class="line"><span class="comment"> * 使用姿势:&lt;br /&gt;</span></span><br><span class="line"><span class="comment"> * 1. 新建一个子类继承该类&lt;br /&gt;</span></span><br><span class="line"><span class="comment"> * 2. 跳转Activity: 在子类配置&#123;<span class="doctag">@link</span> Jump&#125;注解, 然后在注解中配置跳转Activity的类型&lt;br /&gt;</span></span><br><span class="line"><span class="comment"> * 3. 点击按钮触发方法: 在子类声明一个名称以"_"开头的方法(支持任意修饰符),最终生成按钮的文字便是改方法截去"_"&lt;br /&gt;</span></span><br><span class="line"><span class="comment"> * 4. 方法参数支持缺省参数和单个参数&lt;br /&gt;</span></span><br><span class="line"><span class="comment"> * 5. 如果是单个参数,参数类型必须是Button或Button的父类类型,当方法执行时,该参数会被赋值为该Buttom对象&lt;br /&gt;</span></span><br><span class="line"><span class="comment"> * https://github.com/puke3615/DebugActivity&lt;br /&gt;</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zijiao</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 16/10/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">DebugActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">final</span> String FIXED_PREFIX = <span class="string">"_"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String TAG = getClass().getName();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;ButtonItem&gt; buttonItems = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">protected</span> LinearLayout linearLayout;</span><br><span class="line">    <span class="keyword">protected</span> Context context;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line">    <span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line">    <span class="keyword">public</span> <span class="meta">@interface</span> Jump &#123;</span><br><span class="line">        Class&lt;? extends Activity&gt;[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        <span class="keyword">this</span>.context = <span class="keyword">this</span>;</span><br><span class="line">        ScrollView scrollView = <span class="keyword">new</span> ScrollView(<span class="keyword">this</span>);</span><br><span class="line">        setContentView(scrollView);</span><br><span class="line">        <span class="keyword">this</span>.linearLayout = <span class="keyword">new</span> LinearLayout(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">this</span>.linearLayout.setOrientation(LinearLayout.VERTICAL);</span><br><span class="line">        scrollView.addView(linearLayout);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            resolveConfig();</span><br><span class="line">            createButton();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">            error(e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">createButton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (ButtonItem buttonItem : buttonItems) &#123;</span><br><span class="line">            linearLayout.addView(buildButton(buttonItem));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> View <span class="title">buildButton</span><span class="params">(<span class="keyword">final</span> ButtonItem buttonItem)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> Button button = <span class="keyword">new</span> Button(<span class="keyword">this</span>);</span><br><span class="line">        button.setText(buttonItem.name);</span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (buttonItem.target != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    to(buttonItem.target);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    Method method = buttonItem.method;</span><br><span class="line">                    method.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">                    Class&lt;?&gt;[] parameterTypes = method.getParameterTypes();</span><br><span class="line">                    <span class="keyword">int</span> paramSize = parameterTypes.length;</span><br><span class="line">                    <span class="keyword">switch</span> (paramSize) &#123;</span><br><span class="line">                        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                method.invoke(DebugActivity.<span class="keyword">this</span>);</span><br><span class="line">                            &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">                                e.printStackTrace();</span><br><span class="line">                                error(e.getMessage());</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                            <span class="keyword">if</span> (parameterTypes[<span class="number">0</span>].isAssignableFrom(Button.class)) &#123;</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    method.invoke(DebugActivity.<span class="keyword">this</span>, button);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">                                    e.printStackTrace();</span><br><span class="line">                                    error(e.getMessage());</span><br><span class="line">                                &#125;</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        <span class="keyword">default</span>:</span><br><span class="line">                            error(method.getName() + <span class="string">"方法参数配置错误."</span>);</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> button;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">resolveConfig</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Class&lt;?&gt; cls = getClass();</span><br><span class="line">        <span class="comment">//读取跳转配置</span></span><br><span class="line">        <span class="keyword">if</span> (cls.isAnnotationPresent(Jump.class)) &#123;</span><br><span class="line">            Jump annotation = cls.getAnnotation(Jump.class);</span><br><span class="line">            <span class="keyword">for</span> (Class&lt;? extends Activity&gt; activityClass : annotation.value()) &#123;</span><br><span class="line">                buttonItems.add(buildJumpActivityItem(activityClass));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//读取方法</span></span><br><span class="line">        <span class="keyword">for</span> (Method method : cls.getDeclaredMethods()) &#123;</span><br><span class="line">            handleMethod(method);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">handleMethod</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">        String methodName = method.getName();</span><br><span class="line">        <span class="keyword">if</span> (methodName.startsWith(FIXED_PREFIX)) &#123;</span><br><span class="line">            methodName = methodName.replaceFirst(FIXED_PREFIX, <span class="string">""</span>);</span><br><span class="line">            ButtonItem buttonItem = <span class="keyword">new</span> ButtonItem();</span><br><span class="line">            buttonItem.method = method;</span><br><span class="line">            buttonItem.name = methodName;</span><br><span class="line">            buttonItems.add(buttonItem);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> ButtonItem <span class="title">buildJumpActivityItem</span><span class="params">(Class&lt;? extends Activity&gt; activityClass)</span> </span>&#123;</span><br><span class="line">        ButtonItem buttonItem = <span class="keyword">new</span> ButtonItem();</span><br><span class="line">        buttonItem.name = <span class="string">"跳转到"</span> + activityClass.getSimpleName();</span><br><span class="line">        buttonItem.target = activityClass;</span><br><span class="line">        <span class="keyword">return</span> buttonItem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">L</span><span class="params">(Object s)</span> </span>&#123;</span><br><span class="line">        Log.i(TAG, s + <span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">error</span><span class="params">(String errorMessage)</span> </span>&#123;</span><br><span class="line">        T(<span class="string">"[错误信息]\n"</span> + errorMessage);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">T</span><span class="params">(Object message)</span> </span>&#123;</span><br><span class="line">        Toast.makeText(context, String.valueOf(message), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">to</span><span class="params">(Class&lt;? extends Activity&gt; target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            startActivity(<span class="keyword">new</span> Intent(<span class="keyword">this</span>, target));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            error(e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">T</span><span class="params">(String format, Object... values)</span> </span>&#123;</span><br><span class="line">        T(String.format(format, values));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ButtonItem</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> String name;</span><br><span class="line">        <span class="keyword">public</span> Method method;</span><br><span class="line">        <span class="keyword">public</span> Class&lt;? extends Activity&gt; target;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>JumpActivity.java.ftl</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> $&#123;packageName&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zijiao</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 16/10/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JumpActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        TextView text = <span class="keyword">new</span> TextView(<span class="keyword">this</span>);</span><br><span class="line">        text.setText(<span class="string">"跳转Activity成功"</span>);</span><br><span class="line">        setContentView(text);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>SimpleActivity.java.ftl</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> $&#123;packageName&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">@DebugActivity</span>.Jump(&#123;</span><br><span class="line">&lt;#if addJumpActivity&gt;</span><br><span class="line">    JumpActivity.class,</span><br><span class="line">&lt;#else&gt;</span><br><span class="line"></span><br><span class="line">&lt;/#if&gt;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> $</span>&#123;activityClass&#125; extends DebugActivity &#123;</span><br><span class="line"></span><br><span class="line">&lt;#if addExample&gt;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> number = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> _无参方法调用() &#123;</span><br><span class="line">    	T(<span class="string">"无参方法调用"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> _有参方法调用(Button button) &#123;</span><br><span class="line">        button.setText(<span class="string">"number is "</span> + number++);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//代码执行不到,直接弹出toast提示报错</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> _错误参数调用(String msg) &#123;</span><br><span class="line">        T(<span class="string">"test"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//方法名没有以"_"开头,按钮无法创建成功</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> 无效调用() &#123;</span><br><span class="line">        T(<span class="string">"test"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//crash会被会被catch住,以toast方式弹出</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> _Crash测试() &#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">1</span> / <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&lt;/#if&gt;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ok，到此对于该模板的编写过程就结束了，接下来重启下Android Studio，然后<code>New Project</code>一路next下去，直到这个界面，这里就是我们自定义的DebugActivity模板了</p>
+<p><img src="step4.png" alt="step4"></p>
+<p>下面是该模板的Github源码</p>
+<p><a href="https://github.com/puke3615/DebugActivity.git" target="_blank" rel="noopener">https://github.com/puke3615/DebugActivity.git</a></p>
+
+      
+    </div>
+
+    
+      
+
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2016/10/15/Android-Studio-Template-For-File/" rel="bookmark">Android Studio模板之文件</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/03/10/Android-Studio-Template/" rel="bookmark">Android Studio Template</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/03/06/TemplateBuilder/" rel="bookmark">TemplateBuilder</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/03/06/TemplateBuilder[Chinese]/" rel="bookmark">TemplateBuilder(中文版)</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Puke</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/" title="Android Studio模板之文件组">http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/高效开发/" rel="tag"># 高效开发</a>
+          
+            <a href="/tags/Android-Studio/" rel="tag"># Android Studio</a>
+          
+            <a href="/tags/Template/" rel="tag"># Template</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+               <div id="needsharebutton-postbottom">
+                 <span class="btn">
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>
+                 </span>
+               </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/15/Android-Studio-Template-For-File/" rel="next" title="Android Studio模板之文件">
+                <i class="fa fa-chevron-left"></i> Android Studio模板之文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/06/TemplateBuilder/" rel="prev" title="TemplateBuilder">
+                TemplateBuilder <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Puke" />
+            
+              <p class="site-author-name" itemprop="name">Puke</p>
+              <p class="site-description motion-element" itemprop="description">描述信息</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/puke3615" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="puke3615" target="_blank" title="Wexin"><i class="fa fa-fw fa-weixin"></i></a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#Android-Studio模板系列文章"><span class="nav-number">1.</span> <span class="nav-text">Android Studio模板系列文章</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#效果图展示"><span class="nav-number"></span> <span class="nav-text">效果图展示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例场景"><span class="nav-number"></span> <span class="nav-text">示例场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板位置"><span class="nav-number"></span> <span class="nav-text">模板位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板规范"><span class="nav-number"></span> <span class="nav-text">模板规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操刀实战"><span class="nav-number"></span> <span class="nav-text">操刀实战</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Powered By Puke</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">124k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:52</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://puke3615.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://puke3615.github.io/2016/10/16/Android-Studio-Template-For-File-Group/';
+        this.page.identifier = '2016/10/16/Android-Studio-Template-For-File-Group/';
+        this.page.title = 'Android Studio模板之文件组';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://puke3615.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.min.css">
+
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("TUGTQJGdWzfD9vqxvu4TLobi-gzGzoHsz", "e6ji6OuVNHOCBlMQQjQuL1Cs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "default";
+      
+          flOptions.boxForm = "vertical";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script type="text/javascript">
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
