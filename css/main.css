@@ -2020,7 +2020,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #78060e;
+  background: #ff1b96;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2291,6 +2291,19 @@ img:hover {
     -o-transform: scale(1.1);
     transform: scale(1.1);
   }
+}
+#gitment-display-button {
+  display: inline-block;
+  padding: 0 15px;
+  color: #0a9caf;
+  cursor: pointer;
+  font-size: 14px;
+  border: 1px solid #0a9caf;
+  border-radius: 4px;
+}
+#gitment-display-button:hover {
+  color: #fff;
+  background: #0a9caf;
 }
 .fa {
   font-family: FontAwesome !important;
