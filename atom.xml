@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://puke3615.github.io/"/>
-  <updated>2017-11-10T03:36:44.000Z</updated>
+  <updated>2018-07-27T10:37:56.000Z</updated>
   <id>http://puke3615.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://puke3615.github.io/2017/11/08/Keras-Doc-Summary/"/>
     <id>http://puke3615.github.io/2017/11/08/Keras-Doc-Summary/</id>
     <published>2017-11-08T10:37:32.000Z</published>
-    <updated>2017-11-10T03:36:44.000Z</updated>
+    <updated>2018-07-27T10:37:56.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="/2017/11/08/Keras-Doc-Summary/Keras.png" alt=""></p>]]></content>
     
@@ -507,7 +507,7 @@
     <link href="http://puke3615.github.io/2016/08/29/CodeGenerator/"/>
     <id>http://puke3615.github.io/2016/08/29/CodeGenerator/</id>
     <published>2016-08-29T02:15:22.000Z</published>
-    <updated>2017-03-06T08:44:48.000Z</updated>
+    <updated>2018-07-27T10:46:07.000Z</updated>
     
     <content type="html"><![CDATA[<h5 id="1-单例生成"><a href="#1-单例生成" class="headerlink" title="1. 单例生成"></a>1. 单例生成</h5><p><img src="/2016/08/29/CodeGenerator/gif/Singleton.gif" alt="单例生成"></p><h5 id="2-Copy生成"><a href="#2-Copy生成" class="headerlink" title="2. Copy生成"></a>2. Copy生成</h5><p><img src="/2016/08/29/CodeGenerator/gif/Copy.gif" alt="Copy生成"></p><h5 id="3-FindView生成"><a href="#3-FindView生成" class="headerlink" title="3. FindView生成"></a>3. FindView生成</h5><p><img src="/2016/08/29/CodeGenerator/gif/FindView.gif" alt="FindView生成"></p><h5 id="4-MainMethod生成"><a href="#4-MainMethod生成" class="headerlink" title="4. MainMethod生成"></a>4. MainMethod生成</h5><p><img src="/2016/08/29/CodeGenerator/gif/MainMethod.gif" alt="MainMethod生成"></p><h5 id="5-Activity添加到AndroidManifest-xml"><a href="#5-Activity添加到AndroidManifest-xml" class="headerlink" title="5. Activity添加到AndroidManifest.xml"></a>5. Activity添加到AndroidManifest.xml</h5><p><img src="/2016/08/29/CodeGenerator/gif/Activity.gif" alt="Activity添加到AndroidManifest.xml"></p>]]></content>
     
