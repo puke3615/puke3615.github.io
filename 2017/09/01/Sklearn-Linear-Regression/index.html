@@ -123,7 +123,7 @@
 <meta property="og:description" content="线性回归模型，主要用作对于连续数值型数据进行预测。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://puke3615.github.io/2017/09/01/Sklearn-Linear-Regression/image.png">
-<meta property="og:updated_time" content="2017-09-01T08:45:38.000Z">
+<meta property="og:updated_time" content="2018-07-27T06:14:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sklearn之线性回归">
 <meta name="twitter:description" content="线性回归模型，主要用作对于连续数值型数据进行预测。">
@@ -504,6 +504,7 @@
       
         <p>为了展现线性回归技术在二维空间的几何表现，这个例子只使用了糖尿病数据集中的第一个特征。下图尝试找到一条使得数据集中各点到直线距离平方和最小的直线。</p>
 <p><img src="/2017/09/01/Sklearn-Linear-Regression/image.png" alt=""></p>
+<a id="more"></a>
 <p>Source Code:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># Code source: Jaques Grobler</span></span><br><span class="line"><span class="comment"># License: BSD 3 clause</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets, linear_model</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error, r2_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载糖尿病数据集</span></span><br><span class="line">diabetes = datasets.load_diabetes()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只选取一个特征</span></span><br><span class="line">diabetes_X = diabetes.data[:, np.newaxis, <span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将数据分割为训练集、测试集</span></span><br><span class="line">diabetes_X_train = diabetes_X[:<span class="number">-20</span>]</span><br><span class="line">diabetes_X_test = diabetes_X[<span class="number">-20</span>:]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将目标标量分割为训练集、测试集</span></span><br><span class="line">diabetes_y_train = diabetes.target[:<span class="number">-20</span>]</span><br><span class="line">diabetes_y_test = diabetes.target[<span class="number">-20</span>:]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建线性回归对象</span></span><br><span class="line">regr = linear_model.LinearRegression()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用训练集训练模型</span></span><br><span class="line">regr.fit(diabetes_X_train, diabetes_y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用测试集数据进行预测</span></span><br><span class="line">diabetes_y_pred = regr.predict(diabetes_X_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 回归系数</span></span><br><span class="line">print(<span class="string">'Coefficients: \n'</span>, regr.coef_)</span><br><span class="line"><span class="comment"># 均方误差</span></span><br><span class="line">print(<span class="string">"Mean squared error: %.2f"</span></span><br><span class="line">      % mean_squared_error(diabetes_y_test, diabetes_y_pred))</span><br><span class="line"><span class="comment"># 方差分数: 1代表完美预测</span></span><br><span class="line">print(<span class="string">'Variance score: %.2f'</span> % r2_score(diabetes_y_test, diabetes_y_pred))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将测试集数据及预测结果进行绘图输出</span></span><br><span class="line">plt.scatter(diabetes_X_test, diabetes_y_test, color=<span class="string">'black'</span>)</span><br><span class="line">plt.plot(diabetes_X_test, diabetes_y_pred, color=<span class="string">'blue'</span>, linewidth=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">plt.xticks(())</span><br><span class="line">plt.yticks(())</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p>输出结果:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Coefficients:</span><br><span class="line"> [ <span class="number">938.23786125</span>]</span><br><span class="line">Mean squared error: <span class="number">2548.07</span></span><br><span class="line">Variance score: <span class="number">0.47</span></span><br></pre></td></tr></table></figure></p>
@@ -548,7 +549,7 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/08/03/Titanic-Fill-Data/" rel="bookmark">Titanic缺失数据处理</a></div>
+      <div class="popular-posts-title"><a href="/2017/09/02/Watermelon-Book/" rel="bookmark">读《西瓜书》</a></div>
       
     </li>
   
@@ -632,8 +633,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/Activity-onCreate-Load-Bitmap/" rel="prev" title="Activity#onCreate中加载Bitmap">
-                Activity#onCreate中加载Bitmap <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/01/Sklearn-Faces-Recognition-With-Eigenfaces-And-SVM/" rel="prev" title="Sklearn之基于面部特征和SVM的脸部识别">
+                Sklearn之基于面部特征和SVM的脸部识别 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -706,7 +707,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -794,9 +795,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -866,7 +865,7 @@
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Powered By Puke</span>
+  <span class="author" itemprop="copyrightHolder">Puke</span>
 
   
     <span class="post-meta-divider">|</span>
@@ -874,7 +873,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">123k</span>
+    <span title="站点总字数">104k</span>
   
 
   
@@ -883,7 +882,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">1:52</span>
+    <span title="站点阅读时长">1:35</span>
   
 </div>
 
