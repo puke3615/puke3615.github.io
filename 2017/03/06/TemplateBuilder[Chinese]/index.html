@@ -41,7 +41,7 @@
 
 
 
-  <meta name="google-site-verification" content="google931fd34ed3bcda25.html" />
+  <meta name="google-site-verification" content="BvVQ_EYJPlr609WnQRSiFiTTyhHdK0P2M6MnYk_f_0o" />
 
 
 
@@ -521,14 +521,14 @@
 </blockquote>
 <h3 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h3><p><code>TemplateBuilder</code>是一款能够帮助我们快速生成<code>Android Studio Template</code>的AS插件，将通过逐个文件去配置模板的方式改进为通过插件来实现，对于简单的模板制作，只需要一键即可生成。</p>
 <h3 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>打开Android Studio，<code>Preferences</code> – <code>Plugins</code> – <code>Brown Repositories</code>,  搜索<code>TemplateBuilder</code> 并下载，下载之后重启IDE即可使用。</p>
-<p><img src="img1.png" alt=""></p>
+<p><img src="/2017/03/06/TemplateBuilder[Chinese]/img1.png" alt=""></p>
 <h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><h5 id="动态图展示"><a href="#动态图展示" class="headerlink" title="动态图展示"></a>动态图展示</h5><p>先直接贴上Gif的演示效果，分别对应模板的导出与导入</p>
-<p><img src="img2.gif" alt=""></p>
+<p><img src="/2017/03/06/TemplateBuilder[Chinese]/img2.gif" alt=""></p>
 <p><code>导出：</code> 选择待导出的文件或文件夹，按下<code>ALT + T</code>，在弹出界面中更改模板名称（<code>MVP Test</code>）和描述后直接<code>Finish</code>，然后重启IDE；</p>
-<p><img src="img7.gif" alt=""></p>
+<p><img src="/2017/03/06/TemplateBuilder[Chinese]/img7.gif" alt=""></p>
 <p><code>导入：</code> 选择一个包，按下<code>Command + N</code>键，输入模板分类名（默认为电脑用户名），选择<code>MVP Test</code>模板进行导入。</p>
 <h5 id="快速制作"><a href="#快速制作" class="headerlink" title="快速制作"></a>快速制作</h5><p>这里我们拿对一个MVP模板的抽取来举例，首先选中需要制作为模板的类文件（如果需要选中某个文件夹里的全部文件，可以直接选中该文件夹），然后按下启动改插件的快捷键<code>ALT + T</code>，便能看到如下界面</p>
-<p><img src="img3.png" alt=""></p>
+<p><img src="/2017/03/06/TemplateBuilder[Chinese]/img3.png" alt=""></p>
 <p>下面来说明一下该界面对应的内容</p>
 <ul>
 <li><code>Template Category</code>  对应模板的分类，对应选择导入模板时的模板分类，这里默认值是电脑的用户名。</li>
@@ -538,11 +538,11 @@
 <li><code>Input data区域</code>  （见下：<a href="#configure">配置模板变量</a>）</li>
 </ul>
 <p>如果你只是想简单抽取你写的这个模板，你只需要输入下<code>Template Name</code>和<code>Template Description</code>即可，当然如果你不想输入的话这也可以省略掉。接下来直接点击<code>Finish</code>，就能在IDE底部看到弹出如下图所示的提示，此时你已经制作成功，重启IDE即可使用该模板。</p>
-<p><img src="img4.png" alt=""></p>
+<p><img src="/2017/03/06/TemplateBuilder[Chinese]/img4.png" alt=""></p>
 <p>到这里，如果你了解<code>Android Studio Template</code>制作流程的话，你可能觉得相对于完全自己手动去做这样固然简单，但是灵活性上降低了不少。例如模板中有组价依赖关系的时候，你需要在<code>build.gradle.ftl</code>中去添加对应的依赖；导入模板之后你想自动打开某个文件时，你需要编辑<code>recipe.xml.ftl</code>；选择模板适用于哪个版本时，你需要编辑<code>template.xml</code>等等。如果你有这方面的需求，可以点击<code>Next</code>来代替<code>Finish</code>，点击之后你就能看到如下界面，在这里提供了所有你需要关注的配置文件的编辑，编辑完成直接点击<code>OK</code>开始自动生成。</p>
-<p><img src="img6.png" alt=""></p>
+<p><img src="/2017/03/06/TemplateBuilder[Chinese]/img6.png" alt=""></p>
 <h5 id="配置模板变量"><a href="#配置模板变量" class="headerlink" title="配置模板变量"></a><span id="configure">配置模板变量</span></h5><p>在上面的界面中可以看到<code>Input data</code>区域，它对应着导入模板时的变量输入，如果你想增强模板的可配性将会用到它，它就对应着AS模板中<code>template.xml</code>的<code>&lt;parameter /&gt;</code>标签，也就是下面的每一个配置项。</p>
-<p><img src="img5.png" alt=""></p>
+<p><img src="/2017/03/06/TemplateBuilder[Chinese]/img5.png" alt=""></p>
 <p>关于<code>Input data</code>的使用，先解释下每个属性对应的含义</p>
 <ul>
 <li><code>id</code>  变量名，必须和模板中使用的变量名对应，必填</li>
@@ -593,7 +593,7 @@
 </tbody>
 </table>
 <p>添加完模板变量后导出，重启IDE选择导入该模板，此时便能看到刚才配置的两个变量，你可以输入不同的值来验证模板的正确性。</p>
-<p><img src="img8.png" alt=""></p>
+<p><img src="/2017/03/06/TemplateBuilder[Chinese]/img8.png" alt=""></p>
 <h5 id="添加模板依赖"><a href="#添加模板依赖" class="headerlink" title="添加模板依赖"></a>添加模板依赖</h5><p>模板中需要添加gradle依赖时，点击<code>Next</code>在第二个页面中<code>build.gradle.ftl</code>添加如下所示对应的仓库和依赖即可。</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">    <span class="comment">// 如果仓库是jcenter()，则可省略</span></span><br><span class="line">    jcenter()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    compile <span class="string">'io.reactivex.rxjava2:rxjava:2.0.6'</span></span><br><span class="line">    compile <span class="string">'io.reactivex.rxjava2:rxandroid:2.0.1'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h3><p>如果你尝试过自己去制作一个<code>Android Studio Template</code>的话，相信你一定会为模板配置、更改文件名、添加可配参数等等繁琐的操作而烦恼，因为哪怕一个很简单的模板抽取都需要把这一系列流程全都走一遍，更改好几个配置文件。</p>
@@ -632,14 +632,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/03/10/Android-Studio-Template/" rel="bookmark">Android Studio Template</a></div>
+      <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
+      <div class="popular-posts-title"><a href="/2017/03/10/Android-Studio-Template/" rel="bookmark">Android Studio Template</a></div>
       
     </li>
   
@@ -715,8 +715,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/16/Android-Studio-Template-For-File-Group/" rel="next" title="Android Studio模板之文件组">
-                <i class="fa fa-chevron-left"></i> Android Studio模板之文件组
+              <a href="/2017/03/06/TemplateBuilder/" rel="next" title="TemplateBuilder">
+                <i class="fa fa-chevron-left"></i> TemplateBuilder
               </a>
             
           </div>
@@ -725,8 +725,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/06/TemplateBuilder/" rel="prev" title="TemplateBuilder">
-                TemplateBuilder <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/10/Android-Studio-Template/" rel="prev" title="Android Studio Template">
+                Android Studio Template <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -992,7 +992,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">124k</span>
+    <span title="站点总字数">123k</span>
   
 
   

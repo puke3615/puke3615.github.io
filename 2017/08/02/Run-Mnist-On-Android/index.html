@@ -41,7 +41,7 @@
 
 
 
-  <meta name="google-site-verification" content="google931fd34ed3bcda25.html" />
+  <meta name="google-site-verification" content="BvVQ_EYJPlr609WnQRSiFiTTyhHdK0P2M6MnYk_f_0o" />
 
 
 
@@ -520,7 +520,7 @@
 <h3 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h3><p>布局代码就直接省略了，我们只需要在点击<code>识别</code>的时候，调用下面这段的识别逻辑即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 识别</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onInference</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (canvasView.isEmpty()) &#123;</span><br><span class="line">        resultPanel.setText(<span class="string">"画板为空"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    MnistData result = classifier.inference(canvasView.fetchData(<span class="number">28</span>, <span class="number">28</span>));</span><br><span class="line">    resultPanel.setText(result.top(<span class="number">3</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后附上运行效果图</p>
-<p><img src="8.png" alt=""></p>
+<p><img src="/2017/08/02/Run-Mnist-On-Android/8.png" alt=""></p>
 <p>这里是该项目的<a href="https://github.com/puke3615/Mnist" target="_blank" rel="noopener">Github源码</a></p>
 
       
@@ -907,7 +907,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">124k</span>
+    <span title="站点总字数">123k</span>
   
 
   

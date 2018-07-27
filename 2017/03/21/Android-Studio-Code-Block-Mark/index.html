@@ -41,7 +41,7 @@
 
 
 
-  <meta name="google-site-verification" content="google931fd34ed3bcda25.html" />
+  <meta name="google-site-verification" content="BvVQ_EYJPlr609WnQRSiFiTTyhHdK0P2M6MnYk_f_0o" />
 
 
 
@@ -513,7 +513,7 @@
 <p>根据上述规则我们来对<code>MainActivity</code>进行打标操作，代码如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zijiao</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 17/3/21</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="成员变量"&gt;</span></span><br><span class="line">    <span class="keyword">private</span> Button button;</span><br><span class="line">    <span class="comment">// &lt;/editor-fold&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="onCreate逻辑"&gt;</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        initView();</span><br><span class="line">        initListener();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// &lt;/editor-fold&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="findView逻辑"&gt;</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        button = (Button) findViewById(R.id.button);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// &lt;/editor-fold&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="点击事件处理逻辑"&gt;</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"Click button"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// &lt;/editor-fold&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到我们将各个代码块按照逻辑进行分类并添加对应的描述标签，当我们下次再打开该类时，查看或修改某部分代码就会一目了然（当代码庞大时，其优点将会尤为明显），参见下图</p>
-<p><img src="img1.gif" alt=""></p>
+<p><img src="/2017/03/21/Android-Studio-Code-Block-Mark/img1.gif" alt=""></p>
 <h3 id="整合LiveTemplate"><a href="#整合LiveTemplate" class="headerlink" title="整合LiveTemplate"></a>整合LiveTemplate</h3><p>可以看到代码块打标是很方便，但是有一点不好，就是当我们需要给某一个代码块打标时我们总是要在代码块之前添加</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="[A]"&gt;</span></span><br></pre></td></tr></table></figure>
 <p>然后在代码块之后添加</p>
@@ -531,9 +531,9 @@
 </li>
 </ol>
 <p>这个时候你的界面应该是这样，可以核对下</p>
-<p><img src="img2.png" alt=""></p>
+<p><img src="/2017/03/21/Android-Studio-Code-Block-Mark/img2.png" alt=""></p>
 <p>到这里，打标模板已经完成了，你可以随便找一个类进行测试，选中一个代码块，按下快捷键<code>Command + Option + J</code>（Windows系统可以在<code>Preferences</code> — <code>Keymap</code> 中搜索<code>Surround with Live Template...</code>对应的快捷键）来选择<code>Mark Code Block</code>模板，此时我们就可以快速进行代码块打标操作了，如下图</p>
-<p><img src="img3.gif" alt=""></p>
+<p><img src="/2017/03/21/Android-Studio-Code-Block-Mark/img3.gif" alt=""></p>
 
       
     </div>
@@ -561,14 +561,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/03/10/Android-Studio-Template/" rel="bookmark">Android Studio Template</a></div>
+      <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
+      <div class="popular-posts-title"><a href="/2017/03/10/Android-Studio-Template/" rel="bookmark">Android Studio Template</a></div>
       
     </li>
   
@@ -924,7 +924,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">124k</span>
+    <span title="站点总字数">123k</span>
   
 
   

@@ -41,7 +41,7 @@
 
 
 
-  <meta name="google-site-verification" content="google931fd34ed3bcda25.html" />
+  <meta name="google-site-verification" content="BvVQ_EYJPlr609WnQRSiFiTTyhHdK0P2M6MnYk_f_0o" />
 
 
 
@@ -134,7 +134,7 @@
 <meta property="og:image" content="http://puke3615.github.io/2016/10/14/Android-Studio-Template-For-Part/step6.png">
 <meta property="og:image" content="http://puke3615.github.io/2016/10/14/Android-Studio-Template-For-Part/step7.png">
 <meta property="og:image" content="http://puke3615.github.io/2016/10/14/Android-Studio-Template-For-Part/stepl.png">
-<meta property="og:updated_time" content="2017-08-07T03:51:30.000Z">
+<meta property="og:updated_time" content="2018-07-27T05:51:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Studio模板之代码片段">
 <meta name="twitter:description" content="代码片段是Template上的最小单位，因此它也具有最大的灵活性，支持多参数配置、TAB切换、代码块包装等多种特性（IDEA同样适用）。">
@@ -477,7 +477,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2k</span>
+                <span title="本文字数">1.9k</span>
               
 
               
@@ -513,33 +513,25 @@
       
 
       
-        <ul>
-<li><h6 id="Android-Studio模板系列文章"><a href="#Android-Studio模板系列文章" class="headerlink" title="Android Studio模板系列文章"></a>Android Studio模板系列文章</h6><ul>
-<li><a href="../../../../2016/10/14/Android-Studio-Template-For-Part/">Android Studio模板之代码片段</a></li>
-<li><a href="../../../../2016/10/15/Android-Studio-Template-For-File/">Android Studio模板之文件</a></li>
-<li><a href="../../../../2016/10/16/Android-Studio-Template-For-File-Group/">Android Studio模板之文件组</a></li>
-</ul>
-</li>
-</ul>
-<p>下面先直接上几张演示效果图</p>
-<p><img src="LiveTemplate1.gif" alt="UserManager"></p>
+        <p>下面先直接上几张演示效果图</p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/LiveTemplate1.gif" alt="UserManager"></p>
 <p>创建一个单例类</p>
-<p><img src="LiveTemplate2.gif" alt="FileUtil"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/LiveTemplate2.gif" alt="FileUtil"></p>
 <p>写一个将InputStream转化为String的方法</p>
-<p><img src="LiveTemplate3.gif" alt="Test"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/LiveTemplate3.gif" alt="Test"></p>
 <p>生成main方法并打印数字</p>
-<p><img src="LiveTemplate4.gif" alt="FileUtil"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/LiveTemplate4.gif" alt="FileUtil"></p>
 <p>用try catch来包装代码块</p>
 <p>上面的这些有的是IDE自带的，有的是自定义的。具体位置我们可以进入IDE，Preserences，Editor，Live Templates，我们可以在右边栏看到一些列IDE预设的template，如下图</p>
-<p><img src="step1.png" alt="step1"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/step1.png" alt="step1"></p>
 <p>这里我们展开Android，可以看到下图</p>
-<p><img src="step2.png" alt="step2"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/step2.png" alt="step2"></p>
 <p>这里面所有的我们都可以使用，括号后面的内容是为了描述该模板的，你也可以取消前面的勾选来取消该模板。</p>
 <p>其实系统预设的有很多都是很实用的，有兴趣的可以去试一试，不多说。这里主要看一下如何自定义模板，把一些常用的代码片段DIY到自己的模板库中，当下次再需要同样代码的时候只需要一个标识符就能迅速自动生成。</p>
 <p>我们点击右上角的加号，我们可以看到两个选项一个是Live Template，这个表示一个模板，另一个是Template Group，这个表示一个模板所属的分组，就像上面看到的Android，它就属于一个分组。</p>
-<p><img src="step3.png" alt="step3"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/step3.png" alt="step3"></p>
 <p>接下来我们先创建一个自己的Template Group，名称随便取，不要与已有的分组重名就行，这里就取为Custom。然后我们选中新建的这个Custom分组再创建Live Template，会看到如下界面</p>
-<p><img src="step4.png" alt="step4"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/step4.png" alt="step4"></p>
 <p>我对这个界面做了数字标志，大致说下每个区域代表的含义</p>
 <ul>
 <li>区域1：表示模板的缩写，也是我们最终使用时在编辑区输入的指令</li>
@@ -550,11 +542,11 @@
 <li>区域6：提供一些引入模板的可选操作</li>
 </ul>
 <p>这里我们来写一个生成单例的模板，我们按照下图定义好缩写，描述与模板内容</p>
-<p><img src="step5.png" alt="step5"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/step5.png" alt="step5"></p>
 <p>模板内容的代码如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span>[] sInstanceLock = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> $className$ sInstance;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> $className$() &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> $className$ <span class="title">instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (sInstanceLock) &#123;</span><br><span class="line">            <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                sInstance = <span class="keyword">new</span> $className$();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然后我们选择区域4来编辑我们的自定义变量，我们进去后可以看到如下弹窗</p>
-<p><img src="step6.png" alt="step6"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/step6.png" alt="step6"></p>
 <ul>
 <li>Name为自定义的变量名称</li>
 <li>Expression表示系统提供的一些方法</li>
@@ -562,9 +554,9 @@
 <li>Skip if define勾选后，如果该变量被赋值则跳过，相当于引入过程中一次手动的TAB</li>
 </ul>
 <p>接着我们在Expression中选择className()，并勾选Skip if define，并点击确定</p>
-<p><img src="step7.png" alt="step7"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/step7.png" alt="step7"></p>
 <p>最后我们点击区域5来选择模板的作用域，我们选择Java—Declaration</p>
-<p><img src="stepl.png" alt="stepl"></p>
+<p><img src="/2016/10/14/Android-Studio-Template-For-Part/stepl.png" alt="stepl"></p>
 <p>然后保存，我们的单例模板便生成成功了。测试下，在IDE中新建个Java类，在类的内部输入single便出现最上面的那个UserManager的效果。</p>
 <p>当然除此之外还有使用”$SELECTION$”来包装代码块的模板，这个使用场景相对较少这里就不举例了，主要使用的就是这种直接的模板模式。感觉一些常用的，特别是工具类中静态方法相关的，我们都可以抽取成模板，提高开发效率。</p>
 
@@ -746,17 +738,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -911,22 +894,6 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#Android-Studio模板系列文章"><span class="nav-number">1.</span> <span class="nav-text">Android Studio模板系列文章</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
         <div class="back-to-top">
@@ -959,7 +926,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">124k</span>
+    <span title="站点总字数">123k</span>
   
 
   

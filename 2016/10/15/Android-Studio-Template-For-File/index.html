@@ -41,7 +41,7 @@
 
 
 
-  <meta name="google-site-verification" content="google931fd34ed3bcda25.html" />
+  <meta name="google-site-verification" content="BvVQ_EYJPlr609WnQRSiFiTTyhHdK0P2M6MnYk_f_0o" />
 
 
 
@@ -130,7 +130,7 @@
 <meta property="og:image" content="http://puke3615.github.io/2016/10/15/Android-Studio-Template-For-File/fileTemplate3.gif">
 <meta property="og:image" content="http://puke3615.github.io/2016/10/15/Android-Studio-Template-For-File/fileTemplate4.gif">
 <meta property="og:image" content="http://puke3615.github.io/2016/10/15/Android-Studio-Template-For-File/step5.png">
-<meta property="og:updated_time" content="2017-08-07T03:51:48.000Z">
+<meta property="og:updated_time" content="2018-07-27T05:51:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Studio模板之文件">
 <meta name="twitter:description" content="文件模板是指以一个文件为基础的模板，这种形式的模板比代码片段级别的模板要复杂一些，模板中设计到VTL(Velocity Template Language)语法。文件级别比代码级别能够存储更多的代码内容，而且能够通过VTL很大程度上提高模板的灵活度，让模板不再是一个不变的文本字符串。">
@@ -473,7 +473,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.7k</span>
+                <span title="本文字数">1.6k</span>
               
 
               
@@ -487,7 +487,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">1 分钟</span>
               
             </div>
           
@@ -509,23 +509,15 @@
       
 
       
-        <ul>
-<li><h6 id="Android-Studio模板系列文章"><a href="#Android-Studio模板系列文章" class="headerlink" title="Android Studio模板系列文章"></a>Android Studio模板系列文章</h6><ul>
-<li><a href="../../../../2016/10/14/Android-Studio-Template-For-Part/">Android Studio模板之代码片段</a></li>
-<li><a href="../../../../2016/10/15/Android-Studio-Template-For-File/">Android Studio模板之文件</a></li>
-<li><a href="../../../../2016/10/16/Android-Studio-Template-For-File-Group/">Android Studio模板之文件组</a></li>
-</ul>
-</li>
-</ul>
-<p>我们开发的过程中可能会遇到有些类在不同的工程下都需要使用，单独抽成jar包可能又有点小题大做了，而且还得在下次使用的时候去依赖它，这个时候我们AS中的FileTemplate便派上用场了。</p>
-<h5 id="FileTemplate使用"><a href="#FileTemplate使用" class="headerlink" title="FileTemplate使用"></a>FileTemplate使用</h5><p><img src="fileTemplate1.gif" alt="fileTemplate1"></p>
+        <p>我们开发的过程中可能会遇到有些类在不同的工程下都需要使用，单独抽成jar包可能又有点小题大做了，而且还得在下次使用的时候去依赖它，这个时候我们AS中的FileTemplate便派上用场了。</p>
+<h5 id="FileTemplate使用"><a href="#FileTemplate使用" class="headerlink" title="FileTemplate使用"></a>FileTemplate使用</h5><p><img src="/2016/10/15/Android-Studio-Template-For-File/fileTemplate1.gif" alt="fileTemplate1"></p>
 <p>我们开发中可能经常去写一个继承BaseAdapter的子Adapter，而且里面有一大串无脑代码，于是我写了这个DataAdapter的模板。</p>
 <p>Android Studio给我提供了创建模板的快捷方式，我们可以打开任意一个类，然后选择顶部的Tools—Save File As Template便可以快速创建一个当前类的模板文件</p>
-<p><img src="fileTemplate2.gif" alt="fileTemplate2"></p>
+<p><img src="/2016/10/15/Android-Studio-Template-For-File/fileTemplate2.gif" alt="fileTemplate2"></p>
 <p>或者直接通过Preferences — Editor — File and Code Templates右边的加号创建</p>
-<p><img src="step1.png" alt="step1"></p>
+<p><img src="/2016/10/15/Android-Studio-Template-For-File/step1.png" alt="step1"></p>
 <p>然后IDE会自动打开这个界面</p>
-<p><img src="step2.png" alt="step2"></p>
+<p><img src="/2016/10/15/Android-Studio-Template-For-File/step2.png" alt="step2"></p>
 <p>大致说下这几个区域</p>
 <ul>
 <li>区域1：模板的名称，唯一标识一个文件模板</li>
@@ -537,16 +529,16 @@
 <p>接下来我们编辑模板，把这段模板内容直接粘贴到编辑区，然后给模板命名为User即保存关闭该弹窗</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#if ($&#123;PACKAGE_NAME&#125; &amp;&amp; $&#123;PACKAGE_NAME&#125; != "")package $&#123;PACKAGE_NAME&#125;;#end</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> $&#123;USER&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> $&#123;DATE&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> $</span>&#123;NAME&#125; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String[] name = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>现在我们来引入刚写的模板，右键选择待添加模板的包 — New — User</p>
-<p><img src="step3.png" alt="step3"></p>
+<p><img src="/2016/10/15/Android-Studio-Template-For-File/step3.png" alt="step3"></p>
 <p>也可以New一个Java Class然后在弹窗中通过上下方向键或者下拉列表来选择找到创建的User模板</p>
-<p><img src="fileTemplate3.gif" alt="fileTemplate3"></p>
+<p><img src="/2016/10/15/Android-Studio-Template-For-File/fileTemplate3.gif" alt="fileTemplate3"></p>
 <p>还可以直接在New下面选择</p>
-<p><img src="fileTemplate4.gif" alt="fileTemplate4"></p>
+<p><img src="/2016/10/15/Android-Studio-Template-For-File/fileTemplate4.gif" alt="fileTemplate4"></p>
 <p>创建模板之后的引入方式有很多，我们可以使用自己比较喜欢的方式去引入。最终输入文件名点确定，代码直接生成出来。</p>
 <p>上面说的是最基本的文件模板需求，当我们的文件需要多个参数时，例如User这个模板的name属性名可能是多边的，只有引入模板时才能确定下来，这时我们可以用自定义变量来表示，如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#if ($&#123;PACKAGE_NAME&#125; &amp;&amp; $&#123;PACKAGE_NAME&#125; != "")package $&#123;PACKAGE_NAME&#125;;#end</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> $&#123;USER&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> $&#123;DATE&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> $</span>&#123;NAME&#125; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String[] $&#123;fieldName&#125; = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个时候我们再引入模板时，IDE会扫描有没有自定义变量，如果有的并且没有被初始化赋值的话就在弹出的对话框中多一个可编辑的区域，如下图</p>
-<p><img src="step5.png" alt="step5"></p>
+<p><img src="/2016/10/15/Android-Studio-Template-For-File/step5.png" alt="step5"></p>
 <p>这便支持自定义参数的场景，到这一步为止，一般的文件模板需求我们都可以自己满足了。下面介绍一些相对深一点的使用方式，有兴趣的可以看看。</p>
 <p>Android Studio的FileTemplate使用Velocity Template Language（简称VTL）进行逻辑判断和流程控制，有兴趣的可以直接看下Velocity的<a href="http://velocity.apache.org/engine/devel/user-guide.html#Velocity_Template_Language_VTL:_An_Introduction" target="_blank" rel="noopener">官方文档</a>。</p>
 
@@ -569,14 +561,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/03/10/Android-Studio-Template/" rel="bookmark">Android Studio Template</a></div>
+      <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
+      <div class="popular-posts-title"><a href="/2017/03/10/Android-Studio-Template/" rel="bookmark">Android Studio Template</a></div>
       
     </li>
   
@@ -902,7 +894,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#Android-Studio模板系列文章"><span class="nav-number">1.</span> <span class="nav-text">Android Studio模板系列文章</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FileTemplate使用"><span class="nav-number"></span> <span class="nav-text">FileTemplate使用</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#FileTemplate使用"><span class="nav-number">1.</span> <span class="nav-text">FileTemplate使用</span></a></li></ol></div>
             
 
           </div>
@@ -941,7 +933,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">124k</span>
+    <span title="站点总字数">123k</span>
   
 
   

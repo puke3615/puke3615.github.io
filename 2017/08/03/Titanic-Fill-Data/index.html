@@ -41,7 +41,7 @@
 
 
 
-  <meta name="google-site-verification" content="google931fd34ed3bcda25.html" />
+  <meta name="google-site-verification" content="BvVQ_EYJPlr609WnQRSiFiTTyhHdK0P2M6MnYk_f_0o" />
 
 
 
@@ -531,7 +531,7 @@
 <p><code>RMM</code>信息获取很方便，但是不便于直观、确切的观察数据的分布情况，这时考虑通过<code>matplot</code>画出票价的密度分布图。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.hist(fare_with_data, alpha=<span class="number">.7</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p>分布图如下</p>
-<p><img src="data_fix_fare1.png" alt="data_fix_fare"></p>
+<p><img src="/2017/08/03/Titanic-Fill-Data/data_fix_fare1.png" alt="data_fix_fare"></p>
 <p>从图中可以很直观的看出绝大部分数据都是部分在50以下的，鉴于这种情况，我们很直观的选择是把均值作为补全值。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> np.mean(fare_with_data)</span><br></pre></td></tr></table></figure>
 <p>Output:</p>
@@ -548,7 +548,7 @@
 <p>可以逐一分析，我们发现<code>Pclass</code>对应N等票，可能会影响到票价<code>Fare</code>特征，因此我们要取出所有跟该名乘客相同<code>Pclass</code>（从数据可以看出是3）的票价分布。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fare = merged[:, [test_header.index(<span class="string">'Fare'</span>), test_header.index(<span class="string">'Pclass'</span>)]]</span><br><span class="line">fare_with_pclass_3 = [float(f) <span class="keyword">for</span> f, pclass <span class="keyword">in</span> fare <span class="keyword">if</span> f != <span class="string">''</span> <span class="keyword">and</span> pclass == <span class="string">'3'</span>]</span><br><span class="line">plt.hist(fare_with_pclass_3, alpha=<span class="number">.7</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p>分布图如下</p>
-<p><img src="data_fix_fare2.png" alt="data_fix_fare2"></p>
+<p><img src="/2017/08/03/Titanic-Fill-Data/data_fix_fare2.png" alt="data_fix_fare2"></p>
 <p>对比和上一张图的区别，我们能更加确切的了解到，三等票的票价没有高于70的，因此如果按照上面的结论直接把所有数据的票价均值作为补全值，在一定程度上会使得补全值的误差变大，取而代之的是用<code>Pclass</code>为3的乘客的票价均值作为补全值（这里还是有一定的优化空间，我们可以分析<code>Pclass</code>为3的乘客中的年龄、家属情况、船舱等对票价的影响，这里就不继续展开了）。</p>
 <p>有了上面的分析，我们就可以重新计算补全值</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> np.mean(fare_with_pclass_3)</span><br></pre></td></tr></table></figure>
@@ -564,12 +564,12 @@
 <p>Output:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Range: <span class="number">0.17</span> - <span class="number">80.00</span></span><br><span class="line">Mean: <span class="number">29.88</span></span><br><span class="line">Mean variance: <span class="number">14.41</span></span><br></pre></td></tr></table></figure>
 <p>均值29.9，均方差14.4，可见整体年龄层都分布在青壮年阶段，接下来直接看看密度分布图</p>
-<p><img src="data_fix_age1.png" alt=""></p>
+<p><img src="/2017/08/03/Titanic-Fill-Data/data_fix_age1.png" alt=""></p>
 <p>从该图中我们只能观察到老人（50岁以上）和小孩（16岁以下）占比较小，年龄大多集中在17-40左右，我们必须试图在数据中寻找更好的估值标准。</p>
 <p>我们尝试寻找<code>Age</code>与<code>Pclass</code>的关系，先来画出分布图</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">age_pclass = merged[:, [test_header.index(<span class="string">'Age'</span>), test_header.index(<span class="string">'Pclass'</span>)]]</span><br><span class="line"><span class="comment"># 过滤掉Age为空的数据</span></span><br><span class="line">age_pclass_with_data = [[int(float(a)), int(p)] <span class="keyword">for</span> a, p <span class="keyword">in</span> age_pclass <span class="keyword">if</span> a != <span class="string">''</span>]</span><br><span class="line">age_pclass_with_data = np.array(age_pclass_with_data)</span><br><span class="line">x = age_pclass_with_data[:, <span class="number">0</span>]</span><br><span class="line">y = age_pclass_with_data[:, <span class="number">1</span>]</span><br><span class="line">plt.scatter(x, y, alpha=<span class="number">.7</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Age'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Pclass'</span>)</span><br><span class="line">plt.title(<span class="string">'Pclass &amp; Age'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p>分布图如下</p>
-<p><img src="data_fix_age2.png" alt=""></p>
+<p><img src="/2017/08/03/Titanic-Fill-Data/data_fix_age2.png" alt=""></p>
 <p>从上图上中可以知道很难直接根据<code>Pclass</code>估值出<code>Age</code>的值。</p>
 
       
@@ -965,7 +965,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">124k</span>
+    <span title="站点总字数">123k</span>
   
 
   
