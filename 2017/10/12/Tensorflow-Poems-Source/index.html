@@ -156,18 +156,18 @@
 
 
 
-  <meta name="description" content="Tensorflow通过基于RNN来学习古诗文的序列数据，来自动作诗。">
-<meta name="keywords" content="Tensorflow,Machine-Learning,LSTM,RNN">
+  <meta name="description" content="Tensorflow Poems是一款基于RNN（循环神经网络）的 Github开源项目，它能通过学习大量古诗文和歌词然后能够自己来模仿创造诗文和歌词。">
+<meta name="keywords" content="Machine Learning,Python,Tensorflow,RNN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于RNN自动作诗源码剖析">
 <meta property="og:url" content="http://puke3615.github.io/2017/10/12/Tensorflow-Poems-Source/index.html">
 <meta property="og:site_name" content="Puke&#39;s Blog">
-<meta property="og:description" content="Tensorflow通过基于RNN来学习古诗文的序列数据，来自动作诗。">
+<meta property="og:description" content="Tensorflow Poems是一款基于RNN（循环神经网络）的 Github开源项目，它能通过学习大量古诗文和歌词然后能够自己来模仿创造诗文和歌词。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-12T09:50:12.000Z">
+<meta property="og:updated_time" content="2018-07-28T02:03:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于RNN自动作诗源码剖析">
-<meta name="twitter:description" content="Tensorflow通过基于RNN来学习古诗文的序列数据，来自动作诗。">
+<meta name="twitter:description" content="Tensorflow Poems是一款基于RNN（循环神经网络）的 Github开源项目，它能通过学习大量古诗文和歌词然后能够自己来模仿创造诗文和歌词。">
 
 
 
@@ -513,8 +513,6 @@
           
 
           
-              <div class="post-description">Tensorflow通过基于RNN来学习古诗文的序列数据，来自动作诗。</div>
-          
 
         </div>
       </header>
@@ -529,9 +527,10 @@
       
 
       
-        <p><em>Tensorflow Poems是一款基于RNN（循环神经网络）的 <a href="https://github.com/jinfagang/tensorflow_poems" target="_blank" rel="noopener">Github开源项目</a>，它能通过学习大量古诗文和歌词然后能够自己来模仿创造诗文和歌词。</em><br>[TOC]</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>就项目本身，其意义不是很大，权当娱乐就行。这里的重点是解读如何从最原始的诗句，到数据的读取，再到数据预处理，再到模型的构建，再到最后的训练和使用流程。</p>
-<h2 id="源数据"><a href="#源数据" class="headerlink" title="源数据"></a>源数据</h2><p>通过上面的github地址可以下载到项目源码，其中古诗文的数据集是<code>dataset/data/poems.txt</code>，打开可以看到如下的内容（篇幅限制，只显示了前两行诗句）。</p>
+        <p><em>Tensorflow Poems是一款基于RNN（循环神经网络）的 <a href="https://github.com/jinfagang/tensorflow_poems" target="_blank" rel="noopener">Github开源项目</a>，它能通过学习大量古诗文和歌词然后能够自己来模仿创造诗文和歌词。</em></p>
+<a id="more"></a>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>就项目本身，其意义不是很大，权当娱乐就行。这里的重点是解读如何从最原始的诗句，到数据的读取，到数据预处理，到模型的构建，再到最后的训练和使用流程。</p>
+<h2 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h2><p>通过上面的github地址可以下载到项目源码，其中古诗文的数据集是<code>dataset/data/poems.txt</code>，打开可以看到如下的内容（篇幅限制，只显示了前两行诗句）。</p>
 <figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">首春:寒随穷律变，春逐鸟声开。初风飘带柳，晚雪间花梅。碧林青旧竹，绿沼翠新苔。芝田初雁去，绮树巧莺来。</span><br><span class="line">初晴落景:晚霞聊自怡，初晴弥可喜。日晃百花色，风动千林翠。池鱼跃不同，园鸟声还异。寄言博通者，知予物外志。</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>整体的格式还是蛮清晰的，每行就代表一首诗，每首诗由标题和内容两部分组成，中间以冒号分割。</p>
 <h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><p>代码位于<code>poems.py</code>文件的<code>process_peoms</code>方法</p>
@@ -569,7 +568,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/08/02/Run-Mnist-On-Android/" rel="bookmark">Android上运行手写数字识别模型</a></div>
+      <div class="popular-posts-title"><a href="/2017/11/08/Keras-Doc-Summary/" rel="bookmark">Keras框架总结</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/09/01/Sklearn-Linear-Regression/" rel="bookmark">Sklearn之线性回归</a></div>
       
     </li>
   
@@ -577,6 +583,20 @@
       
       
       <div class="popular-posts-title"><a href="/2017/08/02/Tensorflow-On-Android/" rel="bookmark">Android端运行Tensorflow</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/08/03/Titanic-Fill-Data/" rel="bookmark">Titanic缺失数据处理</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/08/01/Machine-Learning-Inaction/" rel="bookmark">读《机器学习实战》</a></div>
       
     </li>
   
@@ -613,11 +633,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
             <a href="/tags/Tensorflow/" rel="tag"><i class="fa fa-tag"></i> Tensorflow</a>
-          
-            <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine-Learning</a>
-          
-            <a href="/tags/LSTM/" rel="tag"><i class="fa fa-tag"></i> LSTM</a>
           
             <a href="/tags/RNN/" rel="tag"><i class="fa fa-tag"></i> RNN</a>
           
@@ -745,7 +765,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -760,9 +780,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -825,15 +843,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -862,7 +872,7 @@
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="./" target="_blank" title="Wexin"><i class="fa fa-fw fa-weixin"></i></a>
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="QQ"><i class="fa fa-fw fa-qq"></i></a>
                   
                 </span>
               
@@ -928,7 +938,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源数据"><span class="nav-number">2.</span> <span class="nav-text">源数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理"><span class="nav-number">3.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型"><span class="nav-number">4.</span> <span class="nav-text">模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">5.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">6.</span> <span class="nav-text">使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据源"><span class="nav-number">2.</span> <span class="nav-text">数据源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理"><span class="nav-number">3.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型"><span class="nav-number">4.</span> <span class="nav-text">模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">5.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">6.</span> <span class="nav-text">使用</span></a></li></ol></div>
             
 
           </div>
@@ -976,7 +986,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">1:35</span>
+    <span title="站点阅读时长">1:34</span>
   
 </div>
 

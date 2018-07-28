@@ -156,21 +156,21 @@
 
 
 
-  <meta name="description" content="Android Studio代码块打标，让我们迅速定位到代码逻辑块。">
-<meta name="keywords" content="高效开发,Android Studio">
+  <meta name="description" content="Android Studio代码块打标，让我们迅速定位到代码逻辑块。当我们开发中写的某些类的代码量相对比较庞大时，就会遇到维护这个类变得困难的问题，抛开对于该类的设计层面的因素，只从代码量的角度来看这个问题。基于IntelliJ的IDE给我们提供了一种能够给我们的代码块进行归纳的标签（以下称为代码块打标），如下 123// &amp;lt;editor-fold defaultstate=&quot;collaps">
+<meta name="keywords" content="Android,高效开发,Android Studio,编程洁癖">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Studio代码块打标">
 <meta property="og:url" content="http://puke3615.github.io/2017/03/21/Android-Studio-Code-Block-Mark/index.html">
 <meta property="og:site_name" content="Puke&#39;s Blog">
-<meta property="og:description" content="Android Studio代码块打标，让我们迅速定位到代码逻辑块。">
+<meta property="og:description" content="Android Studio代码块打标，让我们迅速定位到代码逻辑块。当我们开发中写的某些类的代码量相对比较庞大时，就会遇到维护这个类变得困难的问题，抛开对于该类的设计层面的因素，只从代码量的角度来看这个问题。基于IntelliJ的IDE给我们提供了一种能够给我们的代码块进行归纳的标签（以下称为代码块打标），如下 123// &amp;lt;editor-fold defaultstate=&quot;collaps">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://puke3615.github.io/2017/03/21/Android-Studio-Code-Block-Mark/img1.gif">
 <meta property="og:image" content="http://puke3615.github.io/2017/03/21/Android-Studio-Code-Block-Mark/img2.png">
 <meta property="og:image" content="http://puke3615.github.io/2017/03/21/Android-Studio-Code-Block-Mark/img3.gif">
-<meta property="og:updated_time" content="2017-03-21T10:43:36.000Z">
+<meta property="og:updated_time" content="2018-07-28T02:34:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Studio代码块打标">
-<meta name="twitter:description" content="Android Studio代码块打标，让我们迅速定位到代码逻辑块。">
+<meta name="twitter:description" content="Android Studio代码块打标，让我们迅速定位到代码逻辑块。当我们开发中写的某些类的代码量相对比较庞大时，就会遇到维护这个类变得困难的问题，抛开对于该类的设计层面的因素，只从代码量的角度来看这个问题。基于IntelliJ的IDE给我们提供了一种能够给我们的代码块进行归纳的标签（以下称为代码块打标），如下 123// &amp;lt;editor-fold defaultstate=&quot;collaps">
 <meta name="twitter:image" content="http://puke3615.github.io/2017/03/21/Android-Studio-Code-Block-Mark/img1.gif">
 
 
@@ -467,6 +467,24 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -499,7 +517,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                <span title="本文字数">2.2k</span>
+                <span title="本文字数">2.3k</span>
               
 
               
@@ -517,8 +535,6 @@
           
 
           
-              <div class="post-description">Android Studio代码块打标，让我们迅速定位到代码逻辑块。</div>
-          
 
         </div>
       </header>
@@ -533,17 +549,15 @@
       
 
       
-        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>当我们开发中写的某些类的代码量相对比较庞大时，就会遇到维护这个类变得困难的问题，抛开对于该类的设计层面的因素，只从代码量的角度来看这个问题。基于IntelliJ的IDE给我们提供了一种能够给我们的代码块进行归纳的标签（以下称为<code>代码块打标</code>），如下</p>
+        <p>Android Studio代码块打标，让我们迅速定位到代码逻辑块。当我们开发中写的某些类的代码量相对比较庞大时，就会遇到维护这个类变得困难的问题，抛开对于该类的设计层面的因素，只从代码量的角度来看这个问题。基于IntelliJ的IDE给我们提供了一种能够给我们的代码块进行归纳的标签（以下称为<code>代码块打标</code>），如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="[A]"&gt;</span></span><br><span class="line">[B]</span><br><span class="line"><span class="comment">// &lt;/editor-fold&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>[A]</code> 对应打标的描述语言</li>
-<li><code>[B]</code> 对应待打标代码块</li>
-</ul>
+<p>其中，<code>[A]</code> 对应打标的描述语言，<code>[B]</code> 对应待打标代码块。</p>
+<a id="more"></a>
 <p>根据上述规则我们来对<code>MainActivity</code>进行打标操作，代码如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zijiao</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 17/3/21</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="成员变量"&gt;</span></span><br><span class="line">    <span class="keyword">private</span> Button button;</span><br><span class="line">    <span class="comment">// &lt;/editor-fold&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="onCreate逻辑"&gt;</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        initView();</span><br><span class="line">        initListener();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// &lt;/editor-fold&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="findView逻辑"&gt;</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        button = (Button) findViewById(R.id.button);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// &lt;/editor-fold&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="点击事件处理逻辑"&gt;</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"Click button"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// &lt;/editor-fold&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到我们将各个代码块按照逻辑进行分类并添加对应的描述标签，当我们下次再打开该类时，查看或修改某部分代码就会一目了然（当代码庞大时，其优点将会尤为明显），参见下图</p>
 <p><img src="/2017/03/21/Android-Studio-Code-Block-Mark/img1.gif" alt=""></p>
-<h3 id="整合LiveTemplate"><a href="#整合LiveTemplate" class="headerlink" title="整合LiveTemplate"></a>整合LiveTemplate</h3><p>可以看到代码块打标是很方便，但是有一点不好，就是当我们需要给某一个代码块打标时我们总是要在代码块之前添加</p>
+<p>可以看到代码块打标是很方便，但是有一点不好，就是当我们需要给某一个代码块打标时我们总是要在代码块之前添加</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &lt;editor-fold defaultstate="collapsed" desc="[A]"&gt;</span></span><br></pre></td></tr></table></figure>
 <p>然后在代码块之后添加</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &lt;/editor-fold&gt;</span></span><br></pre></td></tr></table></figure>
@@ -586,6 +600,13 @@
     <li class="popular-posts-item">
       
       
+      <div class="popular-posts-title"><a href="/2017/03/10/Android-Studio-Template/" rel="bookmark">Android Studio Template</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/2016/10/16/Android-Studio-Template-For-File-Group/" rel="bookmark">Android Studio模板之文件组</a></div>
       
     </li>
@@ -593,7 +614,7 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/03/10/Android-Studio-Template/" rel="bookmark">Android Studio Template</a></div>
+      <div class="popular-posts-title"><a href="/2018/06/06/Android-Studio-Debug-2/" rel="bookmark">Android Studio之Debug（二）：自定义Debug变量视图</a></div>
       
     </li>
   
@@ -608,13 +629,6 @@
       
       
       <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
-      <div class="popular-posts-title"><a href="/2017/03/06/TemplateBuilder/" rel="bookmark">TemplateBuilder</a></div>
       
     </li>
   
@@ -651,9 +665,13 @@
       
         <div class="post-tags">
           
+            <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+          
             <a href="/tags/高效开发/" rel="tag"><i class="fa fa-tag"></i> 高效开发</a>
           
             <a href="/tags/Android-Studio/" rel="tag"><i class="fa fa-tag"></i> Android Studio</a>
+          
+            <a href="/tags/编程洁癖/" rel="tag"><i class="fa fa-tag"></i> 编程洁癖</a>
           
         </div>
       
@@ -750,17 +768,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -779,7 +788,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -794,9 +803,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -859,15 +866,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -896,7 +895,7 @@
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="./" target="_blank" title="Wexin"><i class="fa fa-fw fa-weixin"></i></a>
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="QQ"><i class="fa fa-fw fa-qq"></i></a>
                   
                 </span>
               
@@ -953,22 +952,6 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整合LiveTemplate"><span class="nav-number">2.</span> <span class="nav-text">整合LiveTemplate</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
         <div class="back-to-top">
@@ -1010,7 +993,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">1:35</span>
+    <span title="站点阅读时长">1:34</span>
   
 </div>
 

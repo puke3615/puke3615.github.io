@@ -156,18 +156,18 @@
 
 
 
-  <meta name="description" content="将Tensorflow训练好的模型部署在Android端。">
-<meta name="keywords" content="Android,Machine Learning,Tensorflow,移动AI,NDK">
+  <meta name="description" content="将Tensorflow训练好的模型部署在Android端，网上找到的很多资料要么过于复杂，要么就根本不能运行，于是记录下具体的整合步骤。">
+<meta name="keywords" content="Android,Machine Learning,Tensorflow,移动AI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android端运行Tensorflow">
 <meta property="og:url" content="http://puke3615.github.io/2017/08/02/Tensorflow-On-Android/index.html">
 <meta property="og:site_name" content="Puke&#39;s Blog">
-<meta property="og:description" content="将Tensorflow训练好的模型部署在Android端。">
+<meta property="og:description" content="将Tensorflow训练好的模型部署在Android端，网上找到的很多资料要么过于复杂，要么就根本不能运行，于是记录下具体的整合步骤。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-02T06:43:36.000Z">
+<meta property="og:updated_time" content="2018-07-28T02:23:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android端运行Tensorflow">
-<meta name="twitter:description" content="将Tensorflow训练好的模型部署在Android端。">
+<meta name="twitter:description" content="将Tensorflow训练好的模型部署在Android端，网上找到的很多资料要么过于复杂，要么就根本不能运行，于是记录下具体的整合步骤。">
 
 
 
@@ -463,6 +463,24 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -495,7 +513,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                <span title="本文字数">969</span>
+                <span title="本文字数">953</span>
               
 
               
@@ -513,8 +531,6 @@
           
 
           
-              <div class="post-description">将Tensorflow训练好的模型部署在Android端。</div>
-          
 
         </div>
       </header>
@@ -529,37 +545,15 @@
       
 
       
-        <p><em>在Android运行Tensorflow模型，网上找到的很多资料要么过于复杂，要么就根本不能运行，于是记录下具体的整合步骤。</em></p>
-<ul>
-<li><p><code>New Project</code></p>
-</li>
-<li><p><code>local.propertities</code>文件中指定ndk目录</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ndk.dir=<span class="regexp">/Users/</span>zijiao<span class="regexp">/Library/</span>Android<span class="regexp">/sdk/</span>ndk-bundle</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>向<code>src/main/jniLibs/[cpu]</code>目录添加对应的<code>libtensorflow_demo.so</code>文件</p>
-<p>其中<code>[cpu]</code>包含<code>arm64-v8a</code>、<code>armeabi-v7a</code>、<code>x86</code>、<code>x86_64</code></p>
-</li>
-<li><p>修改<code>build.gradle</code>文件</p>
-<ul>
-<li><p><code>android</code>闭包中添加</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aaptOptions &#123; noCompress <span class="string">'pb'</span> &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>android-defaultConfig</code>闭包下添加（可选）</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ndk&#123;</span><br><span class="line">	<span class="comment">//生成的so名字</span></span><br><span class="line">	moduleName <span class="string">"tensorflow_demo"</span>         </span><br><span class="line">	<span class="comment">//输出指定三种abi体系结构下的so库。目前可有可无。</span></span><br><span class="line">	abiFilters <span class="string">"arm64-v8a"</span>, <span class="string">"armeabi-v7a"</span>, <span class="string">"x86_64"</span>, <span class="string">"x86"</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>将<code>TensorFlowInferenceInterface.java</code> 拷到<code>src/main/java/org.tensorflow.contrib.android</code>目录下</p>
-<p>注意加载so文件</p>
+        <p><em>将Tensorflow训练好的模型部署在Android端，网上找到的很多资料要么过于复杂，要么就根本不能运行，于是记录下具体的整合步骤。</em></p>
+<a id="more"></a>
+<h3 id="New-Project"><a href="#New-Project" class="headerlink" title="New Project"></a><code>New Project</code></h3><h3 id="local-propertities文件中指定ndk目录"><a href="#local-propertities文件中指定ndk目录" class="headerlink" title="local.propertities文件中指定ndk目录"></a><code>local.propertities</code>文件中指定ndk目录</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ndk.dir=<span class="regexp">/Users/</span>zijiao<span class="regexp">/Library/</span>Android<span class="regexp">/sdk/</span>ndk-bundle</span><br></pre></td></tr></table></figure>
+<h3 id="向src-main-jniLibs-cpu-目录添加对应的libtensorflow-demo-so文件"><a href="#向src-main-jniLibs-cpu-目录添加对应的libtensorflow-demo-so文件" class="headerlink" title="向src/main/jniLibs/[cpu]目录添加对应的libtensorflow_demo.so文件"></a>向<code>src/main/jniLibs/[cpu]</code>目录添加对应的<code>libtensorflow_demo.so</code>文件</h3><h3 id="其中-cpu-包含arm64-v8a、armeabi-v7a、x86、x86-64"><a href="#其中-cpu-包含arm64-v8a、armeabi-v7a、x86、x86-64" class="headerlink" title="其中[cpu]包含arm64-v8a、armeabi-v7a、x86、x86_64"></a>其中<code>[cpu]</code>包含<code>arm64-v8a</code>、<code>armeabi-v7a</code>、<code>x86</code>、<code>x86_64</code></h3><h4 id="修改build-gradle文件"><a href="#修改build-gradle文件" class="headerlink" title="修改build.gradle文件"></a>修改<code>build.gradle</code>文件</h4><h4 id="android闭包中添加"><a href="#android闭包中添加" class="headerlink" title="android闭包中添加"></a><code>android</code>闭包中添加</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aaptOptions &#123; noCompress <span class="string">'pb'</span> &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="android-defaultConfig闭包下添加（可选）"><a href="#android-defaultConfig闭包下添加（可选）" class="headerlink" title="android-defaultConfig闭包下添加（可选）"></a><code>android-defaultConfig</code>闭包下添加（可选）</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ndk&#123;</span><br><span class="line">	<span class="comment">//生成的so名字</span></span><br><span class="line">	moduleName <span class="string">"tensorflow_demo"</span>         </span><br><span class="line">	<span class="comment">//输出指定三种abi体系结构下的so库。目前可有可无。</span></span><br><span class="line">	abiFilters <span class="string">"arm64-v8a"</span>, <span class="string">"armeabi-v7a"</span>, <span class="string">"x86_64"</span>, <span class="string">"x86"</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="将TensorFlowInferenceInterface-java-拷到src-main-java-org-tensorflow-contrib-android目录下"><a href="#将TensorFlowInferenceInterface-java-拷到src-main-java-org-tensorflow-contrib-android目录下" class="headerlink" title="将TensorFlowInferenceInterface.java 拷到src/main/java/org.tensorflow.contrib.android目录下"></a>将<code>TensorFlowInferenceInterface.java</code> 拷到<code>src/main/java/org.tensorflow.contrib.android</code>目录下</h3><p>注意加载so文件</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    System.loadLibrary(<span class="string">"tensorflow_demo"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将<code>Model文件</code>和<code>Label文件</code>拷到<code>src/main/assets</code>目录下</p>
-</li>
-<li><p>测试是否成功</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TensorFlowInferenceInterface inference = <span class="keyword">new</span> TensorFlowInferenceInterface();</span><br><span class="line">String modelPath = <span class="string">"file:///android_asset/[.pb文件名]"</span>;</span><br><span class="line"><span class="keyword">int</span> code = inference.initializeTensorFlow(getAssets(), modelPath);</span><br><span class="line"><span class="keyword">if</span> (code == <span class="number">0</span>) &#123;</span><br><span class="line">	<span class="comment">// 初始化成功</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="将Model文件和Label文件拷到src-main-assets目录下"><a href="#将Model文件和Label文件拷到src-main-assets目录下" class="headerlink" title="将Model文件和Label文件拷到src/main/assets目录下"></a>将<code>Model文件</code>和<code>Label文件</code>拷到<code>src/main/assets</code>目录下</h3><h3 id="测试是否成功"><a href="#测试是否成功" class="headerlink" title="测试是否成功"></a>测试是否成功</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TensorFlowInferenceInterface inference = <span class="keyword">new</span> TensorFlowInferenceInterface();</span><br><span class="line">String modelPath = <span class="string">"file:///android_asset/[.pb文件名]"</span>;</span><br><span class="line"><span class="keyword">int</span> code = inference.initializeTensorFlow(getAssets(), modelPath);</span><br><span class="line"><span class="keyword">if</span> (code == <span class="number">0</span>) &#123;</span><br><span class="line">	<span class="comment">// 初始化成功</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>​</p>
-</li>
-</ul>
 
       
     </div>
@@ -590,28 +584,28 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2016/08/29/Android-Annotation/" rel="bookmark">Android注解</a></div>
+      <div class="popular-posts-title"><a href="/2017/10/12/Tensorflow-Poems-Source/" rel="bookmark">基于RNN自动作诗源码剖析</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/11/08/Keras-Doc-Summary/" rel="bookmark">Keras框架总结</a></div>
+      <div class="popular-posts-title"><a href="/2018/06/05/Android-Studio-Debug-1/" rel="bookmark">Android Studio之Debug（一）：运行期代码植入</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/08/01/Machine-Learning-Inaction/" rel="bookmark">读《机器学习实战》</a></div>
+      <div class="popular-posts-title"><a href="/2016/10/16/Android-Studio-Template-For-File-Group/" rel="bookmark">Android Studio模板之文件组</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/09/01/Sklearn-Linear-Regression/" rel="bookmark">Sklearn之线性回归</a></div>
+      <div class="popular-posts-title"><a href="/2018/06/06/Android-Studio-Debug-2/" rel="bookmark">Android Studio之Debug（二）：自定义Debug变量视图</a></div>
       
     </li>
   
@@ -655,8 +649,6 @@
             <a href="/tags/Tensorflow/" rel="tag"><i class="fa fa-tag"></i> Tensorflow</a>
           
             <a href="/tags/移动AI/" rel="tag"><i class="fa fa-tag"></i> 移动AI</a>
-          
-            <a href="/tags/NDK/" rel="tag"><i class="fa fa-tag"></i> NDK</a>
           
         </div>
       
@@ -753,8 +745,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -773,7 +774,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -788,9 +789,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -853,15 +852,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -890,7 +881,7 @@
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="./" target="_blank" title="Wexin"><i class="fa fa-fw fa-weixin"></i></a>
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="QQ"><i class="fa fa-fw fa-qq"></i></a>
                   
                 </span>
               
@@ -947,6 +938,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#New-Project"><span class="nav-number">1.</span> <span class="nav-text">New Project</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#local-propertities文件中指定ndk目录"><span class="nav-number">2.</span> <span class="nav-text">local.propertities文件中指定ndk目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向src-main-jniLibs-cpu-目录添加对应的libtensorflow-demo-so文件"><span class="nav-number">3.</span> <span class="nav-text">向src/main/jniLibs/[cpu]目录添加对应的libtensorflow_demo.so文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其中-cpu-包含arm64-v8a、armeabi-v7a、x86、x86-64"><span class="nav-number">4.</span> <span class="nav-text">其中[cpu]包含arm64-v8a、armeabi-v7a、x86、x86_64</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改build-gradle文件"><span class="nav-number">4.1.</span> <span class="nav-text">修改build.gradle文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#android闭包中添加"><span class="nav-number">4.2.</span> <span class="nav-text">android闭包中添加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#android-defaultConfig闭包下添加（可选）"><span class="nav-number">4.3.</span> <span class="nav-text">android-defaultConfig闭包下添加（可选）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将TensorFlowInferenceInterface-java-拷到src-main-java-org-tensorflow-contrib-android目录下"><span class="nav-number">5.</span> <span class="nav-text">将TensorFlowInferenceInterface.java 拷到src/main/java/org.tensorflow.contrib.android目录下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将Model文件和Label文件拷到src-main-assets目录下"><span class="nav-number">6.</span> <span class="nav-text">将Model文件和Label文件拷到src/main/assets目录下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试是否成功"><span class="nav-number">7.</span> <span class="nav-text">测试是否成功</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -988,7 +995,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">1:35</span>
+    <span title="站点阅读时长">1:34</span>
   
 </div>
 

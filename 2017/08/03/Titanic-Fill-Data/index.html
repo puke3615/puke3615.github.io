@@ -156,22 +156,22 @@
 
 
 
-  <meta name="description" content="对Titanic中缺失数据进行分析、补全。">
-<meta name="keywords" content="Machine Learning,特征工程,Titanic,Kaggle">
+  <meta name="description" content="Kaggle的比赛入门，通过机器学习模型对泰坦尼克号上幸存情况进行预测，这里主要针对预测前的特征工程处理，对缺失数据进行分析和补全。">
+<meta name="keywords" content="Machine Learning,Python,Kaggle">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Titanic缺失数据处理">
 <meta property="og:url" content="http://puke3615.github.io/2017/08/03/Titanic-Fill-Data/index.html">
 <meta property="og:site_name" content="Puke&#39;s Blog">
-<meta property="og:description" content="对Titanic中缺失数据进行分析、补全。">
+<meta property="og:description" content="Kaggle的比赛入门，通过机器学习模型对泰坦尼克号上幸存情况进行预测，这里主要针对预测前的特征工程处理，对缺失数据进行分析和补全。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://puke3615.github.io/2017/08/03/Titanic-Fill-Data/data_fix_fare1.png">
 <meta property="og:image" content="http://puke3615.github.io/2017/08/03/Titanic-Fill-Data/data_fix_fare2.png">
 <meta property="og:image" content="http://puke3615.github.io/2017/08/03/Titanic-Fill-Data/data_fix_age1.png">
 <meta property="og:image" content="http://puke3615.github.io/2017/08/03/Titanic-Fill-Data/data_fix_age2.png">
-<meta property="og:updated_time" content="2017-08-04T01:04:14.000Z">
+<meta property="og:updated_time" content="2018-07-28T02:15:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Titanic缺失数据处理">
-<meta name="twitter:description" content="对Titanic中缺失数据进行分析、补全。">
+<meta name="twitter:description" content="Kaggle的比赛入门，通过机器学习模型对泰坦尼克号上幸存情况进行预测，这里主要针对预测前的特征工程处理，对缺失数据进行分析和补全。">
 <meta name="twitter:image" content="http://puke3615.github.io/2017/08/03/Titanic-Fill-Data/data_fix_fare1.png">
 
 
@@ -468,6 +468,24 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -518,8 +536,6 @@
           
 
           
-              <div class="post-description">对Titanic中缺失数据进行分析、补全。</div>
-          
 
         </div>
       </header>
@@ -534,7 +550,9 @@
       
 
       
-        <h3 id="加载数据"><a href="#加载数据" class="headerlink" title="加载数据"></a>加载数据</h3><p>加载csv文件数据</p>
+        <p>Kaggle的比赛入门，通过机器学习模型对泰坦尼克号上幸存情况进行预测，这里主要针对预测前的特征工程处理，对缺失数据进行分析和补全。</p>
+<a id="more"></a>
+<h3 id="加载数据"><a href="#加载数据" class="headerlink" title="加载数据"></a>加载数据</h3><p>加载csv文件数据</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data</span><span class="params">(path)</span>:</span></span><br><span class="line">    <span class="keyword">import</span> csv <span class="keyword">as</span> csv</span><br><span class="line">    reader = csv.reader(open(path, <span class="string">'rb'</span>))</span><br><span class="line">    header = reader.next()</span><br><span class="line">    data = []</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> reader:</span><br><span class="line">        data.append(line)</span><br><span class="line">    <span class="keyword">return</span> header, np.array(data)</span><br></pre></td></tr></table></figure>
 <p>测试代码</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_header, train_data = load_data(TRAIN_PATH)</span><br><span class="line"><span class="keyword">print</span> train_header</span><br></pre></td></tr></table></figure>
@@ -630,13 +648,6 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/08/01/Machine-Learning-Inaction/" rel="bookmark">读《机器学习实战》</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/2017/09/01/Sklearn-Linear-Regression/" rel="bookmark">Sklearn之线性回归</a></div>
       
     </li>
@@ -644,7 +655,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2017/09/01/Sklearn-Faces-Recognition-With-Eigenfaces-And-SVM/" rel="bookmark">Sklearn之基于面部特征和SVM的脸部识别</a></div>
+      <div class="popular-posts-title"><a href="/2017/10/12/Tensorflow-Poems-Source/" rel="bookmark">基于RNN自动作诗源码剖析</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/08/01/Machine-Learning-Inaction/" rel="bookmark">读《机器学习实战》</a></div>
       
     </li>
   
@@ -690,9 +708,7 @@
           
             <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
           
-            <a href="/tags/特征工程/" rel="tag"><i class="fa fa-tag"></i> 特征工程</a>
-          
-            <a href="/tags/Titanic/" rel="tag"><i class="fa fa-tag"></i> Titanic</a>
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
           
             <a href="/tags/Kaggle/" rel="tag"><i class="fa fa-tag"></i> Kaggle</a>
           
@@ -820,7 +836,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -835,9 +851,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -900,15 +914,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -937,7 +943,7 @@
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="./" target="_blank" title="Wexin"><i class="fa fa-fw fa-weixin"></i></a>
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="QQ"><i class="fa fa-fw fa-qq"></i></a>
                   
                 </span>
               
@@ -1051,7 +1057,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">1:35</span>
+    <span title="站点阅读时长">1:34</span>
   
 </div>
 
