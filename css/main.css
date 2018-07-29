@@ -2097,7 +2097,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #de0569;
+  background: #96d4f5;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3461,4 +3461,7 @@ ul.breadcrumb li+li:last-child {
 }
 body {
   text-shadow: 0.01em 0.01em 0.01em #999 !important;
+}
+.content-wrap {
+  background-color: rgba(255,255,255,0.8);
 }
