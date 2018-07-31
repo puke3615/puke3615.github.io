@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://puke3615.github.io/"/>
-  <updated>2018-07-31T04:45:28.000Z</updated>
+  <updated>2018-07-31T05:44:47.000Z</updated>
   <id>http://puke3615.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Android Studio高频Postfix总结</title>
+    <link href="http://puke3615.github.io/2018/07/31/Android-Studio-Postfix/"/>
+    <id>http://puke3615.github.io/2018/07/31/Android-Studio-Postfix/</id>
+    <published>2018-07-31T05:14:46.000Z</published>
+    <updated>2018-07-31T05:44:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="var"><a href="#var" class="headerlink" title="var"></a>var</h3><p><img src="/2018/07/31/Android-Studio-Postfix/var.gif" alt="var"></p><h3 id="null"><a href="#null" class="headerlink" title="null"></a>null</h3><p><img src="/2018/07/31/Android-Studio-Postfix/null.gif" alt="null"></p><a id="more"></a><h3 id="notnull"><a href="#notnull" class="headerlink" title="notnull"></a>notnull</h3><p><img src="/2018/07/31/Android-Studio-Postfix/notnull.gif" alt="notnull"></p><h3 id="nn"><a href="#nn" class="headerlink" title="nn"></a>nn</h3><p><img src="/2018/07/31/Android-Studio-Postfix/nn.gif" alt="nn"></p><h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><p><img src="/2018/07/31/Android-Studio-Postfix/for.gif" alt="for"></p><h3 id="fori"><a href="#fori" class="headerlink" title="fori"></a>fori</h3><p><img src="/2018/07/31/Android-Studio-Postfix/fori.gif" alt="fori"></p><h3 id="not"><a href="#not" class="headerlink" title="not"></a>not</h3><p><img src="/2018/07/31/Android-Studio-Postfix/not.gif" alt="not"></p><h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><p><img src="/2018/07/31/Android-Studio-Postfix/if.gif" alt="if"></p><h3 id="cast"><a href="#cast" class="headerlink" title="cast"></a>cast</h3><p><img src="/2018/07/31/Android-Studio-Postfix/cast.gif" alt="cast"></p><h3 id="return"><a href="#return" class="headerlink" title="return"></a>return</h3><p><img src="/2018/07/31/Android-Studio-Postfix/return.gif" alt="return"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;var&quot;&gt;&lt;a href=&quot;#var&quot; class=&quot;headerlink&quot; title=&quot;var&quot;&gt;&lt;/a&gt;var&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;/2018/07/31/Android-Studio-Postfix/var.gif&quot; alt=&quot;var&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;null&quot;&gt;&lt;a href=&quot;#null&quot; class=&quot;headerlink&quot; title=&quot;null&quot;&gt;&lt;/a&gt;null&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;/2018/07/31/Android-Studio-Postfix/null.gif&quot; alt=&quot;null&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="技术" scheme="http://puke3615.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="高效开发" scheme="http://puke3615.github.io/tags/%E9%AB%98%E6%95%88%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="Android Sutdio" scheme="http://puke3615.github.io/tags/Android-Sutdio/"/>
+    
+  </entry>
   
   <entry>
     <title>Java、Groovy、JavaScript、Python各语言对比</title>
@@ -545,33 +570,6 @@
       <category term="Java" scheme="http://puke3615.github.io/tags/Java/"/>
     
       <category term="编程设计" scheme="http://puke3615.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AE%BE%E8%AE%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CodeGenerator</title>
-    <link href="http://puke3615.github.io/2016/08/29/CodeGenerator/"/>
-    <id>http://puke3615.github.io/2016/08/29/CodeGenerator/</id>
-    <published>2016-08-29T02:15:22.000Z</published>
-    <updated>2018-07-28T03:28:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Android Studio Plugin的一些拓展插件使用，简化我们的日常开发。</p><h5 id="单例生成"><a href="#单例生成" class="headerlink" title="单例生成"></a>单例生成</h5><p><img src="/2016/08/29/CodeGenerator/gif/Singleton.gif" alt="单例生成"></p><a id="more"></a><h5 id="Copy生成"><a href="#Copy生成" class="headerlink" title="Copy生成"></a>Copy生成</h5><p><img src="/2016/08/29/CodeGenerator/gif/Copy.gif" alt="Copy生成"></p><h5 id="FindView生成"><a href="#FindView生成" class="headerlink" title="FindView生成"></a>FindView生成</h5><p><img src="/2016/08/29/CodeGenerator/gif/FindView.gif" alt="FindView生成"></p><h5 id="MainMethod生成"><a href="#MainMethod生成" class="headerlink" title="MainMethod生成"></a>MainMethod生成</h5><p><img src="/2016/08/29/CodeGenerator/gif/MainMethod.gif" alt="MainMethod生成"></p><h5 id="Activity添加到AndroidManifest-xml"><a href="#Activity添加到AndroidManifest-xml" class="headerlink" title="Activity添加到AndroidManifest.xml"></a>Activity添加到AndroidManifest.xml</h5><p><img src="/2016/08/29/CodeGenerator/gif/Activity.gif" alt="Activity添加到AndroidManifest.xml"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Android Studio Plugin的一些拓展插件使用，简化我们的日常开发。&lt;/p&gt;
-&lt;h5 id=&quot;单例生成&quot;&gt;&lt;a href=&quot;#单例生成&quot; class=&quot;headerlink&quot; title=&quot;单例生成&quot;&gt;&lt;/a&gt;单例生成&lt;/h5&gt;&lt;p&gt;&lt;img src=&quot;/2016/08/29/CodeGenerator/gif/Singleton.gif&quot; alt=&quot;单例生成&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="技术" scheme="http://puke3615.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Android" scheme="http://puke3615.github.io/tags/Android/"/>
-    
-      <category term="Android Studio" scheme="http://puke3615.github.io/tags/Android-Studio/"/>
-    
-      <category term="Android Studio Plugin - 高效开发 - Generaotr" scheme="http://puke3615.github.io/tags/Android-Studio-Plugin-%E9%AB%98%E6%95%88%E5%BC%80%E5%8F%91-Generaotr/"/>
     
   </entry>
   
