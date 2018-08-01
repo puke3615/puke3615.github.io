@@ -16,7 +16,7 @@
   <entry>
     <title><![CDATA[Android Studio高频Postfix总结]]></title>
     <url>%2F2018%2F07%2F31%2FAndroid-Studio-Postfix%2F</url>
-    <content type="text"><![CDATA[var null notnull nn for fori not if cast return]]></content>
+    <content type="text"><![CDATA[.var声明 .null判空 .notnull判非空 .nn判非空 .for遍历 .fori带索引的遍历 .not取反 .if条件判断 .cast强转 .return返回值]]></content>
       <categories>
         <category>技术</category>
       </categories>
