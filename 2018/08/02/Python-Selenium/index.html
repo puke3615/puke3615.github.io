@@ -166,7 +166,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://puke3615.github.io/2018/08/02/Python-Selenium/img0.png">
 <meta property="og:image" content="http://puke3615.github.io/2018/08/02/Python-Selenium/img1.gif">
-<meta property="og:updated_time" content="2018-08-03T01:13:08.000Z">
+<meta property="og:updated_time" content="2018-08-03T01:17:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动化处理浏览器任务">
 <meta name="twitter:description" content="在日常工作当中，我们经常会和浏览器打交道，当然就可能会在浏览器上做一些重复、无脑的工作，这篇文章旨在对于这类问题出一个基于脚本的自动化解决方案。">
@@ -627,7 +627,7 @@
 </table>
 <p>可以看到，其中Selenium库包含丰富的元素查找相关的api，找到对应的元素是对该元素进行操作的基础，所以能否快速、便捷、精准的查找到目标元素至关重要。</p>
 <p>这里着重强调一下<code>find_elements_by_xpath</code>函数，该函数是基于<a href="http://www.w3school.com.cn/xpath/" target="_blank" rel="noopener">XPath语法规范</a>进行查找元素的，该规范在爬虫开发、浏览器脚本、XML配置查找等方面的使用时相当高频的。实际上，上面的所有查找方法都可以通过该方法进行替代。</p>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>（略。。。）</p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>（涉及到公司业务保密，这里就不展示出来了）</p>
 <h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><p>用原生Selenium的Api写过一个应用之后，虽然感觉它的Api不算复杂，但对于我们只想写一个自动化脚本而言，还是不够简练，毕竟它的Api的初衷是给为了做浏览器自动化测试使用的。</p>
 <p>而我想要的效果就是，更简单，尽可能一行代码执行一个Action，而一个自动化脚本就是包含多个Action的一个Robot。于是就基于Selenium库封装了很薄的一层<a href="https://github.com/puke3615/selenium_robot" target="_blank" rel="noopener">selenium-robot库</a>，然后发布到<a href="https://pypi.org/project/selenium-robot/#description" target="_blank" rel="noopener">pypi仓库</a>里。</p>
 <p>以最上面的访问Selenium官网的那个Demo来比较，用<code>selenium-robot</code>来实现出来的是这样的</p>
