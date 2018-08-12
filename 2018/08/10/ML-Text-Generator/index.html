@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="BvVQ_EYJPlr609WnQRSiFiTTyhHdK0P2M6MnYk_f_0o" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Playball:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'KFRJ311K0H',
+      apiKey: '4c626345121fb7419731b7ae5a02dc19',
+      indexName: 'Hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索文章","hits_empty":"未找到关键词：${query}","hits_stats":"搜索到${hits}个结果，用时${time}ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言：基于RNN的文本生成器涉及到很多知识点，本文的目的，一方面希望能够给对RNN有兴趣但不了解或者不熟悉整个生成流程的人带来更加全面的认知，另一方面是为了能够将自己在这条路上踩过的坑、困惑的点一一记录下来。">
+<meta name="keywords" content="Machine Learning,Keras,Python,RNN,长文,LSTM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ML-Text-Generator">
+<meta property="og:url" content="http://puke3615.github.io/2018/08/10/ML-Text-Generator/index.html">
+<meta property="og:site_name" content="Puke&#39;s Blog">
+<meta property="og:description" content="前言：基于RNN的文本生成器涉及到很多知识点，本文的目的，一方面希望能够给对RNN有兴趣但不了解或者不熟悉整个生成流程的人带来更加全面的认知，另一方面是为了能够将自己在这条路上踩过的坑、困惑的点一一记录下来。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://puke3615.github.io/2018/08/10/ML-Text-Generator/char_freq.png">
+<meta property="og:image" content="http://puke3615.github.io/2018/08/10/ML-Text-Generator/word_freq.png">
+<meta property="og:updated_time" content="2018-08-12T12:52:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ML-Text-Generator">
+<meta name="twitter:description" content="前言：基于RNN的文本生成器涉及到很多知识点，本文的目的，一方面希望能够给对RNN有兴趣但不了解或者不熟悉整个生成流程的人带来更加全面的认知，另一方面是为了能够将自己在这条路上踩过的坑、困惑的点一一记录下来。">
+<meta name="twitter:image" content="http://puke3615.github.io/2018/08/10/ML-Text-Generator/char_freq.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://puke3615.github.io/2018/08/10/ML-Text-Generator/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>ML-Text-Generator | Puke's Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?34758a82d032eeddb9df79e54b74f600";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Puke's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Keep learning as long as living.</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-media">
+    <a href="/media/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-play-circle"></i> <br />音控</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+    
+
+      <a href="https://github.com/puke3615"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://puke3615.github.io/2018/08/10/ML-Text-Generator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Puke">
+      <meta itemprop="description" content="好事多磨">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Puke's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ML-Text-Generator
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-10 09:37:52" itemprop="dateCreated datePublished" datetime="2018-08-10T09:37:52+08:00">2018-08-10</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/10/ML-Text-Generator/" class="leancloud_visitors" data-flag-title="ML-Text-Generator">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="本文字数">4.8k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">4 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前言：基于RNN的文本生成器涉及到很多知识点，本文的目的，一方面希望能够给对RNN有兴趣但不了解或者不熟悉整个生成流程的人带来更加全面的认知，另一方面是为了能够将自己在这条路上踩过的坑、困惑的点一一记录下来。</p>
+<a id="more"></a>
+<p>[TOC]</p>
+<h1 id="思路串讲"><a href="#思路串讲" class="headerlink" title="思路串讲"></a>思路串讲</h1><p>这里结合一个比较小的例子进行整个生成模型的思路串讲，该部分只涉及思路，无关任何算法和代码。只为了理清整个预处理、训练、生成的流程。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这短短的一生，我们最终都会失去。你不妨大胆一些，爱一个人，攀一座山，追一个梦。</span><br></pre></td></tr></table></figure>
+<p>这里选择了电影《大鱼海棠》中一句很经典的台词作为示例，进行整个思路的串讲。最终的目的是让我们的模型能够自动生成该句子。</p>
+<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>在目前深度学习框架如同雨后春笋般萌生的时代里，深度学习模型的搭建本身不再是高门槛的事情，相比之下数据预处理却是一个尤为重要且直接关系到最终生成结果的一环。</p>
+<h3 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h3><p>一句话，一篇文章，我们要训练它，首先需要把它变成结构化、计算机可理解的序列。</p>
+<p>这里我们就需要将上面的这段话进行拆分为很多个词，以供下一步处理。而我们常用的拆词有两种方式，基于char和基于word（对应到中文就是基于字和基于词），下面将展开说明两种拆词方式。</p>
+<h4 id="基于char分词"><a href="#基于char分词" class="headerlink" title="基于char分词"></a>基于char分词</h4><p>最直观的看这种拆词方式，直接看拆分的结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">'这'</span>, <span class="string">'短'</span>, <span class="string">'短'</span>, <span class="string">'的'</span>, <span class="string">'一'</span>, <span class="string">'生'</span>, <span class="string">'，'</span>, <span class="string">'我'</span>, <span class="string">'们'</span>, <span class="string">'最'</span>, <span class="string">'终'</span>, <span class="string">'都'</span>, <span class="string">'会'</span>, <span class="string">'失'</span>, <span class="string">'去'</span>, <span class="string">'。'</span>, <span class="string">'你'</span>, <span class="string">'不'</span>, <span class="string">'妨'</span>, <span class="string">'大'</span>, <span class="string">'胆'</span>, <span class="string">'一'</span>, <span class="string">'些'</span>, <span class="string">'，'</span>, <span class="string">'爱'</span>, <span class="string">'一'</span>, <span class="string">'个'</span>, <span class="string">'人'</span>, <span class="string">'，'</span>, <span class="string">'攀'</span>, <span class="string">'一'</span>, <span class="string">'座'</span>, <span class="string">'山'</span>, <span class="string">'，'</span>, <span class="string">'追'</span>, <span class="string">'一'</span>, <span class="string">'个'</span>, <span class="string">'梦'</span>, <span class="string">'。'</span>]</span><br></pre></td></tr></table></figure>
+<p>这种方式中的一个字、一个标点符号、一个空格、一个换行符，都是一个独立的词，我们都要进行统计。同时，在拆词时我们还需要对每个词进行词频统计并按照词频从高到低进行排序，以供接下来的去词使用，我们统计得出如下的结果</p>
+<p><img src="/2018/08/10/ML-Text-Generator/char_freq.png" alt=""></p>
+<h4 id="基于word分词"><a href="#基于word分词" class="headerlink" title="基于word分词"></a>基于word分词</h4><p>基于词进行拆分的方式是指拆分后的句子中会直接包含一些词语而非单字。对于英文就是一个单词，对于中文可以是一个字，也可以是一个词语。如果是一个词语，那该词语一定是确实有含义的而非任意进行组合。比如基于该示例进行的拆词结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">'这'</span>, <span class="string">'短短的'</span>, <span class="string">'一生'</span>, <span class="string">'，'</span>, <span class="string">'我们'</span>, <span class="string">'最终'</span>, <span class="string">'都'</span>, <span class="string">'会'</span>, <span class="string">'失去'</span>, <span class="string">'。'</span>, <span class="string">'你'</span>, <span class="string">'不妨'</span>, <span class="string">'大胆'</span>, <span class="string">'一些'</span>, <span class="string">'，'</span>, <span class="string">'爱'</span>, <span class="string">'一个'</span>, <span class="string">'人'</span>, <span class="string">'，'</span>, <span class="string">'攀'</span>, <span class="string">'一座'</span>, <span class="string">'山'</span>, <span class="string">'，'</span>, <span class="string">'追'</span>, <span class="string">'一个'</span>, <span class="string">'梦'</span>, <span class="string">'。'</span>]</span><br></pre></td></tr></table></figure>
+<p>对应的词频统计如下</p>
+<p><img src="/2018/08/10/ML-Text-Generator/word_freq.png" alt=""></p>
+<h3 id="去词"><a href="#去词" class="headerlink" title="去词"></a>去词</h3><p>（移除低频词，按词频选择最大词数，和最小词频）</p>
+<p>在本示例汇总，去词步骤是可以省略的，因为总次数特别少。但对于几百M、甚至几十G的文本而言，该步骤会显得尤为重要。如果一本小说中有5000个字（去重后），但可能其有1000个词只出现过10次以下的，这部分词我们需要剔除掉，因为对于整个庞大的数据集而言这种低频次的词是可以忽略不计的。从这个维度来说只能说明保留低频词的不必要性，而实际上，我们还需要从另一维度来说明取出低频词的必要性，那就是防止维度爆炸，关于这一点会在后面提到。</p>
+<h3 id="数据映射"><a href="#数据映射" class="headerlink" title="数据映射"></a>数据映射</h3><p>（先排序，再映射，保证word不变性）</p>
+<p>上面提到我们需要将数据转化为计算机可理解的序列，而实际上仅仅将句子转化为词的层面上，还是不够的。我们需要对词在进行数字形式的离散化，以便后面我们的模型能够进行识别。</p>
+<p>这里我们就以上面基于char分词的结果进行映射选择，我们的词和数字索引的映射关系是这样的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"一"</span>: <span class="number">0</span></span><br><span class="line"><span class="string">"，"</span>: <span class="number">1</span></span><br><span class="line"><span class="string">"短"</span>: <span class="number">2</span></span><br><span class="line"><span class="string">"个"</span>: <span class="number">3</span></span><br><span class="line"><span class="string">"。"</span>: <span class="number">4</span></span><br><span class="line"><span class="string">"都"</span>: <span class="number">5</span></span><br><span class="line"><span class="string">"追"</span>: <span class="number">6</span></span><br><span class="line"><span class="string">"这"</span>: <span class="number">7</span></span><br><span class="line"><span class="string">"胆"</span>: <span class="number">8</span></span><br><span class="line"><span class="string">"终"</span>: <span class="number">9</span></span><br><span class="line"><span class="string">"的"</span>: <span class="number">10</span></span><br><span class="line"><span class="string">"生"</span>: <span class="number">11</span></span><br><span class="line"><span class="string">"爱"</span>: <span class="number">12</span></span><br><span class="line"><span class="string">"梦"</span>: <span class="number">13</span></span><br><span class="line"><span class="string">"最"</span>: <span class="number">14</span></span><br><span class="line"><span class="string">"攀"</span>: <span class="number">15</span></span><br><span class="line"><span class="string">"我"</span>: <span class="number">16</span></span><br><span class="line"><span class="string">"座"</span>: <span class="number">17</span></span><br><span class="line"><span class="string">"山"</span>: <span class="number">18</span></span><br><span class="line"><span class="string">"妨"</span>: <span class="number">19</span></span><br><span class="line"><span class="string">"失"</span>: <span class="number">20</span></span><br><span class="line"><span class="string">"大"</span>: <span class="number">21</span></span><br><span class="line"><span class="string">"去"</span>: <span class="number">22</span></span><br><span class="line"><span class="string">"你"</span>: <span class="number">23</span></span><br><span class="line"><span class="string">"会"</span>: <span class="number">24</span></span><br><span class="line"><span class="string">"们"</span>: <span class="number">25</span></span><br><span class="line"><span class="string">"人"</span>: <span class="number">26</span></span><br><span class="line"><span class="string">"些"</span>: <span class="number">27</span></span><br><span class="line"><span class="string">"不"</span>: <span class="number">28</span></span><br></pre></td></tr></table></figure>
+<p>该映射关系非常重要，将纵向贯穿到接下来的数据处理、模型训练和最后的模型预测的整个流程。由于该映射关系是标识<code>词 =&gt; 词索引</code>的，所以我们简称之为<code>word2index</code>；相反的，我们还需要一个<code>词索引 =&gt; 词</code>的反向映射关系，即<code>0: &quot;一&quot;, 1: &quot;，&quot;, 2: &quot;短&quot;, …</code>这种形式的映射关系，我们简称之为<code>index2word</code>。</p>
+<h3 id="数据对齐"><a href="#数据对齐" class="headerlink" title="数据对齐"></a>数据对齐</h3><p>宏观来说，RNN模型是专门用来处理序列数据的，它最大的优势就是能够打破普通神经网络中维度固定的限制；但微观来说，RNN模型的基本单元又是一个个基本的神经元组成的，所以更小范畴内来看，在数据处理方面还是需要对训练数据进行数据对齐操作的。</p>
+<p>具体的对齐操作是指我们根据指定长度（比如5）的词作为输入，前面不足该长度的用起始符（这里用<code>【</code>）代替，该输入序列的下一词会作为对应的输出，然后再结合该输出作为下次预测的输入继续进行预测，直到预测到结束符（这里用<code>】</code>标识）为止，便完成了一整个预测流程。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">['【', '【', '【', '【', '【'] =&gt; '这'</span><br><span class="line">['【', '【', '【', '【', '这'] =&gt; '短'</span><br><span class="line">['【', '【', '【', '这', '短'] =&gt; '短'</span><br><span class="line">['【', '【', '这', '短', '短'] =&gt; '的'</span><br><span class="line">['【', '这', '短', '短', '的'] =&gt; '一'</span><br><span class="line">['这', '短', '短', '的', '一'] =&gt; '生'</span><br><span class="line">['短', '短', '的', '一', '生'] =&gt; '，'</span><br><span class="line">['短', '的', '一', '生', '，'] =&gt; '我'</span><br><span class="line">['的', '一', '生', '，', '我'] =&gt; '们'</span><br><span class="line">['一', '生', '，', '我', '们'] =&gt; '最'</span><br><span class="line">['生', '，', '我', '们', '最'] =&gt; '终'</span><br><span class="line">['，', '我', '们', '最', '终'] =&gt; '都'</span><br><span class="line">['我', '们', '最', '终', '都'] =&gt; '会'</span><br><span class="line">['们', '最', '终', '都', '会'] =&gt; '失'</span><br><span class="line">['最', '终', '都', '会', '失'] =&gt; '去'</span><br><span class="line">['终', '都', '会', '失', '去'] =&gt; '。'</span><br><span class="line">['都', '会', '失', '去', '。'] =&gt; '你'</span><br><span class="line">['会', '失', '去', '。', '你'] =&gt; '不'</span><br><span class="line">['失', '去', '。', '你', '不'] =&gt; '妨'</span><br><span class="line">['去', '。', '你', '不', '妨'] =&gt; '大'</span><br><span class="line">['。', '你', '不', '妨', '大'] =&gt; '胆'</span><br><span class="line">['你', '不', '妨', '大', '胆'] =&gt; '一'</span><br><span class="line">['不', '妨', '大', '胆', '一'] =&gt; '些'</span><br><span class="line">['妨', '大', '胆', '一', '些'] =&gt; '，'</span><br><span class="line">['大', '胆', '一', '些', '，'] =&gt; '爱'</span><br><span class="line">['胆', '一', '些', '，', '爱'] =&gt; '一'</span><br><span class="line">['一', '些', '，', '爱', '一'] =&gt; '个'</span><br><span class="line">['些', '，', '爱', '一', '个'] =&gt; '人'</span><br><span class="line">['，', '爱', '一', '个', '人'] =&gt; '，'</span><br><span class="line">['爱', '一', '个', '人', '，'] =&gt; '攀'</span><br><span class="line">['一', '个', '人', '，', '攀'] =&gt; '一'</span><br><span class="line">['个', '人', '，', '攀', '一'] =&gt; '座'</span><br><span class="line">['人', '，', '攀', '一', '座'] =&gt; '山'</span><br><span class="line">['，', '攀', '一', '座', '山'] =&gt; '，'</span><br><span class="line">['攀', '一', '座', '山', '，'] =&gt; '追'</span><br><span class="line">['一', '座', '山', '，', '追'] =&gt; '一'</span><br><span class="line">['座', '山', '，', '追', '一'] =&gt; '个'</span><br><span class="line">['山', '，', '追', '一', '个'] =&gt; '梦'</span><br><span class="line">['，', '追', '一', '个', '梦'] =&gt; '。'</span><br><span class="line">['追', '一', '个', '梦', '。'] =&gt; '】'</span><br></pre></td></tr></table></figure>
+<p>上面的映射关系是为了便于我们理解而写的形式，而实际上提供给我们模型学习的数据是通过上面的<code>word2index</code>映射的数据。如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">['39', '39', '39', '39', '39'] =&gt; ' 7'</span><br><span class="line">['39', '39', '39', '39', ' 7'] =&gt; ' 2'</span><br><span class="line">				.</span><br><span class="line">				.</span><br><span class="line">				.</span><br><span class="line">[' 1', ' 6', ' 0', ' 3', '13'] =&gt; ' 4'</span><br><span class="line">[' 6', ' 0', ' 3', '13', ' 4'] =&gt; '40'</span><br></pre></td></tr></table></figure>
+<p>由于index形式的数据可读性不好，就不一一展示出来了。</p>
+<blockquote>
+<p>注：word形式的数据到index形式的数据需要特别注意的一点是，<code>【</code>和<code>】</code>这两个标识符在<code>word2index</code>中是没有对应的index的，这个时候需要我们来约定一种映射关系：起始符对应总词数，结束符对应总词数 + 1。比如对于本例公有有39个词，那词索引范围就是0-38，此时起始符就对应总词数39，结束符就对应总次数39+1=40。</p>
+</blockquote>
+<h2 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h2><h3 id="数据供给方式"><a href="#数据供给方式" class="headerlink" title="数据供给方式"></a>数据供给方式</h3><p>数据供给是指预处理后的数据供给模型进行训练，一般的数据供给的方式有两种：全量供给和基于生成器的供给。</p>
+<h4 id="全量"><a href="#全量" class="headerlink" title="全量"></a>全量</h4><p>顾名思义，全量供给是指一次性把所有的数据全部提供给模型，告诉模型如何每次吃下多少（batch_size）条数据，然后模型自己会每次从中去取。</p>
+<p>该方式的好处是数据供给方便，不需要过多的计算<code>steps_per_epoch</code>和<code>batch_size</code>的关系；缺点就是会占用全量训练数据的内存，所以对于小数据集的数据推荐使用该方式。</p>
+<h4 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h4><p>基于生成器模式的数据提供，它实际上是采用了懒加载的方式，模型通过迭代来取到下一batch的数据，生成器方式的数据供给可以通过<code>Python</code>语言的<code>yield</code>关键词来配合完成。</p>
+<p>由于数据是懒加载的，因此该方式的好处是极大程度节省内存占用；当然对应的缺点就是实现的成本要高于前者，且需要计算出<code>steps_per_epoch</code>来间接告诉模型总数据量。（在CV方向的DL模型中基本上都会使用该方式。）</p>
+<h3 id="模型黑盒"><a href="#模型黑盒" class="headerlink" title="模型黑盒"></a>模型黑盒</h3><p>这里权且不展示涉及到模型的原理相关知识点，先把它当做一个模型黑盒来使用。但要特殊说明一点，RNN的之所以独特，是因为它可以处理一般神经网络无法处理的非固定维度的数据。</p>
+<h2 id="模型预测"><a href="#模型预测" class="headerlink" title="模型预测"></a>模型预测</h2><h3 id="初始数据"><a href="#初始数据" class="headerlink" title="初始数据"></a>初始数据</h3><p>（seed or random）</p>
+<h3 id="预测"><a href="#预测" class="headerlink" title="预测"></a>预测</h3><p>（batch_size的处理）</p>
+<h3 id="结果选择"><a href="#结果选择" class="headerlink" title="结果选择"></a>结果选择</h3><p>（best or prob）</p>
+<h3 id="迭代预测"><a href="#迭代预测" class="headerlink" title="迭代预测"></a>迭代预测</h3><p>（策略：seed or padding）</p>
+<h1 id="RNN模型"><a href="#RNN模型" class="headerlink" title="RNN模型"></a>RNN模型</h1><h2 id="一般NN，及其乏力点"><a href="#一般NN，及其乏力点" class="headerlink" title="一般NN，及其乏力点"></a>一般NN，及其乏力点</h2><h2 id="RNN模型的有效性"><a href="#RNN模型的有效性" class="headerlink" title="RNN模型的有效性"></a>RNN模型的有效性</h2><h2 id="RNN的不足"><a href="#RNN的不足" class="headerlink" title="RNN的不足"></a>RNN的不足</h2><h2 id="强大的LSTM"><a href="#强大的LSTM" class="headerlink" title="强大的LSTM"></a>强大的LSTM</h2><h1 id="编码实战"><a href="#编码实战" class="headerlink" title="编码实战"></a>编码实战</h1><h2 id="数据选择"><a href="#数据选择" class="headerlink" title="数据选择"></a>数据选择</h2><h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><h2 id="预训练"><a href="#预训练" class="headerlink" title="预训练"></a>预训练</h2><h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><h2 id="预测-1"><a href="#预测-1" class="headerlink" title="预测"></a>预测</h2><h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><h2 id="预处理-1"><a href="#预处理-1" class="headerlink" title="预处理"></a>预处理</h2><h2 id="RNN模型-1"><a href="#RNN模型-1" class="headerlink" title="RNN模型"></a>RNN模型</h2><h2 id="经典案例"><a href="#经典案例" class="headerlink" title="经典案例"></a>经典案例</h2><h2 id="相关源码实现"><a href="#相关源码实现" class="headerlink" title="相关源码实现"></a>相关源码实现</h2>
+      
+    </div>
+
+    <div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;"><br/>------------- The end -------------</div>
+    
+</div>
+    
+    </div>
+
+    
+      
+
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/10/12/Tensorflow-Poems-Source/" rel="bookmark">基于RNN自动作诗源码剖析</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/11/08/Keras-Doc-Summary/" rel="bookmark">Keras框架总结</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/09/01/Sklearn-Linear-Regression/" rel="bookmark">Sklearn之线性回归</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/05/03/Keras-Scene-Competion/" rel="bookmark">AI场景分类竞赛</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/08/03/Titanic-Fill-Data/" rel="bookmark">Titanic缺失数据处理</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Puke</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://puke3615.github.io/2018/08/10/ML-Text-Generator/" title="ML-Text-Generator">http://puke3615.github.io/2018/08/10/ML-Text-Generator/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          
+            <a href="/tags/Keras/" rel="tag"><i class="fa fa-tag"></i> Keras</a>
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/RNN/" rel="tag"><i class="fa fa-tag"></i> RNN</a>
+          
+            <a href="/tags/长文/" rel="tag"><i class="fa fa-tag"></i> 长文</a>
+          
+            <a href="/tags/LSTM/" rel="tag"><i class="fa fa-tag"></i> LSTM</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+               <div id="needsharebutton-postbottom">
+                 <span class="btn">
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>
+                 </span>
+               </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/02/Python-Selenium/" rel="next" title="自动化处理浏览器任务">
+                <i class="fa fa-chevron-left"></i> 自动化处理浏览器任务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Puke" />
+            
+              <p class="site-author-name" itemprop="name">Puke</p>
+              <p class="site-description motion-element" itemprop="description">好事多磨</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/puke3615" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/puke3615" target="_blank" title="Zhihu"><i class="fa fa-fw fa-graduation-cap"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="QQ"><i class="fa fa-fw fa-qq"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/Puke56373292" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/zijiao.wu" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i></a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友链
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://notes.iissnan.com/" title="IIssNan" target="_blank">IIssNan</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dandyxu.me/" title="Dandy Xu" target="_blank">Dandy Xu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://chaoo.oschina.io/" title="Chaooo" target="_blank">Chaooo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://acris.me/" title="Acris" target="_blank">Acris</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#思路串讲"><span class="nav-number">1.</span> <span class="nav-text">思路串讲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">1.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据预处理"><span class="nav-number">1.2.</span> <span class="nav-text">数据预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分词"><span class="nav-number">1.2.1.</span> <span class="nav-text">分词</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基于char分词"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">基于char分词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于word分词"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">基于word分词</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#去词"><span class="nav-number">1.2.2.</span> <span class="nav-text">去词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据映射"><span class="nav-number">1.2.3.</span> <span class="nav-text">数据映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据对齐"><span class="nav-number">1.2.4.</span> <span class="nav-text">数据对齐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型训练"><span class="nav-number">1.3.</span> <span class="nav-text">模型训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据供给方式"><span class="nav-number">1.3.1.</span> <span class="nav-text">数据供给方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全量"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">全量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成器"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">生成器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型黑盒"><span class="nav-number">1.3.2.</span> <span class="nav-text">模型黑盒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型预测"><span class="nav-number">1.4.</span> <span class="nav-text">模型预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始数据"><span class="nav-number">1.4.1.</span> <span class="nav-text">初始数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预测"><span class="nav-number">1.4.2.</span> <span class="nav-text">预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果选择"><span class="nav-number">1.4.3.</span> <span class="nav-text">结果选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代预测"><span class="nav-number">1.4.4.</span> <span class="nav-text">迭代预测</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RNN模型"><span class="nav-number">2.</span> <span class="nav-text">RNN模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一般NN，及其乏力点"><span class="nav-number">2.1.</span> <span class="nav-text">一般NN，及其乏力点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN模型的有效性"><span class="nav-number">2.2.</span> <span class="nav-text">RNN模型的有效性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN的不足"><span class="nav-number">2.3.</span> <span class="nav-text">RNN的不足</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强大的LSTM"><span class="nav-number">2.4.</span> <span class="nav-text">强大的LSTM</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编码实战"><span class="nav-number">3.</span> <span class="nav-text">编码实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据选择"><span class="nav-number">3.1.</span> <span class="nav-text">数据选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理"><span class="nav-number">3.2.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预训练"><span class="nav-number">3.3.</span> <span class="nav-text">预训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">3.4.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预测-1"><span class="nav-number">3.5.</span> <span class="nav-text">预测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理-1"><span class="nav-number">4.1.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN模型-1"><span class="nav-number">4.2.</span> <span class="nav-text">RNN模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#经典案例"><span class="nav-number">4.3.</span> <span class="nav-text">经典案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关源码实现"><span class="nav-number">4.4.</span> <span class="nav-text">相关源码实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Puke</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">126k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:55</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      访客人数：<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      访问次数：<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname,
+            owner: 'puke3615',
+            repo: 'puke3615.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'dd457df35400aae1ea4ed2b5ebcc7ca38005f8a6',
+            
+                client_id: '38aba096f221adc94da8'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.min.css">
+
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("TUGTQJGdWzfD9vqxvu4TLobi-gzGzoHsz", "e6ji6OuVNHOCBlMQQjQuL1Cs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook,Linkedin,GoogleBookmarks,Mailto,Evernote";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "vertical";
+      
+          flOptions.position = "topRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook,Linkedin,GoogleBookmarks,Mailto,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script type="text/javascript">
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
