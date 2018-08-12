@@ -156,20 +156,20 @@
 
 
 
-  <meta name="description" content="前言：基于RNN的文本生成器涉及到很多知识点，本文结合一个比较小的例子进行整个生成模型的思路串讲，只涉及思路，无关任何算法和代码，目的是理清整个预处理、训练、生成预测的流程。">
+  <meta name="description" content="前言：基于RNN的文本生成器涉及到很多知识点，本文结合一个比较小的例子进行整个生成模型的流程总结，只涉及思路，不包含算法和代码，目的是理清整个预处理、训练、生成预测的流程。">
 <meta name="keywords" content="Machine Learning,RNN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于深度学习的文本生成过程">
 <meta property="og:url" content="http://puke3615.github.io/2018/08/10/ML-Text-Generator/index.html">
 <meta property="og:site_name" content="Puke&#39;s Blog">
-<meta property="og:description" content="前言：基于RNN的文本生成器涉及到很多知识点，本文结合一个比较小的例子进行整个生成模型的思路串讲，只涉及思路，无关任何算法和代码，目的是理清整个预处理、训练、生成预测的流程。">
+<meta property="og:description" content="前言：基于RNN的文本生成器涉及到很多知识点，本文结合一个比较小的例子进行整个生成模型的流程总结，只涉及思路，不包含算法和代码，目的是理清整个预处理、训练、生成预测的流程。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://puke3615.github.io/2018/08/10/ML-Text-Generator/char_freq.png">
 <meta property="og:image" content="http://puke3615.github.io/2018/08/10/ML-Text-Generator/word_freq.png">
-<meta property="og:updated_time" content="2018-08-12T15:22:09.000Z">
+<meta property="og:updated_time" content="2018-08-12T15:42:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于深度学习的文本生成过程">
-<meta name="twitter:description" content="前言：基于RNN的文本生成器涉及到很多知识点，本文结合一个比较小的例子进行整个生成模型的思路串讲，只涉及思路，无关任何算法和代码，目的是理清整个预处理、训练、生成预测的流程。">
+<meta name="twitter:description" content="前言：基于RNN的文本生成器涉及到很多知识点，本文结合一个比较小的例子进行整个生成模型的流程总结，只涉及思路，不包含算法和代码，目的是理清整个预处理、训练、生成预测的流程。">
 <meta name="twitter:image" content="http://puke3615.github.io/2018/08/10/ML-Text-Generator/char_freq.png">
 
 
@@ -556,10 +556,10 @@
       
 
       
-        <p>前言：基于RNN的文本生成器涉及到很多知识点，本文结合一个比较小的例子进行整个生成模型的思路串讲，只涉及思路，无关任何算法和代码，目的是理清整个预处理、训练、生成预测的流程。</p>
+        <p>前言：基于RNN的文本生成器涉及到很多知识点，本文结合一个比较小的例子进行整个生成模型的流程总结，只涉及思路，不包含算法和代码，目的是理清整个预处理、训练、生成预测的流程。</p>
 <a id="more"></a>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这短短的一生，我们最终都会失去。你不妨大胆一些，爱一个人，攀一座山，追一个梦。</span><br></pre></td></tr></table></figure>
-<p>这里选择了电影《大鱼海棠》中一句很经典的台词作为示例，进行整个思路的串讲。最终的目的是让我们的模型能够自动生成该句子。</p>
+<p>这里选择了电影《大鱼海棠》中一句很经典的台词作为示例，进行整个流程的总结。最终的目的是让我们的模型能够自动生成该句子。</p>
 <h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>在目前深度学习框架如同雨后春笋般萌生的时代里，深度学习模型的搭建本身不再是高门槛的事情，相比之下数据预处理却是一个尤为重要且直接关系到最终生成结果的一环。</p>
 <h3 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h3><p>一句话，一篇文章，我们要训练它，首先需要把它变成结构化、计算机可理解的序列。</p>
 <p>这里我们就需要将上面的这段话进行拆分为很多个词，以供下一步处理。而我们常用的拆词有两种方式，基于char和基于word（对应到中文就是基于字和基于词），下面将展开说明两种拆词方式。</p>
