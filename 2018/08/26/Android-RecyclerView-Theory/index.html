@@ -156,24 +156,25 @@
 
 
 
-  <meta name="description" content="好事多磨">
-<meta name="keywords" content="关键词">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Puke&#39;s Blog">
-<meta property="og:url" content="http://puke3615.github.io/tags/编程洁癖/index.html">
+  <meta name="description" content="Android端Native业务开发中涉及到列表的场景时，我们最先想到的就是使用RecyclerView或ListView（两者基本原理是相通的，以下均以RecyclerView为例说明），这篇文章将尝试通过基于一个具体场景来说明RecyclerView内部的优化原理。">
+<meta name="keywords" content="Android,RecyclerView,性能优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RecyclerView的优化原理">
+<meta property="og:url" content="http://puke3615.github.io/2018/08/26/Android-RecyclerView-Theory/index.html">
 <meta property="og:site_name" content="Puke&#39;s Blog">
-<meta property="og:description" content="好事多磨">
+<meta property="og:description" content="Android端Native业务开发中涉及到列表的场景时，我们最先想到的就是使用RecyclerView或ListView（两者基本原理是相通的，以下均以RecyclerView为例说明），这篇文章将尝试通过基于一个具体场景来说明RecyclerView内部的优化原理。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-26T11:45:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Puke&#39;s Blog">
-<meta name="twitter:description" content="好事多磨">
+<meta name="twitter:title" content="RecyclerView的优化原理">
+<meta name="twitter:description" content="Android端Native业务开发中涉及到列表的场景时，我们最先想到的就是使用RecyclerView或ListView（两者基本原理是相通的，以下均以RecyclerView为例说明），这篇文章将尝试通过基于一个具体场景来说明RecyclerView内部的优化原理。">
 
 
 
 
 
 
-  <link rel="canonical" href="http://puke3615.github.io/tags/编程洁癖/"/>
+  <link rel="canonical" href="http://puke3615.github.io/2018/08/26/Android-RecyclerView-Theory/"/>
 
 
 
@@ -183,7 +184,7 @@
   };
 </script>
 
-  <title>标签: 编程洁癖 | Puke's Blog</title>
+  <title>RecyclerView的优化原理 | Puke's Blog</title>
   
 
 
@@ -240,7 +241,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -305,7 +306,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
   </li>
@@ -399,87 +400,349 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>编程洁癖<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://puke3615.github.io/2018/08/26/Android-RecyclerView-Theory/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Puke">
+      <meta itemprop="description" content="好事多磨">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Puke's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/03/21/Android-Studio-Code-Block-Mark/" itemprop="url">
-              
-                <span itemprop="name">Android Studio代码块打标</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">RecyclerView的优化原理
+              
+            
+          </h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-21T17:32:14+08:00"
-              content="2017-03-21" >
-          03-21
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
 
-    </header>
-  </article>
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-26 15:38:38" itemprop="dateCreated datePublished" datetime="2018-08-26T15:38:38+08:00">2018-08-26</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/26/Android-RecyclerView-Theory/" class="leancloud_visitors" data-flag-title="RecyclerView的优化原理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="本文字数">1.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Android端Native业务开发中涉及到列表的场景时，我们最先想到的就是使用<code>RecyclerView</code>或<code>ListView</code>（两者基本原理是相通的，以下均以<code>RecyclerView</code>为例说明），这篇文章将尝试通过基于一个具体场景来说明<code>RecyclerView</code>内部的优化原理。</p>
+<a id="more"></a>
+<h2 id="全量加载替换为逐项懒加载"><a href="#全量加载替换为逐项懒加载" class="headerlink" title="全量加载替换为逐项懒加载"></a>全量加载替换为逐项懒加载</h2><p>为了对比说明<code>RecyclerView</code>的优势，这里以<code>LinearLayout</code>作为参考进行对比。</p>
+<p>在列表场景中，我们使用<code>RecyclerView</code>来代替<code>LinearLayout</code>，是因为前者通过对单项<code>ItemView</code>进行加载的方式来渲染整个页面，而不是基于整个页面进行一次性渲染。</p>
+<p>举个例子，假如一个页面需要加载有100项的列表，其中每一项加载耗时需要5ms。如果使用传统的<code>LinearLayout</code>，一次性全部加载的时间就是<code>100 * 5ms = 500ms</code>，500ms加载时间对于用户而言是什么？以Android系统为了使得用户能在端上拥有60FPS的体验，而做出的每过<code>1s / 60FPS ≈ 16ms</code>发出一个<code>VSYNC</code>信号进行UI刷新为准，500ms就意味着在加载这个列表时将出现<code>(500ms - 16ms) / 16ms ≈ 30</code>帧的丢失，而用户感受到的就是当前列表加载时非常卡顿。而如果使用<code>RecyclerView</code>方式进行进行渲染，则每项渲染时间为5ms，两项渲染的间隙里仍然可以进行<code>VSYNC</code>对应的UI刷新操作，这种场景下几乎不会造成丢帧现象。</p>
+<p>除此之外，<code>RecyclerView</code>对单项进行加载并非简单地从1次加载100项拆分为100次加载各加载1项，它在此基础上还做了懒加载的操作，即只有当用户界面滑动到当前项时才会进行加载。</p>
+<p>举个例子，用户手机一屏最多能展示10项时，此时<code>RecyclerView</code>便只会渲染10次，每次渲染1项。当用户往下滑动到第11项准备要“露出来”的时候，<code>RecyclerView</code>才会渲染第11项，剩下的89项也是同样的加载方式。这样的设计带来的好处同常用的懒加载类似，就是将短时间内的密集型任务进行离散化分配，尽可能降低CPU的压力。</p>
+<blockquote>
+<p>该特性是RecylerView内部实现的，面向开发者是透明的</p>
+</blockquote>
+<h2 id="ItemView复用"><a href="#ItemView复用" class="headerlink" title="ItemView复用"></a>ItemView复用</h2><p>仅仅单项懒加载还不够，还要更快，这时我们需要将矛头指向耗时操作的罪魁祸首——<code>LayoutInflater#inflate</code>。在这一步中，Android系统会去解析<code>layout.xml</code>的资源文件，然后还可能会进行一系列的反射操作来实例化View，这一步的操作相较于View信息的填充而言，是尤为耗时的。而对于100项的列表，如果我们每次都去进行<code>inflate</code>操作的话，也将会对运行性能带来不少压力。</p>
+<p><code>RecyclerView</code>对应该问题解法就是<b>复用</b>，它内部会有个<code>mCachedViews</code>的缓存变量，可以抽象理解为里面存储着每一个创建的子View，每次渲染子View时如果缓存中有未使用的子View会优先从缓存中取，当缓存的View不足以界面展示时，它就会再去创建新View并添加进去。</p>
+<p>比如，总共需要展示100项，一屏显示10项，此时缓存中包含10个子View。</p>
+<ul>
+<li>当滑动到第11项时，发现缓存的10项全部用来UI展示，没有未使用的子View，此时便再创建一项子View并放到缓存中</li>
+<li>当滑动到第12项时，此时第1项已经完全从屏幕上方滑到屏幕显示之外了，该项便是未使用的子View，此时<code>RecylerView</code>会直接复用该项来渲染第12项</li>
+<li>后续项的加载都会隶属于上面的两种情况</li>
+</ul>
+<blockquote>
+<p>注：该特性也是RecyclerView内部实现的，一样不需要开发者额外处理；而更早设计的ListView会不存在该特性的，我们开发者一般会通过<code>View#setTag</code>方式来手动实现该特性。这也是为什么RecyclerView的官方Api中直接显式的提出<code>ViewHolder</code>概念而ListView中并未有任何<code>ViewHolder</code>概念（ListView的<code>ViewHolder</code>是我们开发中手动加入的）的原因。</p>
+</blockquote>
 
       
     </div>
 
+    <div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;"><br/>------------- The end -------------</div>
+    
+</div>
+    
+    </div>
+
+    
+      
+
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2018/08/26/Android-RecyclerView-Architecture-Design/" rel="bookmark">RecyclerView结构设计的技术思考</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/03/21/Android-Studio-Code-Block-Mark/" rel="bookmark">Android Studio代码块打标</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2018/06/05/Android-Studio-Debug-1/" rel="bookmark">Android Studio之Debug（一）：运行期代码植入</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2018/06/06/Android-Studio-Debug-2/" rel="bookmark">Android Studio之Debug（二）：自定义Debug变量视图</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Puke</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://puke3615.github.io/2018/08/26/Android-RecyclerView-Theory/" title="RecyclerView的优化原理">http://puke3615.github.io/2018/08/26/Android-RecyclerView-Theory/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+          
+            <a href="/tags/RecyclerView/" rel="tag"><i class="fa fa-tag"></i> RecyclerView</a>
+          
+            <a href="/tags/性能优化/" rel="tag"><i class="fa fa-tag"></i> 性能优化</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+               <div id="needsharebutton-postbottom">
+                 <span class="btn">
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>
+                 </span>
+               </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/10/ML-Text-Generator/" rel="next" title="基于深度学习的文本生成过程">
+                <i class="fa fa-chevron-left"></i> 基于深度学习的文本生成过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/26/Android-RecyclerView-Architecture-Design/" rel="prev" title="RecyclerView结构设计的技术思考">
+                RecyclerView结构设计的技术思考 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -500,8 +763,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -520,7 +792,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -610,7 +882,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -685,6 +961,10 @@
                     <a href="https://acris.me/" title="Acris" target="_blank">Acris</a>
                   </li>
                 
+                  <li class="links-of-blogroll-item">
+                    <a href="https:timor419.github.io" title="Timor" target="_blank">Timor</a>
+                  </li>
+                
               </ul>
             </div>
           
@@ -699,6 +979,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#全量加载替换为逐项懒加载"><span class="nav-number">1.</span> <span class="nav-text">全量加载替换为逐项懒加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ItemView复用"><span class="nav-number">2.</span> <span class="nav-text">ItemView复用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -732,7 +1028,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">126k</span>
+    <span title="站点总字数">158k</span>
   
 
   
@@ -741,7 +1037,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">1:55</span>
+    <span title="站点阅读时长">2:23</span>
   
 </div>
 
@@ -884,6 +1180,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
@@ -918,6 +1218,30 @@
       </style>
     
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname,
+            owner: 'puke3615',
+            repo: 'puke3615.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'dd457df35400aae1ea4ed2b5ebcc7ca38005f8a6',
+            
+                client_id: '38aba096f221adc94da8'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
     
 
 
@@ -1136,7 +1460,7 @@
   <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
   <script type="text/javascript">
   
-    bookmark.loadBookmark();
+    bookmark.scrollToMark('auto', "#更多");
   
   </script>
 
