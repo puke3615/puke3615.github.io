@@ -589,14 +589,7 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="/2016/10/16/Android-Studio-Template-For-File-Group/" rel="bookmark">Android Studio模板之文件组</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
-      <div class="popular-posts-title"><a href="/2017/03/21/Android-Studio-Code-Block-Mark/" rel="bookmark">Android Studio代码块打标</a></div>
+      <div class="popular-posts-title"><a href="/2016/10/14/Android-Studio-Template-For-Part/" rel="bookmark">Android Studio模板之代码片段</a></div>
       
     </li>
   
@@ -618,6 +611,13 @@
       
       
       <div class="popular-posts-title"><a href="/2016/10/15/Android-Studio-Template-For-File/" rel="bookmark">Android Studio模板之文件</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2017/03/21/Android-Studio-Code-Block-Mark/" rel="bookmark">Android Studio代码块打标</a></div>
       
     </li>
   
@@ -1214,7 +1214,7 @@
       <script type="text/javascript">
       function renderGitment(){
         var gitment = new Gitmint({
-            id: window.location.pathname,
+            id: decodeURI(window.location.pathname),
             owner: 'puke3615',
             repo: 'puke3615.github.io',
             
