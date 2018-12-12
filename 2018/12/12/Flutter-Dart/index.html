@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="BvVQ_EYJPlr609WnQRSiFiTTyhHdK0P2M6MnYk_f_0o" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Playball:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'KFRJ311K0H',
+      apiKey: '4c626345121fb7419731b7ae5a02dc19',
+      indexName: 'Hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索文章","hits_empty":"未找到关键词：${query}","hits_stats":"搜索到${hits}个结果，用时${time}ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="[TOC] 一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  //">
+<meta name="keywords" content="Dart,Flutter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dart语法要点汇总">
+<meta property="og:url" content="http://puke3615.github.io/2018/12/12/Flutter-Dart/index.html">
+<meta property="og:site_name" content="Puke&#39;s Blog">
+<meta property="og:description" content="[TOC] 一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  //">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-12T11:56:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dart语法要点汇总">
+<meta name="twitter:description" content="[TOC] 一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  //">
+
+
+
+
+
+
+  <link rel="canonical" href="http://puke3615.github.io/2018/12/12/Flutter-Dart/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Dart语法要点汇总 | Puke's Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?34758a82d032eeddb9df79e54b74f600";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Puke's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Keep learning as long as living.</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-media">
+    <a href="/media/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-play-circle"></i> <br />音控</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+    
+
+      <a href="https://github.com/puke3615"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://puke3615.github.io/2018/12/12/Flutter-Dart/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Puke">
+      <meta itemprop="description" content="好事多磨">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Puke's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Dart语法要点汇总
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-12 10:53:55" itemprop="dateCreated datePublished" datetime="2018-12-12T10:53:55+08:00">2018-12-12</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/12/Flutter-Dart/" class="leancloud_visitors" data-flag-title="Dart语法要点汇总">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="本文字数">6k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h3 id="一个基础的Dart程序"><a href="#一个基础的Dart程序" class="headerlink" title="一个基础的Dart程序"></a>一个基础的Dart程序</h3><p>[In]</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main为Dart程序入口</span></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  <span class="comment">// 调用printNumber方法</span></span><br><span class="line">  <span class="keyword">var</span> number = <span class="number">58</span>;</span><br><span class="line">  printNumber(number);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法返回类型缺省时，默认返回类型为dynamic</span></span><br><span class="line">printNumber(<span class="built_in">int</span> number) &#123;</span><br><span class="line">  <span class="comment">// 1. 字符串用单/双引号均可</span></span><br><span class="line">  <span class="comment">// 2. 字符串中支持$&#123;&#125;表达式, 单字符变量时可简化为$</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"The number is $number."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[Out]</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The number is 58.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Dart单行注释用<code>//</code>，多行注释用<code>/**/</code>（同Java）</li>
+<li><code>var</code>是一种不需要指定类型的声明方式</li>
+<li><code>int</code>是一种数据类型，对应的还有<code>String</code>、<code>List</code>和<code>bool</code>类型</li>
+<li>字符串的标识用单、双引号均可（同Python、JS）</li>
+<li>字符串中支持<code>${number}</code>表达式, 单字符变量时可简化为<code>$number</code>（同JS的<font color="red">&#96;{$number}&#96;</font>）</li>
+</ul>
+<blockquote>
+<p>当你在学习Dart语言时，你需要清楚这概念：</p>
+<ul>
+<li>所有的东西都是一个对象，每个对象都是一个class的实例，即使是数字、函数、<code>null</code>都是对象，并且所有的对象都集成自Object类。</li>
+<li>尽管Dart语言是一种强类型语言，但你在类型声明时仍然可以不指定类型，因为Dart可以自动进行类型推断。在上面的代码中，<code>number</code>变量的类型就被推断为<code>int</code>，当你并不想显式地声明类型时，你可以使用置顶的类型<a href="https://www.dartlang.org/guides/language/effective-dart/design#do-annotate-with-object-instead-of-dynamic-to-indicate-any-object-is-allowed" target="_blank" rel="noopener">dynamic</a>来标识。</li>
+<li>Dart语言同样支持泛型，如<code>List&lt;int&gt;</code>、<code>List&lt;dynamic&gt;</code>（同Java）。</li>
+<li>Dart语言支持顶级方法（即不与类绑定的方法，如上的<code>main</code>方法），以及绑定类和实例的方法（分别对应静态方法和实例方法），而且还支持方法嵌套（同Python、JS）。</li>
+<li>和Java不同的是，Dart语言并不支持<code>publish</code>、<code>protected</code>、<code>private</code>这些关键字，它是通过前缀<code>_</code>来标识为私有域的（同Python），<a href="https://www.dartlang.org/guides/language/language-tour#libraries-and-visibility" target="_blank" rel="noopener">参</a>。</li>
+</ul>
+</blockquote>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>这是一个创建并初始化变量的例子</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'Bob'</span>;</span><br></pre></td></tr></table></figure>
+<p><code>name</code>变量类型被推断为<code>String</code>，你也能更改为制定的类型。如果一个变量的类型并不限制于单一类型，你也可以使用<code>dynamic</code>或<code>Object</code>进行声明，如：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dynamic</span> name = <span class="string">'Bob'</span>;</span><br></pre></td></tr></table></figure>
+<p>同样也可以选择制定的声明方式</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> name = <span class="string">'Bob'</span>;</span><br></pre></td></tr></table></figure>
+<p>但根据Dart推荐的编码风格，在局部变量中使用<code>var</code>要更优于制定的类型声明。</p>
+<h4 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h4><p>Dart中声明时如果未初始化，会被自动初始化为<code>null</code></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> lineCount;</span><br><span class="line"><span class="keyword">assert</span>(lineCount == <span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：<code>assert</code>只在开发环境有效，在实际的生产环境无效</p>
+</blockquote>
+<h4 id="final与const"><a href="#final与const" class="headerlink" title="final与const"></a>final与const</h4><p><code>final</code>和<code>const</code>标识该变量只能被赋值一次，区别在于<code>final</code>是运行时赋值，<code>const</code>是编译时赋值。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="built_in">String</span> nickname = <span class="string">'Jack'</span>;</span><br><span class="line"><span class="comment">// final修饰时, 可省略类型声明</span></span><br><span class="line"><span class="keyword">final</span> name = <span class="string">'Jack'</span>;</span><br></pre></td></tr></table></figure>
+<p><code>const</code>不仅可以用来声明变量，还能用来创建常量值，如：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此时不能在对列表a进行更新操作</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">const</span> [<span class="number">1</span>, <span class="number">2</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="内置类型"><a href="#内置类型" class="headerlink" title="内置类型"></a>内置类型</h3><h4 id="数字型"><a href="#数字型" class="headerlink" title="数字型"></a>数字型</h4><p>包含<code>int</code>和<code>double</code>，不包含<del><code>float</code></del></p>
+<p>常用的类型转换</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// String -&gt; int</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">int</span>.parse(<span class="string">'1'</span>);</span><br><span class="line"><span class="keyword">assert</span>(a == <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// String -&gt; double</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="built_in">double</span>.parse(<span class="string">'1.1'</span>);</span><br><span class="line"><span class="keyword">assert</span>(b == <span class="number">1.1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// int -&gt; String</span></span><br><span class="line"><span class="built_in">String</span> c = <span class="number">1.</span>toString();</span><br><span class="line"><span class="keyword">assert</span>(c == <span class="string">'1'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// double -&gt; String</span></span><br><span class="line"><span class="built_in">String</span> d = <span class="number">3.14159</span>.toStringAsFixed(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">assert</span>(d == <span class="string">'3.14'</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><ul>
+<li><p>单引号、双引号均可</p>
+</li>
+<li><p>字符串拼接时，换行可省略加号，如</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'123'</span></span><br><span class="line">    <span class="string">'456'</span>;</span><br><span class="line"><span class="built_in">print</span>(a);</span><br><span class="line"><span class="comment">// Out: 123456</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字符串可以用索引，但不支持负值索引（区分于Python），如</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'Jack'</span>;</span><br><span class="line"><span class="built_in">print</span>(a[<span class="number">1</span>]);</span><br><span class="line"><span class="comment">// Out: a</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h4><p>在Dart语言中，数组即列表</p>
+<p>[In]</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  <span class="comment">// 初始化</span></span><br><span class="line">  <span class="keyword">var</span> list = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line">  <span class="comment">// 增</span></span><br><span class="line">  list.add(<span class="string">'d'</span>);</span><br><span class="line">  <span class="comment">// 删</span></span><br><span class="line">  list.remove(<span class="string">'b'</span>);</span><br><span class="line">  <span class="comment">// 改</span></span><br><span class="line">  list[<span class="number">1</span>] = <span class="string">'cc'</span>;</span><br><span class="line">  <span class="comment">// 查</span></span><br><span class="line">  <span class="keyword">var</span> last = list[list.length - <span class="number">1</span>];</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'list is $list'</span>);</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'last is $last'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[Out]</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list is [a, cc, d]</span><br><span class="line">last is d</span><br></pre></td></tr></table></figure>
+<h4 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h4><p>[In]</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  <span class="keyword">var</span> map = &#123;<span class="string">'a'</span>: <span class="number">1</span>, <span class="string">'b'</span>: <span class="number">2</span>&#125;;</span><br><span class="line">  <span class="comment">// 增</span></span><br><span class="line">  map[<span class="string">'c'</span>] = <span class="number">3</span>;</span><br><span class="line">  <span class="comment">// 删</span></span><br><span class="line">  map.remove(<span class="string">'a'</span>);</span><br><span class="line">  <span class="comment">// 改</span></span><br><span class="line">  map[<span class="string">'b'</span>] = <span class="number">22</span>;</span><br><span class="line">  <span class="comment">// 查</span></span><br><span class="line">  <span class="keyword">var</span> cValue = map[<span class="string">'c'</span>];</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'map is $map'</span>);</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'cValue is $cValue'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[Out]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">map is &#123;b: 22, c: 3&#125;</span><br><span class="line">cValue is 3</span><br></pre></td></tr></table></figure>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>Dart是一门完全面向对象的语言，即使它的函数也是一个对象，并且有自己的类型——<code>Function</code>。这就意味着函数可以被赋值为一个变量，或者作为一个参数在其他函数之间传递。</p>
+<p>对于只包含一个表达式的方法体，你也可以使用<code>=&gt;</code>的简写形式，如：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> say() &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'123'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该写法与以上有同样效果</span></span><br><span class="line"><span class="keyword">void</span> say2() =&gt; <span class="built_in">print</span>(<span class="string">'123'</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="可选参数"><a href="#可选参数" class="headerlink" title="可选参数"></a>可选参数</h4><p>Dart的可选参数分为<code>命名可选参数</code>和<code>位置可选参数</code>两种（两者之间互斥，即不能同时使用）。</p>
+<p><strong>命名可选参数</strong></p>
+<p>[In]</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  say(age: <span class="number">27</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> say(&#123;<span class="built_in">String</span> name=<span class="string">'Jack'</span>, <span class="built_in">int</span> age=<span class="number">20</span>&#125;) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'$name\'s age is $age.'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[Out]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Jack&apos;s age is 27.</span><br></pre></td></tr></table></figure>
+<p><strong>位置可选参数</strong></p>
+<p>[In]</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  say(<span class="string">'Tom'</span>, <span class="number">27</span>, <span class="string">'Love game.'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> say(<span class="built_in">String</span> name, <span class="built_in">int</span> age, [<span class="built_in">String</span> remark]) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'$name\'s age is $age.<span class="subst">$&#123;remark??<span class="string">''</span>&#125;</span>'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[Out]</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Tom's age is 27.Love game.</span><br></pre></td></tr></table></figure>
+<p><strong>默认参数值</strong></p>
+<p>参数可用<code>=</code>声明默认值，默认值只能是编译时常量。</p>
+<blockquote>
+<p>注：<code>命名可选参数</code>的默认参数值可使用<code>:</code>指定，但对于<code>位置可选参数</code>不支持，推荐统一使用<code>=</code>的默认参数指定方式</p>
+</blockquote>
+<h4 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h4><p>[In]</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  <span class="keyword">var</span> list = [<span class="string">'Android'</span>, <span class="string">'iOS'</span>, <span class="string">'WindowPhone'</span>];</span><br><span class="line">  list.forEach((item) &#123;</span><br><span class="line">    <span class="built_in">print</span>(item);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[Out]</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Android</span><br><span class="line">iOS</span><br><span class="line">WindowPhone</span><br></pre></td></tr></table></figure>
+<h3 id="特殊操作符"><a href="#特殊操作符" class="headerlink" title="特殊操作符"></a>特殊操作符</h3><ul>
+<li><p><code>is</code> &lt;=&gt; Java的<code>instanceof</code></p>
+</li>
+<li><p><code>a?.b</code> &lt;=&gt; <code>a == null ? null : a.b</code></p>
+</li>
+<li><p><code>a??b</code> &lt;=&gt; <code>a == null ? b : a</code></p>
+</li>
+<li><p><code>a ??= b</code> &lt;=&gt; <code>a = a == null ? b : a</code></p>
+</li>
+<li><p><code>a as String</code> &lt;=&gt; Java的<code>(String) a</code></p>
+</li>
+<li><p><code>..</code>级别操作符</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> button = <span class="built_in">querySelector</span>(<span class="string">'#confirm'</span>);</span><br><span class="line">button.text = <span class="string">'Confirm'</span>;</span><br><span class="line">button.classes.add(<span class="string">'important'</span>);</span><br><span class="line">button.onClick.listen((e) =&gt; <span class="built_in">window</span>.alert(<span class="string">'Confirmed!'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该写法等价上述写法</span></span><br><span class="line"><span class="built_in">querySelector</span>(<span class="string">'#confirm'</span>) <span class="comment">// Get an object.</span></span><br><span class="line">  ..text = <span class="string">'Confirm'</span> <span class="comment">// Use its members.</span></span><br><span class="line">  ..classes.add(<span class="string">'important'</span>)</span><br><span class="line">  ..onClick.listen((e) =&gt; <span class="built_in">window</span>.alert(<span class="string">'Confirmed!'</span>));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 抛异常</span></span><br><span class="line"><span class="keyword">throw</span> FormatException(<span class="string">'Expected at least 1 section'</span>);</span><br><span class="line"><span class="keyword">throw</span> <span class="string">'Out of llamas!'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 捕获异常</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  breedMoreLlamas();</span><br><span class="line">&#125; on OutOfLlamasException &#123;</span><br><span class="line">  <span class="comment">// A specific exception</span></span><br><span class="line">  buyMoreLlamas();</span><br><span class="line">&#125; on Exception <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="comment">// Anything else that is an exception</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'Unknown exception: $e'</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="comment">// No specified type, handles all</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'Something really unknown: $e'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// ···</span></span><br><span class="line">&#125; on Exception <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'Exception details:\n $e'</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e, s) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'Exception details:\n $e'</span>);</span><br><span class="line">  <span class="comment">// 第二个参数s是一个错误堆栈实例</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'Stack trace:\n $s'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">dynamic</span> foo = <span class="keyword">true</span>;</span><br><span class="line">  <span class="built_in">print</span>(foo++); <span class="comment">// Runtime error</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'misbehave() partially handled <span class="subst">$&#123;e.runtimeType&#125;</span>.'</span>);</span><br><span class="line">  <span class="comment">// 关键字rethrow重新抛出异常</span></span><br><span class="line">  <span class="keyword">rethrow</span>; <span class="comment">// Allow callers to see the exception. </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="重载操作符"><a href="#重载操作符" class="headerlink" title="重载操作符"></a>重载操作符</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vector</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">int</span> x, y;</span><br><span class="line"></span><br><span class="line">  Vector(<span class="keyword">this</span>.x, <span class="keyword">this</span>.y);</span><br><span class="line"></span><br><span class="line">  Vector <span class="keyword">operator</span> +(Vector v) =&gt; Vector(x + v.x, y + v.y);</span><br><span class="line">  Vector <span class="keyword">operator</span> -(Vector v) =&gt; Vector(x - v.x, y - v.y);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Operator == and hashCode not shown. For details, see note below.</span></span><br><span class="line">  <span class="comment">// ···</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  <span class="keyword">final</span> v = Vector(<span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">  <span class="keyword">final</span> w = Vector(<span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">assert</span>(v + w == Vector(<span class="number">4</span>, <span class="number">5</span>));</span><br><span class="line">  <span class="keyword">assert</span>(v - w == Vector(<span class="number">0</span>, <span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h3><ul>
+<li><code>sync* + yield</code>返回<code>Iterable</code>对象</li>
+<li><code>async* + yield</code>返回<code>Stream</code>对象</li>
+</ul>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Iterable</span>&lt;<span class="built_in">int</span>&gt; naturalsTo(<span class="built_in">int</span> n) <span class="keyword">sync</span>* &#123;</span><br><span class="line">  <span class="built_in">int</span> k = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (k &lt; n) <span class="keyword">yield</span> k++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Stream&lt;<span class="built_in">int</span>&gt; asynchronousNaturalsTo(<span class="built_in">int</span> n) <span class="keyword">async</span>* &#123;</span><br><span class="line">  <span class="built_in">int</span> k = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (k &lt; n) <span class="keyword">yield</span> k++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果生成器返回值是可迭代的，亦可使用<code>yield*</code>来提高性能，如：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Iterable</span>&lt;<span class="built_in">int</span>&gt; naturalsDownFrom(<span class="built_in">int</span> n) <span class="keyword">sync</span>* &#123;</span><br><span class="line">  <span class="keyword">if</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">yield</span> n;</span><br><span class="line">    <span class="keyword">yield</span>* naturalsDownFrom(n - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="可调用的类"><a href="#可调用的类" class="headerlink" title="可调用的类"></a>可调用的类</h3><p>给类定义<code>call</code>方法能使得当前类是Callable的（同Python）</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WannabeFunction</span> </span>&#123;</span><br><span class="line">  call(<span class="built_in">String</span> a, <span class="built_in">String</span> b, <span class="built_in">String</span> c) =&gt; <span class="string">'$a $b $c!'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main() &#123;</span><br><span class="line">  <span class="keyword">var</span> wf = <span class="keyword">new</span> WannabeFunction();</span><br><span class="line">  <span class="keyword">var</span> out = wf(<span class="string">"Hi"</span>,<span class="string">"there,"</span>,<span class="string">"gang"</span>);</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'$out'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;"><br/>------------- The end -------------</div>
+    
+</div>
+    
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Puke</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://puke3615.github.io/2018/12/12/Flutter-Dart/" title="Dart语法要点汇总">http://puke3615.github.io/2018/12/12/Flutter-Dart/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Dart/" rel="tag"><i class="fa fa-tag"></i> Dart</a>
+          
+            <a href="/tags/Flutter/" rel="tag"><i class="fa fa-tag"></i> Flutter</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+               <div id="needsharebutton-postbottom">
+                 <span class="btn">
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>
+                 </span>
+               </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/26/Android-RecyclerView-Architecture-Design/" rel="next" title="彻底解耦RecyclerView.Adapter">
+                <i class="fa fa-chevron-left"></i> 彻底解耦RecyclerView.Adapter
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Puke" />
+            
+              <p class="site-author-name" itemprop="name">Puke</p>
+              <p class="site-description motion-element" itemprop="description">好事多磨</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/puke3615" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/puke3615" target="_blank" title="Zhihu"><i class="fa fa-fw fa-graduation-cap"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1129090915@qq.com" target="_blank" title="QQ"><i class="fa fa-fw fa-qq"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/Puke56373292" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/zijiao.wu" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i></a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友链
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://notes.iissnan.com/" title="IIssNan" target="_blank">IIssNan</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dandyxu.me/" title="Dandy Xu" target="_blank">Dandy Xu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://chaoo.oschina.io/" title="Chaooo" target="_blank">Chaooo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://acris.me/" title="Acris" target="_blank">Acris</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https:timor419.github.io" title="Timor" target="_blank">Timor</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个基础的Dart程序"><span class="nav-number">1.</span> <span class="nav-text">一个基础的Dart程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">2.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#默认值"><span class="nav-number">2.1.</span> <span class="nav-text">默认值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#final与const"><span class="nav-number">2.2.</span> <span class="nav-text">final与const</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内置类型"><span class="nav-number">3.</span> <span class="nav-text">内置类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数字型"><span class="nav-number">3.1.</span> <span class="nav-text">数字型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串"><span class="nav-number">3.2.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#列表"><span class="nav-number">3.3.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字典"><span class="nav-number">3.4.</span> <span class="nav-text">字典</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">4.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可选参数"><span class="nav-number">4.1.</span> <span class="nav-text">可选参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#匿名函数"><span class="nav-number">4.2.</span> <span class="nav-text">匿名函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊操作符"><span class="nav-number">5.</span> <span class="nav-text">特殊操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">6.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重载操作符"><span class="nav-number">7.</span> <span class="nav-text">重载操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成器"><span class="nav-number">8.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可调用的类"><span class="nav-number">9.</span> <span class="nav-text">可调用的类</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Puke</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">165k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">2:30</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      访客人数：<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      访问次数：<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="/js/src/gitment/default.css">
+        <script src="/js/src/gitment/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: '1544583235000',
+            owner: 'puke3615',
+            repo: 'puke3615.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'dd457df35400aae1ea4ed2b5ebcc7ca38005f8a6',
+            
+                client_id: '38aba096f221adc94da8'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.min.css">
+
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("TUGTQJGdWzfD9vqxvu4TLobi-gzGzoHsz", "e6ji6OuVNHOCBlMQQjQuL1Cs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook,Linkedin,GoogleBookmarks,Mailto,Evernote";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "vertical";
+      
+          flOptions.position = "topRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook,Linkedin,GoogleBookmarks,Mailto,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script type="text/javascript">
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
