@@ -157,14 +157,14 @@
 
 
   <meta name="description" content="一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  // 1. 字符">
-<meta name="keywords" content="Dart,Flutter">
+<meta name="keywords" content="Flutter,Dart">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dart语法要点汇总">
 <meta property="og:url" content="http://puke3615.github.io/2018/12/12/Flutter-Dart/index.html">
 <meta property="og:site_name" content="Puke&#39;s Blog">
 <meta property="og:description" content="一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  // 1. 字符">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-12T12:04:08.000Z">
+<meta property="og:updated_time" content="2018-12-13T00:57:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dart语法要点汇总">
 <meta name="twitter:description" content="一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  // 1. 字符">
@@ -521,7 +521,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                <span title="本文字数">6k</span>
+                <span title="本文字数">6.1k</span>
               
 
               
@@ -533,7 +533,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                <span title="阅读时长">5 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
@@ -566,7 +566,7 @@
 </ul>
 <a id="more"></a>
 <blockquote>
-<p>当你在学习Dart语言时，你需要清楚这概念：</p>
+<p>当你在学习Dart语言时，需要清楚这些概念：</p>
 <ul>
 <li>所有的东西都是一个对象，每个对象都是一个class的实例，即使是数字、函数、<code>null</code>都是对象，并且所有的对象都集成自Object类。</li>
 <li>尽管Dart语言是一种强类型语言，但你在类型声明时仍然可以不指定类型，因为Dart可以自动进行类型推断。在上面的代码中，<code>number</code>变量的类型就被推断为<code>int</code>，当你并不想显式地声明类型时，你可以使用置顶的类型<a href="https://www.dartlang.org/guides/language/effective-dart/design#do-annotate-with-object-instead-of-dynamic-to-indicate-any-object-is-allowed" target="_blank" rel="noopener">dynamic</a>来标识。</li>
@@ -634,6 +634,8 @@
 <p>[Out]</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Android</span><br><span class="line">iOS</span><br><span class="line">WindowPhone</span><br></pre></td></tr></table></figure>
 <h2 id="特殊操作符"><a href="#特殊操作符" class="headerlink" title="特殊操作符"></a>特殊操作符</h2><ul>
+<li><p><code>a ~/ b</code> &lt;=&gt; <code>(a / b) as int</code></p>
+</li>
 <li><p><code>is</code> &lt;=&gt; Java的<code>instanceof</code></p>
 </li>
 <li><p><code>a?.b</code> &lt;=&gt; <code>a == null ? null : a.b</code></p>
@@ -676,6 +678,18 @@
     
       
 
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/2018/12/12/Flutter-Dart-Best-Practice/" rel="bookmark">Dart语言最佳实践</a></div>
+      
+    </li>
+  
+  </ul>
+
 
     
 
@@ -707,9 +721,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Dart/" rel="tag"><i class="fa fa-tag"></i> Dart</a>
-          
             <a href="/tags/Flutter/" rel="tag"><i class="fa fa-tag"></i> Flutter</a>
+          
+            <a href="/tags/Dart/" rel="tag"><i class="fa fa-tag"></i> Dart</a>
           
         </div>
       
@@ -751,6 +765,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/12/Flutter-Dart-Best-Practice/" rel="prev" title="Dart语言最佳实践">
+                Dart语言最佳实践 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -831,7 +849,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1071,7 +1089,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">165k</span>
+    <span title="站点总字数">178k</span>
   
 
   
@@ -1080,7 +1098,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">2:30</span>
+    <span title="站点阅读时长">2:42</span>
   
 </div>
 
