@@ -262,11 +262,11 @@
     
       <category term="Java" scheme="http://puke3615.github.io/tags/Java/"/>
     
-      <category term="Python" scheme="http://puke3615.github.io/tags/Python/"/>
-    
       <category term="Groovy" scheme="http://puke3615.github.io/tags/Groovy/"/>
     
       <category term="JavaScript" scheme="http://puke3615.github.io/tags/JavaScript/"/>
+    
+      <category term="Python" scheme="http://puke3615.github.io/tags/Python/"/>
     
   </entry>
   
@@ -346,11 +346,11 @@
     
       <category term="Machine Learning" scheme="http://puke3615.github.io/tags/Machine-Learning/"/>
     
+      <category term="思维导图" scheme="http://puke3615.github.io/tags/%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/"/>
+    
       <category term="Keras" scheme="http://puke3615.github.io/tags/Keras/"/>
     
       <category term="Python" scheme="http://puke3615.github.io/tags/Python/"/>
-    
-      <category term="思维导图" scheme="http://puke3615.github.io/tags/%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/"/>
     
   </entry>
   
@@ -372,11 +372,11 @@
     
       <category term="Machine Learning" scheme="http://puke3615.github.io/tags/Machine-Learning/"/>
     
-      <category term="Python" scheme="http://puke3615.github.io/tags/Python/"/>
+      <category term="RNN" scheme="http://puke3615.github.io/tags/RNN/"/>
     
       <category term="Tensorflow" scheme="http://puke3615.github.io/tags/Tensorflow/"/>
     
-      <category term="RNN" scheme="http://puke3615.github.io/tags/RNN/"/>
+      <category term="Python" scheme="http://puke3615.github.io/tags/Python/"/>
     
   </entry>
   
