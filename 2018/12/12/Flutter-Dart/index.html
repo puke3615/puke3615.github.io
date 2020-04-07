@@ -164,7 +164,7 @@
 <meta property="og:site_name" content="Puke&#39;s Blog">
 <meta property="og:description" content="一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  // 1. 字符">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-07T06:56:38.009Z">
+<meta property="og:updated_time" content="2020-04-07T07:05:35.480Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dart语法要点汇总">
 <meta name="twitter:description" content="一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  // 1. 字符">
@@ -577,11 +577,11 @@
 </blockquote>
 <h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>这是一个创建并初始化变量的例子</p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'Bob'</span>;</span><br></pre></td></tr></table></figure>
-<p><code>name</code>变量类型被推断为<code>String</code>，你也能更改为制定的类型。如果一个变量的类型并不限制于单一类型，你也可以使用<code>dynamic</code>或<code>Object</code>进行声明，如：</p>
+<p><code>name</code>变量类型被推断为<code>String</code>，你也能更改为指定的类型。如果一个变量的类型并不限制于单一类型，你也可以使用<code>dynamic</code>或<code>Object</code>进行声明，如：</p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dynamic</span> name = <span class="string">'Bob'</span>;</span><br></pre></td></tr></table></figure>
-<p>同样也可以选择制定的声明方式</p>
+<p>同样也可以选择指定的声明方式</p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> name = <span class="string">'Bob'</span>;</span><br></pre></td></tr></table></figure>
-<p>但根据Dart推荐的编码风格，在局部变量中使用<code>var</code>要更优于制定的类型声明。</p>
+<p>但根据Dart推荐的编码风格，在局部变量中使用<code>var</code>要更优于指定的类型声明。</p>
 <h2 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h2><p>Dart中声明时如果未初始化，会被自动初始化为<code>null</code></p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> lineCount;</span><br><span class="line"><span class="keyword">assert</span>(lineCount == <span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
 <blockquote>
