@@ -164,7 +164,7 @@
 <meta property="og:site_name" content="Puke&#39;s Blog">
 <meta property="og:description" content="一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  // 1. 字符">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-07T07:05:35.480Z">
+<meta property="og:updated_time" content="2020-04-07T07:35:06.563Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dart语法要点汇总">
 <meta name="twitter:description" content="一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  // 1. 字符">
@@ -646,7 +646,7 @@
 </li>
 <li><p><code>a as String</code> &lt;=&gt; Java的<code>(String) a</code></p>
 </li>
-<li><p><code>..</code>级别操作符</p>
+<li><p><code>..</code>级联操作符</p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> button = <span class="built_in">querySelector</span>(<span class="string">'#confirm'</span>);</span><br><span class="line">button.text = <span class="string">'Confirm'</span>;</span><br><span class="line">button.classes.add(<span class="string">'important'</span>);</span><br><span class="line">button.onClick.listen((e) =&gt; <span class="built_in">window</span>.alert(<span class="string">'Confirmed!'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该写法等价上述写法</span></span><br><span class="line"><span class="built_in">querySelector</span>(<span class="string">'#confirm'</span>) <span class="comment">// Get an object.</span></span><br><span class="line">  ..text = <span class="string">'Confirm'</span> <span class="comment">// Use its members.</span></span><br><span class="line">  ..classes.add(<span class="string">'important'</span>)</span><br><span class="line">  ..onClick.listen((e) =&gt; <span class="built_in">window</span>.alert(<span class="string">'Confirmed!'</span>));</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
