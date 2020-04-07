@@ -164,7 +164,7 @@
 <meta property="og:site_name" content="Puke&#39;s Blog">
 <meta property="og:description" content="一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  // 1. 字符">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-13T00:57:50.000Z">
+<meta property="og:updated_time" content="2020-04-07T06:56:38.009Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dart语法要点汇总">
 <meta name="twitter:description" content="一个基础的Dart程序[In] 12345678910111213// main为Dart程序入口void main() &amp;#123;  // 调用printNumber方法  var number = 58;  printNumber(number);&amp;#125;// 方法返回类型缺省时，默认返回类型为dynamicprintNumber(int number) &amp;#123;  // 1. 字符">
@@ -569,10 +569,10 @@
 <p>当你在学习Dart语言时，需要清楚这些概念：</p>
 <ul>
 <li>所有的东西都是一个对象，每个对象都是一个class的实例，即使是数字、函数、<code>null</code>都是对象，并且所有的对象都集成自Object类。</li>
-<li>尽管Dart语言是一种强类型语言，但你在类型声明时仍然可以不指定类型，因为Dart可以自动进行类型推断。在上面的代码中，<code>number</code>变量的类型就被推断为<code>int</code>，当你并不想显式地声明类型时，你可以使用置顶的类型<a href="https://www.dartlang.org/guides/language/effective-dart/design#do-annotate-with-object-instead-of-dynamic-to-indicate-any-object-is-allowed" target="_blank" rel="noopener">dynamic</a>来标识。</li>
+<li>尽管Dart语言是一种强类型语言，但你在类型声明时仍然可以不指定类型，因为Dart可以自动进行类型推断。在上面的代码中，<code>number</code>变量的类型就被推断为<code>int</code>，当你并不想显式地声明类型时，你可以使用指定的类型<a href="https://www.dartlang.org/guides/language/effective-dart/design#do-annotate-with-object-instead-of-dynamic-to-indicate-any-object-is-allowed" target="_blank" rel="noopener">dynamic</a>来标识。</li>
 <li>Dart语言同样支持泛型，如<code>List&lt;int&gt;</code>、<code>List&lt;dynamic&gt;</code>（同Java）。</li>
 <li>Dart语言支持顶级方法（即不与类绑定的方法，如上的<code>main</code>方法），以及绑定类和实例的方法（分别对应静态方法和实例方法），而且还支持方法嵌套（同Python、JS）。</li>
-<li>和Java不同的是，Dart语言并不支持<code>publish</code>、<code>protected</code>、<code>private</code>这些关键字，它是通过前缀<code>_</code>来标识为私有域的（同Python），<a href="https://www.dartlang.org/guides/language/language-tour#libraries-and-visibility" target="_blank" rel="noopener">参</a>。</li>
+<li>和Java不同的是，Dart语言并不支持<code>public</code>、<code>protected</code>、<code>private</code>这些关键字，它是通过前缀<code>_</code>来标识为私有域的（同Python），<a href="https://www.dartlang.org/guides/language/language-tour#libraries-and-visibility" target="_blank" rel="noopener">参</a>。</li>
 </ul>
 </blockquote>
 <h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>这是一个创建并初始化变量的例子</p>
@@ -1077,7 +1077,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
